@@ -1,4 +1,4 @@
 0 6 * * * /opt/9router/update-9router.sh >> /tmp/9router-update.log 2>&1
 CRON_TZ=Asia/Jakarta
 PATH=/home/antok/.local/bin:/usr/local/bin:/usr/bin:/bin
-0 10,13,15,17,20 * * * NODE_PATH=/home/antok/fb-poster/node_modules /usr/bin/node /home/antok/fb-video-creator/run.js >> /home/antok/fb-video-creator/cron.log 2>&1
+0 10,13,15,17,20 * * * NODE_PATH=/home/antok/fb-poster/node_modules /home/antok/.local/bin/node /home/antok/fb-video-creator/run.js >> /home/antok/fb-video-creator/cron.log 2>&1
