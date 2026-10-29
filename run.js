@@ -54,7 +54,6 @@ async function run() {
   await sendContentToTelegram(currentTopic, videoPath, currentTopic.postText, thumbnailPath);
 
   // 4. Update State
-  state.lastTopicIndex = nextIndex;
   state.history.push({
     id: draftRecord.id,
     topicId: currentTopic.id,
