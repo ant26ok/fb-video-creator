@@ -2,6 +2,18 @@ const fs = require('fs');
 const path = require('path');
 const config = require('./config');
 
+async function fetchWithRetry(url, options, maxRetries = 3) {
+  for (let i = 0; i < maxRetries; i++) {
+    try {
+      return await fetch(url, options);
+    } catch (err) {
+      console.warn(`[TELEGRAM RETRY ${i + 1}/${maxRetries}] Network error: ${err.message}`);
+      if (i === maxRetries - 1) throw err;
+      await new Promise(r => setTimeout(r, 2000 * (i + 1)));
+    }
+  }
+}
+
 async function sendContentToTelegram(topic, videoPath, postText) {
   const token = config.TELEGRAM_BOT_TOKEN;
   const chatId = config.TELEGRAM_CHAT_ID;
@@ -20,7 +32,7 @@ async function sendContentToTelegram(topic, videoPath, postText) {
   const videoBuffer = fs.readFileSync(videoPath);
   videoFormData.append('video', new Blob([videoBuffer], { type: 'video/mp4' }), path.basename(videoPath));
 
-  const videoRes = await fetch(`https://api.telegram.org/bot${token}/sendVideo`, {
+  const videoRes = await fetchWithRetry(`https://api.telegram.org/bot${token}/sendVideo`, {
     method: 'POST',
     body: videoFormData
   });
@@ -50,7 +62,7 @@ async function sendContentToTelegram(topic, videoPath, postText) {
     parse_mode: 'HTML'
   };
 
-  const textRes = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+  const textRes = await fetchWithRetry(`https://api.telegram.org/bot${token}/sendMessage`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(messagePayload)
