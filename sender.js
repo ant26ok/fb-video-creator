@@ -43,7 +43,18 @@ async function sendContentToTelegram(topic, videoPath, postText) {
   console.log('[TELEGRAM SUCCESS] Video berhasil terkirim ke Telegram.');
 
   // 2. Kirim Pesan Teks Draft Lengkap (Siap Salin)
-  const escapedText = postText
+  function attachCta(text) {
+    const cta = "Pernah ngalamin kejadian atau dilema serupa? Yuk Like, Komen pengalaman teman-teman di bawah, dan Share postingan ini ke rekan-rekan IT lainnya!\n\n";
+    if (text.includes("Share postingan") || text.includes("Like, Komen")) return text;
+    const hashtagIndex = text.search(/#[A-Za-z0-9_]/);
+    if (hashtagIndex !== -1) {
+      return text.slice(0, hashtagIndex).trimEnd() + "\n\n" + cta + text.slice(hashtagIndex);
+    }
+    return text.trimEnd() + "\n\n" + cta;
+  }
+
+  const finalPostText = attachCta(postText);
+  const escapedText = finalPostText
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;');
