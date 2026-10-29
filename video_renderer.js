@@ -105,6 +105,48 @@ function buildP5Html(topic) {
 <body>
   <div id="canvas-container"></div>
 
+  <!-- Attention-Grabbing Video Thumbnail Cover (0s - 2.8s) -->
+  <div id="cover-thumbnail" style="position: absolute; inset: 0; background: radial-gradient(circle at 50% 38%, #0f172a 0%, #020617 100%); z-index: 100; display: flex; flex-direction: column; justify-content: space-between; padding: 60px; box-sizing: border-box; transition: all 0.75s cubic-bezier(0.16, 1, 0.3, 1);">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <div style="display: inline-flex; align-items: center; gap: 10px; padding: 8px 22px; border-radius: 9999px; background: rgba(244, 63, 94, 0.18); border: 1.5px solid #f43f5e; color: #f43f5e; font-weight: 900; font-size: 15px; letter-spacing: 0.12em; text-transform: uppercase;">
+        <span style="width: 10px; height: 10px; border-radius: 50%; background: #f43f5e; box-shadow: 0 0 12px #f43f5e;"></span>
+        CRITICAL IT WARNING
+      </div>
+      <div style="font-family: monospace; font-size: 15px; font-weight: 800; color: #38bdf8; background: rgba(14, 165, 233, 0.15); padding: 8px 18px; border-radius: 10px; border: 1px solid rgba(56, 189, 248, 0.4);">
+        ⚡ SIMULASI SISTEM
+      </div>
+    </div>
+
+    <div style="margin: auto 0; text-align: left;">
+      <div style="font-size: 16px; font-weight: 800; color: #38bdf8; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 14px; font-family: monospace;">
+        ${topic.category}
+      </div>
+      <h1 style="font-size: 48px; font-weight: 950; color: #ffffff; line-height: 1.22; margin: 0 0 24px 0; text-shadow: 0 4px 30px rgba(0, 0, 0, 0.95);">
+        ${topic.title}
+      </h1>
+      <div style="background: rgba(15, 23, 42, 0.92); border-left: 5px solid ${topic.accentColor}; padding: 20px 24px; border-radius: 0 18px 18px 0; border: 1px solid rgba(255, 255, 255, 0.12); border-left-width: 5px; box-shadow: 0 15px 35px rgba(0,0,0,0.5);">
+        <p style="margin: 0; font-size: 21px; color: #cbd5e1; line-height: 1.5; font-weight: 600;">
+          ${topic.hook}
+        </p>
+      </div>
+    </div>
+
+    <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255, 255, 255, 0.12); padding-top: 24px;">
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <div style="width: 44px; height: 44px; border-radius: 14px; background: linear-gradient(135deg, #0ea5e9, #6366f1); display: flex; align-items: center; justify-content: center; font-weight: 900; color: #fff; font-size: 16px; box-shadow: 0 4px 15px rgba(14, 165, 233, 0.4);">
+          AP
+        </div>
+        <div>
+          <div style="font-size: 16px; font-weight: 800; color: #ffffff;">Ardyanto Tresno Prabowo</div>
+          <div style="font-size: 12px; color: #94a3b8;">Full-Stack Dev &amp; System Analyst</div>
+        </div>
+      </div>
+      <div style="display: inline-flex; align-items: center; gap: 10px; padding: 10px 22px; border-radius: 9999px; background: #38bdf820; border: 1.5px solid #38bdf8; color: #38bdf8; font-weight: 800; font-size: 14px; font-family: monospace; box-shadow: 0 0 20px rgba(56, 189, 248, 0.25);">
+        ▶ TAP TO PLAY VIDEO
+      </div>
+    </div>
+  </div>
+
   <div id="overlay">
     <!-- Top Header -->
     <div class="header-box">
@@ -192,6 +234,7 @@ function buildP5Html(topic) {
     p5.disableFriendlyErrors = true;
 
     // Timeline driver
+    const cover = document.getElementById('cover-thumbnail');
     const s1 = document.getElementById('scene1');
     const s2 = document.getElementById('scene2');
     const s3 = document.getElementById('scene3');
@@ -199,18 +242,28 @@ function buildP5Html(topic) {
     const p2 = document.getElementById('pillar-2');
     const p3 = document.getElementById('pillar-3');
 
+    // 1. Hide Cover/Thumbnail at 2.8s
+    setTimeout(() => {
+      if (cover) {
+        cover.style.opacity = '0';
+        cover.style.transform = 'translateY(-100%)';
+      }
+    }, 2800);
+
+    // 2. Transition from Scene 1 to Scene 2 at 8.0s
     setTimeout(() => {
       s1.style.display = 'none';
       s2.style.display = 'block';
       setTimeout(() => { p1.style.opacity = '1'; p1.style.transform = 'translateY(0)'; p1.style.borderColor = '${topic.accentColor}'; }, 400);
       setTimeout(() => { p2.style.opacity = '1'; p2.style.transform = 'translateY(0)'; p2.style.borderColor = '${topic.accentColor}'; }, 3200);
       setTimeout(() => { p3.style.opacity = '1'; p3.style.transform = 'translateY(0)'; p3.style.borderColor = '${topic.accentColor}'; }, 6200);
-    }, 5500);
+    }, 8000);
 
+    // 3. Transition from Scene 2 to Scene 3 at 17.5s
     setTimeout(() => {
       s2.style.display = 'none';
       s3.style.display = 'block';
-    }, 15500);
+    }, 17500);
 
     // === P5.JS GENERATIVE BACKGROUND ART ===
     const sketch = (p) => {
@@ -347,8 +400,8 @@ async function renderVideo(topic) {
   const page = await context.newPage();
   await page.goto(`file://${htmlPath}`);
 
-  // Rekam selama 20.5 detik
-  await page.waitForTimeout(20500);
+  // Rekam selama 23 detik (termasuk thumbnail cover 2.8s)
+  await page.waitForTimeout(23000);
 
   await page.close();
   await context.close();
@@ -365,12 +418,26 @@ async function renderVideo(topic) {
   const ffmpegCmd = `ffmpeg -y -i "${rawWebmPath}" -c:v libx264 -pix_fmt yuv420p -r 30 -movflags +faststart "${finalVideoPath}"`;
   execSync(ffmpegCmd, { stdio: 'pipe' });
 
+  // Ekstrak cover thumbnail gambar JPG beresolusi tinggi di detik pertama
+  const thumbFileName = `fb_thumb_${topic.id}_${Date.now()}.jpg`;
+  const finalThumbPath = path.join(config.VIDEOS_DIR, thumbFileName);
+  try {
+    const thumbCmd = `ffmpeg -y -ss 00:00:01 -i "${finalVideoPath}" -vframes 1 -q:v 2 "${finalThumbPath}"`;
+    execSync(thumbCmd, { stdio: 'pipe' });
+    console.log(`[RENDER THUMBNAIL SUCCESS] Thumbnail cover dibuat: ${finalThumbPath}`);
+  } catch (e) {
+    console.warn('[RENDER THUMBNAIL WARN]:', e.message);
+  }
+
   try {
     fs.rmSync(tempDir, { recursive: true, force: true });
   } catch (e) {}
 
   console.log(`[RENDER P5 SUCCESS] Video selesai: ${finalVideoPath} (${fs.statSync(finalVideoPath).size} bytes)`);
-  return finalVideoPath;
+  return {
+    videoPath: finalVideoPath,
+    thumbnailPath: fs.existsSync(finalThumbPath) ? finalThumbPath : null
+  };
 }
 
 module.exports = {

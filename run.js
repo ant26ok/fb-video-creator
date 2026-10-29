@@ -29,8 +29,10 @@ async function run() {
 
   console.log(`[TOPIC SELECTED] (${nextIndex + 1}/${topics.length}) ${currentTopic.title}`);
 
-  // 1. Render Video 1080x1080 30FPS MP4
-  const videoPath = await renderVideo(currentTopic);
+  // 1. Render Video 1080x1080 30FPS MP4 dengan Cover Thumbnail
+  const renderRes = await renderVideo(currentTopic);
+  const videoPath = typeof renderRes === 'string' ? renderRes : renderRes.videoPath;
+  const thumbnailPath = renderRes.thumbnailPath || null;
 
   // 2. Simpan draft ke disk
   const draftRecord = {
@@ -40,6 +42,7 @@ async function run() {
     category: currentTopic.category,
     createdAt: new Date().toISOString(),
     videoPath,
+    thumbnailPath,
     postText: currentTopic.postText
   };
   fs.writeFileSync(
@@ -48,7 +51,7 @@ async function run() {
   );
 
   // 3. Kirim Video dan Teks Siap Salin ke Telegram Antok
-  await sendContentToTelegram(currentTopic, videoPath, currentTopic.postText);
+  await sendContentToTelegram(currentTopic, videoPath, currentTopic.postText, thumbnailPath);
 
   // 4. Update State
   state.lastTopicIndex = nextIndex;

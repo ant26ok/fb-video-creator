@@ -14,7 +14,7 @@ async function fetchWithRetry(url, options, maxRetries = 3) {
   }
 }
 
-async function sendContentToTelegram(topic, videoPath, postText) {
+async function sendContentToTelegram(topic, videoPath, postText, thumbnailPath = null) {
   const token = config.TELEGRAM_BOT_TOKEN;
   const chatId = config.TELEGRAM_CHAT_ID;
   if (!token || !chatId) {
@@ -23,7 +23,7 @@ async function sendContentToTelegram(topic, videoPath, postText) {
 
   console.log(`[TELEGRAM] Mengunggah file video ${path.basename(videoPath)} ke Telegram...`);
   
-  // 1. Kirim Video terlebih dahulu
+  // 1. Kirim Video terlebih dahulu (dengan Thumbnail jika tersedia)
   const videoFormData = new FormData();
   videoFormData.append('chat_id', chatId);
   videoFormData.append('caption', `🎬 <b>VIDEO KONTEN IT:</b> ${topic.title}\n🏷️ <i>${topic.category}</i>\n\n👇 Salin teks draft postingan di pesan bawah ini:`);
@@ -31,6 +31,11 @@ async function sendContentToTelegram(topic, videoPath, postText) {
   
   const videoBuffer = fs.readFileSync(videoPath);
   videoFormData.append('video', new Blob([videoBuffer], { type: 'video/mp4' }), path.basename(videoPath));
+
+  if (thumbnailPath && fs.existsSync(thumbnailPath)) {
+    const thumbBuffer = fs.readFileSync(thumbnailPath);
+    videoFormData.append('thumbnail', new Blob([thumbBuffer], { type: 'image/jpeg' }), path.basename(thumbnailPath));
+  }
 
   const videoRes = await fetchWithRetry(`https://api.telegram.org/bot${token}/sendVideo`, {
     method: 'POST',
