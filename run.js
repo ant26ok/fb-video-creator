@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const config = require('./config');
 const topics = require('./topics');
+const { generateAiTopicWithFallback } = require('./ai_content_generator');
 const { renderVideo } = require('./video_renderer');
 const { sendContentToTelegram } = require('./sender');
 
@@ -24,10 +25,9 @@ async function run() {
   console.log('====================================================');
 
   const state = loadState();
-  const nextIndex = (state.lastTopicIndex + 1) % topics.length;
-  const currentTopic = topics[nextIndex];
+  const currentTopic = await generateAiTopicWithFallback();
 
-  console.log(`[TOPIC SELECTED] (${nextIndex + 1}/${topics.length}) ${currentTopic.title}`);
+  console.log(`[TOPIC READY] [${currentTopic.category}] ${currentTopic.title}`);
 
   // 1. Render Video 1080x1080 30FPS MP4 dengan Cover Thumbnail
   const renderRes = await renderVideo(currentTopic);

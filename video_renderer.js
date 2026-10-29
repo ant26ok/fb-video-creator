@@ -6,6 +6,12 @@ const config = require('./config');
 
 function buildP5Html(topic) {
   const p5Script = fs.readFileSync(path.join(__dirname, 'p5.min.js'), 'utf8');
+  let bgBase64 = '';
+  if (topic.bgImagePath && fs.existsSync(topic.bgImagePath)) {
+    try {
+      bgBase64 = fs.readFileSync(topic.bgImagePath).toString('base64');
+    } catch (e) {}
+  }
 
   return `<!DOCTYPE html>
 <html lang="id">
@@ -23,13 +29,29 @@ function buildP5Html(topic) {
       background: #020617;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
+    @keyframes kenBurns {
+      0% { transform: scale(1) translate(0, 0); }
+      100% { transform: scale(1.14) translate(-25px, -15px); }
+    }
+    #ai-backdrop {
+      position: absolute;
+      top: -40px;
+      left: -40px;
+      width: 1160px;
+      height: 1160px;
+      background-size: cover;
+      background-position: center;
+      filter: brightness(0.32) contrast(1.2);
+      animation: kenBurns 26s ease-out forwards;
+      z-index: 0;
+    }
     #canvas-container {
       position: absolute;
       top: 0;
       left: 0;
       width: 1080px;
       height: 1080px;
-      z-index: 1;
+      z-index: 2;
     }
     #overlay {
       position: absolute;
@@ -103,6 +125,7 @@ function buildP5Html(topic) {
   </style>
 </head>
 <body>
+  ${bgBase64 ? `<div id="ai-backdrop" style="background-image: url('data:image/jpeg;base64,${bgBase64}');"></div>` : ''}
   <div id="canvas-container"></div>
 
   <!-- Attention-Grabbing Video Thumbnail Cover (0s - 2.8s) -->
@@ -297,7 +320,7 @@ function buildP5Html(topic) {
       };
 
       p.draw = () => {
-        p.background(2, 6, 23);
+        ${bgBase64 ? 'p.clear(); p.background(2, 6, 23, 140);' : 'p.background(2, 6, 23);'}
 
         const t = p.frameCount * 0.015;
         
