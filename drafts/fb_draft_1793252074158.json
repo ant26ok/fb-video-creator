@@ -1,0 +1,9 @@
+{
+  "id": "fb_draft_1793252074158",
+  "topicId": "db_deadlock_concurrency",
+  "topic": "Deadlock di Jam Sibuk: Mengapa Tambah RAM Tidak Cukup?",
+  "category": "DATABASE & CONCURRENCY",
+  "createdAt": "2026-10-29T05:34:34.158Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_db_deadlock_concurrency_1793252040871.mp4",
+  "postText": "Sistem lancar jaya pas uji coba, tapi begitu jam sibuk pagi langsung freeze total. 😅\n\nKomplain masuk bertubi-tubi: kasir tidak bisa bayar, antrean farmasi tertahan, layar muter-muter tanpa pesan error.\n\nRefleks pertama tim infrastruktur biasanya panik: \"Tambah CPU! Tambah RAM server!\"\nBegitu dicek di server monitoring, CPU baru kepakai 22%, RAM masih sisa belasan giga. \n\nLalu apa biang keroknya? \nJawabannya: DATABASE DEADLOCK.\n\nDua transaksi berbeda berusaha memperbarui dua tabel yang sama, tapi dengan urutan terbalik:\n- Transaksi A: Kunci Tabel Pasien, lalu mau kunci Tabel Antrean.\n- Transaksi B: Kunci Tabel Antrean, lalu mau kunci Tabel Pasien.\nHasilnya? Saling tunggu sampai batas timeout database tercapai (freeze berantai).\n\nTiga solusi arsitektur yang selalu saya terapkan:\n1. Standardisasi Urutan Kunci (Strict Access Order): Seluruh modul backend wajib mengakses tabel dengan urutan hierarki yang sama.\n2. Optimistic Concurrency Control (OCC): Gunakan kolom 'version' daripada SELECT FOR UPDATE berkepanjangan.\n3. Potong Durasi Transaksi: Jangan pernah selipkan panggilan external HTTP API di dalam blok transaksi database database (BEGIN ... COMMIT).\n\nHardware mahal tidak bisa mengobati logika konkurensi yang berantakan.\n\nDi sistem tempat teman-teman bekerja, momen apa yang paling sering memicu drama lock/deadlock di jam sibuk?\n\n#SoftwareArchitecture #DatabaseOptimization #SystemAnalyst #FullStackDev #BackendEngineering #PostgreSQL #SQLServer"
+}

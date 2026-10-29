@@ -1,0 +1,5 @@
+videos/
+temp_*
+.env
+cron.log
+node_modules/
