@@ -25,6 +25,14 @@ async function run() {
   console.log('====================================================');
 
   const state = loadState();
+  const currentSlot = new Date().toLocaleDateString('sv-SE', { timeZone: 'Asia/Jakarta' }) + '_' + String(new Date().toLocaleString('en-US', { timeZone: 'Asia/Jakarta', hour: '2-digit', hour12: false })).trim();
+
+  // Cegah double run jika cron host dan n8n sama-sama menembak di jam yang sama
+  if (state.lastExecutedSlot === currentSlot) {
+    console.log(`[SLOT GUARD] Slot ${currentSlot} sudah dieksekusi sebelumnya. Melewati eksekusi duplikat.`);
+    return;
+  }
+
   const currentTopic = await generateAiTopicWithFallback();
 
   console.log(`[TOPIC READY] [${currentTopic.category}] ${currentTopic.title}`);
@@ -54,6 +62,7 @@ async function run() {
   await sendContentToTelegram(currentTopic, videoPath, currentTopic.postText, thumbnailPath);
 
   // 4. Update State
+  state.lastExecutedSlot = currentSlot;
   state.history.push({
     id: draftRecord.id,
     topicId: currentTopic.id,
