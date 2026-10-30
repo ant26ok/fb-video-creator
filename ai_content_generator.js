@@ -15,6 +15,18 @@ const AI_TOPIC_ANGLES = [
   'Healthcare IT Integration: FHIR, HL7, Interoperability & Medical Telemetry Security'
 ];
 
+function getRecentVideoTopics() {
+  try {
+    if (fs.existsSync(config.STATE_FILE)) {
+      const state = JSON.parse(fs.readFileSync(config.STATE_FILE, 'utf8'));
+      if (Array.isArray(state.history)) {
+        return state.history.map(h => h.title).filter(Boolean).slice(-10);
+      }
+    }
+  } catch (e) {}
+  return [];
+}
+
 async function generateAiTopicWithFallback() {
   if (!config.ROUTER_API_KEY) {
     console.log('[AI VIDEO] ROUTER_API_KEY tidak ditemukan, memakai fallback topics.');
@@ -22,6 +34,11 @@ async function generateAiTopicWithFallback() {
   }
 
   const selectedAngle = AI_TOPIC_ANGLES[Math.floor(Math.random() * AI_TOPIC_ANGLES.length)];
+  const recentTopics = getRecentVideoTopics();
+  const recentListStr = recentTopics.length > 0
+    ? `\nDAFTAR TOPIK YANG SUDAH PERNAH DIBIKIN (DILARANG MENGULANG TOPIK, ANALOGI, ATAU JUDUL YANG SERUPA):\n${recentTopics.map(t => '- ' + t).join('\n')}\n`
+    : '';
+
   console.log(`[AI VIDEO GENERATOR] Meminta Gemini 3.8 Flash membuat topik video baru seputar: "${selectedAngle}"...`);
 
   const systemPrompt = `You are a legendary Principal Software Architect and engaging tech storyteller (like Jordan in tech).
@@ -32,11 +49,11 @@ Output strictly valid JSON with no markdown wrapping (do not use \`\`\`json). Th
   const userPrompt = `Create one fresh, high-impact video script & Facebook post about: "${selectedAngle}".
 
 Author context: Ardyanto (Antok), Full-stack Programmer & System Analyst in hospital/healthcare IT. Practical, authoritative, humble, insightful engineering tone. Dilarang menyebut nama RSK Ngesti Waluyo (gunakan 'rumah sakit tempat saya bekerja' atau 'faskes'). Dilarang menyertakan link repo GitHub.
-
+${recentListStr}
 Strict requirements:
 1. id: unique short alphanumeric slug (e.g. "ai_agent_orchestration_loop")
 2. category: uppercase topic category (e.g. "AI ARCHITECTURE", "DATABASE CONCURRENCY", "DISTRIBUTED SYSTEMS")
-3. title: punchy, provocative title in Indonesian max 65 chars (e.g. "AI Agent di Production: Mengapa LLM Saja Tidak Cukup?")
+3. title: punchy, provocative title in Indonesian max 65 chars (WAJIB BARU dan TIDAK BOLEH MIRIP dengan topik sebelumnya!)
 4. color: Tailwind gradient classes for badge (e.g. "from-cyan-500 to-blue-600" or "from-amber-500 to-rose-600")
 5. accentColor: hex code (e.g. "#06b6d4", "#f43f5e", "#10b981", "#8b5cf6")
 6. hook: 1-2 sentence real-world dilemma or critical bottleneck in Indonesian (max 160 chars)
@@ -52,7 +69,7 @@ Strict requirements:
    - 5-7 relevant hashtags.
 10. imagePrompt: ultra-detailed English prompt for an AI-generated 1080x1080 cinematic background:
     - Dramatic high-contrast chiaroscuro, dark obsidian/slate background, neon cyan or warm amber rim lighting.
-    - Intriguing focal object: macro shot of glowing neural microchips, optic fiber server racks, or holographic telemetry.
+    - Intriguing focal object matching this new topic: macro shot of glowing neural microchips, optic fiber server racks, or holographic telemetry.
     - Absolutely NO text, NO typography, NO watermark, NO logo, NO cartoon.
 
 Return ONLY the raw JSON object.`;
