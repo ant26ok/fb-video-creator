@@ -49,7 +49,7 @@ async function sendContentToTelegram(topic, videoPath, postText, thumbnailPath =
 
   // 2. Kirim Pesan Teks Draft Lengkap (Siap Salin)
   function attachCta(text) {
-    const cta = "Pernah ngalamin kejadian atau dilema serupa? Yuk Like, Komen pengalaman teman-teman di bawah, dan Share postingan ini ke rekan-rekan IT lainnya!\n\n";
+    const cta = "Kalau di stack dan arsitektur sistem teman-teman, strategi apa yang paling ampuh menghadapi situasi seperti ini? Yuk Like, Komen pandangan atau pengalaman teman-teman di bawah, dan Share postingan ini ke rekan-rekan IT lainnya!\n\n";
     if (text.includes("Share postingan") || text.includes("Like, Komen")) return text;
     const hashtagIndex = text.search(/#[A-Za-z0-9_]/);
     if (hashtagIndex !== -1) {

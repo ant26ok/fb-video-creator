@@ -65,7 +65,9 @@ Strict requirements:
 9. postText: complete, engaging Facebook post in Indonesian (900-1400 characters):
    - Strong relatable hook in the first 2 lines.
    - Clear technical breakdown and real experience.
-   - WAJIB CALL TO ACTION (CTA) sebelum hashtag: ajak pembaca untuk Like, Komen pengalaman jika pernah mengalami hal serupa, dan Share ke rekan-rekan IT lainnya.
+   - WAJIB DI BAGIAN AKHIR SEBELUM HASHTAG:
+     1. Ajukan 1 PERTANYAAN pancingan diskusi yang tajam, spesifik, dan memicu perdebatan/curhat teknis agar pembaca antusias ikut berkomentar di kolom komentar.
+     2. Sertakan ajakan interaksi (CTA): ajak pembaca untuk Like, Komen pandangan atau pengalamannya di bawah, dan Share postingan ini ke rekan-rekan IT lainnya.
    - 5-7 relevant hashtags.
 10. imagePrompt: ultra-detailed English prompt for an AI-generated 1080x1080 cinematic background:
     - Dramatic high-contrast chiaroscuro, dark obsidian/slate background, neon cyan or warm amber rim lighting.
