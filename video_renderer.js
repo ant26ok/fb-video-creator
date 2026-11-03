@@ -41,7 +41,7 @@ function buildP5Html(topic) {
       height: 1160px;
       background-size: cover;
       background-position: center;
-      filter: brightness(0.32) contrast(1.2);
+      filter: brightness(0.68) contrast(1.15) saturate(1.2);
       animation: kenBurns 26s ease-out forwards;
       z-index: 0;
     }
@@ -98,12 +98,12 @@ function buildP5Html(topic) {
       text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
     }
     .scene-box {
-      background: rgba(15, 23, 42, 0.78);
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(15, 23, 42, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.15);
       border-radius: 20px;
       padding: 24px 32px;
-      backdrop-filter: blur(12px);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
       transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .footer-box {
@@ -129,7 +129,7 @@ function buildP5Html(topic) {
   <div id="canvas-container"></div>
 
   <!-- Attention-Grabbing Video Thumbnail Cover (0s - 2.8s) -->
-  <div id="cover-thumbnail" style="position: absolute; inset: 0; background: radial-gradient(circle at 50% 38%, #0f172a 0%, #020617 100%); z-index: 100; display: flex; flex-direction: column; justify-content: space-between; padding: 60px; box-sizing: border-box; transition: all 0.75s cubic-bezier(0.16, 1, 0.3, 1);">
+  <div id="cover-thumbnail" style="position: absolute; inset: 0; ${bgBase64 ? `background: linear-gradient(180deg, rgba(2, 6, 23, 0.72) 0%, rgba(2, 6, 23, 0.92) 100%), url('data:image/jpeg;base64,${bgBase64}'); background-size: cover; background-position: center;` : 'background: radial-gradient(circle at 50% 38%, #0f172a 0%, #020617 100%);'} z-index: 100; display: flex; flex-direction: column; justify-content: space-between; padding: 60px; box-sizing: border-box; transition: all 0.75s cubic-bezier(0.16, 1, 0.3, 1);">
     <div style="display: flex; justify-content: space-between; align-items: center;">
       <div style="display: inline-flex; align-items: center; gap: 10px; padding: 8px 22px; border-radius: 9999px; background: rgba(244, 63, 94, 0.18); border: 1.5px solid #f43f5e; color: #f43f5e; font-weight: 900; font-size: 15px; letter-spacing: 0.12em; text-transform: uppercase;">
         <span style="width: 10px; height: 10px; border-radius: 50%; background: #f43f5e; box-shadow: 0 0 12px #f43f5e;"></span>
@@ -207,17 +207,24 @@ function buildP5Html(topic) {
           <span style="font-size: 11px; font-family: monospace; color: #94a3b8;">ACTIVE PIPELINE</span>
         </div>
         <div style="display: grid; grid-template-columns: 1fr; gap: 12px;">
-          ${topic.keyPoints.map((pt, i) => `
-            <div id="pillar-${i+1}" style="display: flex; align-items: flex-start; gap: 14px; padding: 12px 16px; border-radius: 12px; background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(255, 255, 255, 0.08); opacity: 0.35; transform: translateY(8px); transition: all 0.5s ease;">
-              <div style="width: 32px; height: 32px; border-radius: 8px; background: rgba(14, 165, 233, 0.15); border: 1px solid rgba(56, 189, 248, 0.4); color: #38bdf8; display: flex; align-items: center; justify-content: center; font-weight: 900; font-family: monospace; font-size: 13px; flex-shrink: 0;">
-                ${pt.num}
+          ${topic.keyPoints.map((pt, i) => {
+            const icons = ['⚡', '🛡️', '📊', '🔒', '⚙️'];
+            const icon = icons[i % icons.length];
+            return `
+            <div id="pillar-${i+1}" style="display: flex; align-items: center; gap: 16px; padding: 14px 20px; border-radius: 14px; background: rgba(30, 41, 59, 0.7); border: 1.5px solid rgba(255, 255, 255, 0.1); opacity: 0.35; transform: translateY(8px); transition: all 0.5s ease;">
+              <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(14, 165, 233, 0.2); border: 1.5px solid rgba(56, 189, 248, 0.5); color: #38bdf8; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);">
+                ${icon}
               </div>
-              <div>
-                <div style="font-size: 15px; font-weight: 700; color: #ffffff;">${pt.title}</div>
-                <div style="font-size: 12px; color: #94a3b8; margin-top: 2px;">${pt.desc}</div>
+              <div style="flex: 1;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="font-family: monospace; font-size: 12px; font-weight: 800; color: #38bdf8; background: rgba(56, 189, 248, 0.15); padding: 2px 8px; border-radius: 6px;">STEP ${pt.num}</span>
+                  <div style="font-size: 16px; font-weight: 800; color: #ffffff;">${pt.title}</div>
+                </div>
+                <div style="font-size: 13px; color: #cbd5e1; margin-top: 4px; line-height: 1.4;">${pt.desc}</div>
               </div>
             </div>
-          `).join('')}
+            `;
+          }).join('')}
         </div>
       </div>
 
@@ -319,10 +326,53 @@ function buildP5Html(topic) {
         }
       };
 
+      // Draw an architectural server/cloud icon badge in the center background
+      function drawArchitectureGlyphs(t) {
+        p.push();
+        p.translate(W / 2, 450);
+        
+        // Rotating tech rings
+        p.noFill();
+        p.stroke(56, 189, 248, 60);
+        p.strokeWeight(1.5);
+        p.circle(0, 0, 360 + Math.sin(t * 2) * 15);
+        
+        p.stroke(244, 63, 94, 45);
+        p.strokeWeight(1);
+        p.circle(0, 0, 420 + Math.cos(t * 1.5) * 20);
+
+        // Radial hub nodes
+        for (let a = 0; a < 6; a++) {
+          const angle = a * (p.TWO_PI / 6) + t * 0.4;
+          const rx = Math.cos(angle) * 180;
+          const ry = Math.sin(angle) * 180;
+          
+          p.stroke(56, 189, 248, 80);
+          p.strokeWeight(1);
+          p.line(0, 0, rx, ry);
+          
+          p.fill(15, 23, 42, 220);
+          p.stroke(56, 189, 248, 160);
+          p.strokeWeight(1.5);
+          p.rectMode(p.CENTER);
+          p.rect(rx, ry, 36, 26, 6);
+          
+          p.fill(56, 189, 248, 220);
+          p.noStroke();
+          p.circle(rx - 8, ry, 4);
+          p.fill(34, 197, 94, 220);
+          p.circle(rx + 8, ry, 4);
+        }
+
+        p.pop();
+      }
+
       p.draw = () => {
-        ${bgBase64 ? 'p.clear(); p.background(2, 6, 23, 140);' : 'p.background(2, 6, 23);'}
+        ${bgBase64 ? 'p.clear(); p.background(2, 6, 23, 70);' : 'p.background(2, 6, 23);'}
 
         const t = p.frameCount * 0.015;
+        
+        drawArchitectureGlyphs(t);
         
         for (let i = 0; i < nodes.length; i++) {
           const n = nodes[i];
