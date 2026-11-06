@@ -14,7 +14,7 @@ function buildP5Html(topic) {
   }
 
   return `<!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>${topic.title}</title>
@@ -136,7 +136,7 @@ function buildP5Html(topic) {
         CRITICAL IT WARNING
       </div>
       <div style="font-family: monospace; font-size: 15px; font-weight: 800; color: #38bdf8; background: rgba(14, 165, 233, 0.15); padding: 8px 18px; border-radius: 10px; border: 1px solid rgba(56, 189, 248, 0.4);">
-        ⚡ SIMULASI SISTEM
+        ⚡ SYSTEM ARCHITECTURE
       </div>
     </div>
 
@@ -237,7 +237,7 @@ function buildP5Html(topic) {
           "${topic.takeaway}"
         </div>
         <div style="margin-top: 16px; font-size: 13px; font-family: monospace; color: #38bdf8; font-weight: 700;">
-          Diskusi teknis & studi kasus di kolom komentar Facebook 👇
+          Deep dive engineering discussion in the Facebook comments below 👇
         </div>
       </div>
     </div>

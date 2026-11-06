@@ -49,8 +49,8 @@ async function sendContentToTelegram(topic, videoPath, postText, thumbnailPath =
 
   // 2. Kirim Pesan Teks Draft Lengkap (Siap Salin)
   function attachCta(text) {
-    const cta = "Kalau di stack dan arsitektur sistem teman-teman, strategi apa yang paling ampuh menghadapi situasi seperti ini? Yuk Like, Komen pandangan atau pengalaman teman-teman di bawah, dan Share postingan ini ke rekan-rekan IT lainnya!\n\n";
-    if (text.includes("Share postingan") || text.includes("Like, Komen")) return text;
+    const cta = "How does your engineering team approach this architectural challenge in production? Drop your thoughts or real-world battle scars in the comments below, Like if this resonated, and Share with your fellow engineers!\n\n";
+    if (text.includes("Share with your fellow") || text.includes("in the comments below") || text.includes("Like, Comment") || text.includes("Like, Komen")) return text;
     const hashtagIndex = text.search(/#[A-Za-z0-9_]/);
     if (hashtagIndex !== -1) {
       return text.slice(0, hashtagIndex).trimEnd() + "\n\n" + cta + text.slice(hashtagIndex);
@@ -66,15 +66,15 @@ async function sendContentToTelegram(topic, videoPath, postText, thumbnailPath =
 
   const messagePayload = {
     chat_id: chatId,
-    text: `📘 <b>DRAFT KONTEN FACEBOOK (SIAP POSTING)</b>\n` +
+    text: `📘 <b>FACEBOOK VIDEO CONTENT (READY TO POST)</b>\n` +
           `━━━━━━━━━━━━━━━━━━━━\n` +
-          `📌 <b>Topik:</b> ${topic.title}\n` +
-          `🏷️ <b>Kategori:</b> ${topic.category}\n` +
-          `🕒 <b>Jadwal:</b> ${new Date().toLocaleTimeString('id-ID', { timeZone: 'Asia/Jakarta', hour: '2-digit', minute: '2-digit' })} WIB\n\n` +
-          `📋 <b>Salin Teks di Bawah (Ketuk blok teks untuk salin):</b>\n\n` +
+          `📌 <b>Topic:</b> ${topic.title}\n` +
+          `🏷️ <b>Category:</b> ${topic.category}\n` +
+          `🕒 <b>Slot:</b> ${new Date().toLocaleTimeString('id-ID', { timeZone: 'Asia/Jakarta', hour: '2-digit', minute: '2-digit' })} WIB\n\n` +
+          `📋 <b>Tap the text block below to copy:</b>\n\n` +
           `<pre><code>${escapedText}</code></pre>\n\n` +
           `━━━━━━━━━━━━━━━━━━━━\n` +
-          `💡 <i>Simpan video di atas ke galeri, salin teks di atas, lalu posting langsung ke feed Facebook Anda.</i>`,
+          `💡 <i>Save the video and thumbnail cover above to your gallery, tap the text block to copy, and paste directly to your Facebook feed.</i>`,
     parse_mode: 'HTML'
   };
 

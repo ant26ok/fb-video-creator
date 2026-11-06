@@ -48,26 +48,26 @@ Output strictly valid JSON with no markdown wrapping (do not use \`\`\`json). Th
 
   const userPrompt = `Create one fresh, high-impact video script & Facebook post about: "${selectedAngle}".
 
-Author context: Ardyanto (Antok), Full-stack Programmer & System Analyst in hospital/healthcare IT. Practical, authoritative, humble, insightful engineering tone. Dilarang menyebut nama RSK Ngesti Waluyo (gunakan 'rumah sakit tempat saya bekerja' atau 'faskes'). Dilarang menyertakan link repo GitHub.
+Author context: Ardyanto (Antok), Full-stack Programmer & System Analyst in hospital/healthcare IT. Practical, authoritative, humble, insightful engineering tone. CRITICAL ANONYMITY RULE: DO NOT mention specific hospital names like RSK Ngesti Waluyo (use generic terms like 'the hospital where I work', 'healthcare facilities', or 'healthcare IT'). CRITICAL REPO RULE: DO NOT include GitHub repository links.
 ${recentListStr}
 Strict requirements:
 1. id: unique short alphanumeric slug (e.g. "ai_agent_orchestration_loop")
-2. category: uppercase topic category (e.g. "AI ARCHITECTURE", "DATABASE CONCURRENCY", "DISTRIBUTED SYSTEMS")
-3. title: punchy, provocative title in Indonesian max 65 chars (WAJIB BARU dan TIDAK BOLEH MIRIP dengan topik sebelumnya!)
+2. category: uppercase topic category in English (e.g. "AI ARCHITECTURE", "DATABASE CONCURRENCY", "DISTRIBUTED SYSTEMS", "MISSION-CRITICAL DEVOPS")
+3. title: punchy, provocative title in English max 65 chars (MUST BE UNIQUE and NEVER repeat recent topics!)
 4. color: Tailwind gradient classes for badge (e.g. "from-cyan-500 to-blue-600" or "from-amber-500 to-rose-600")
 5. accentColor: hex code (e.g. "#06b6d4", "#f43f5e", "#10b981", "#8b5cf6")
-6. hook: 1-2 sentence real-world dilemma or critical bottleneck in Indonesian (max 160 chars)
+6. hook: 1-2 sentence real-world dilemma or critical bottleneck in English (max 160 chars)
 7. keyPoints: array of exactly 3 objects:
    - num: "01", "02", "03"
-   - title: concise technical solution title in Indonesian (max 35 chars)
-   - desc: actionable explanation in Indonesian (max 80 chars)
-8. takeaway: memorable punchline or rule of thumb in Indonesian (max 100 chars)
-9. postText: complete, engaging Facebook post in Indonesian (900-1400 characters):
+   - title: concise technical solution title in English (max 35 chars)
+   - desc: actionable explanation in English (max 80 chars)
+8. takeaway: memorable punchline or rule of thumb in English (max 100 chars)
+9. postText: complete, engaging Facebook post in idiomatic ENGLISH (900-1400 characters):
    - Strong relatable hook in the first 2 lines.
-   - Clear technical breakdown and real experience.
-   - WAJIB DI BAGIAN AKHIR SEBELUM HASHTAG:
-     1. Ajukan 1 PERTANYAAN pancingan diskusi yang tajam, spesifik, dan memicu perdebatan/curhat teknis agar pembaca antusias ikut berkomentar di kolom komentar.
-     2. Sertakan ajakan interaksi (CTA): ajak pembaca untuk Like, Komen pandangan atau pengalamannya di bawah, dan Share postingan ini ke rekan-rekan IT lainnya.
+   - Clear technical breakdown, architecture patterns, and real production experience.
+   - MANDATORY ENDING SECTION BEFORE HASHTAGS:
+     1. Ask ONE thought-provoking, specific discussion question that sparks engineering debate and invites peers to share their experiences in the comments.
+     2. Include Call To Action (CTA): Invite readers to Like, Comment their experience or perspectives below, and Share the post with fellow IT colleagues/teams.
    - 5-7 relevant hashtags.
 10. imagePrompt: ultra-detailed English prompt for an AI-generated 1080x1080 cinematic background:
     - Dramatic high-contrast chiaroscuro, dark obsidian/slate background, neon cyan or warm amber rim lighting.
