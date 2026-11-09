@@ -48,17 +48,33 @@ async function sendContentToTelegram(topic, videoPath, postText, thumbnailPath =
   console.log('[TELEGRAM SUCCESS] Video berhasil terkirim ke Telegram.');
 
   // 2. Kirim Pesan Teks Draft Lengkap (Siap Salin)
-  function attachCta(text) {
+  function attachCtaAndTags(text) {
+    let result = text;
     const cta = "How does your engineering team approach this architectural challenge in production? Drop your thoughts or real-world battle scars in the comments below, Like if this resonated, and Share with your fellow engineers!\n\n";
-    if (text.includes("Share with your fellow") || text.includes("in the comments below") || text.includes("Like, Comment") || text.includes("Like, Komen")) return text;
-    const hashtagIndex = text.search(/#[A-Za-z0-9_]/);
-    if (hashtagIndex !== -1) {
-      return text.slice(0, hashtagIndex).trimEnd() + "\n\n" + cta + text.slice(hashtagIndex);
+
+    if (!result.includes("Share with your fellow") && !result.includes("in the comments below") && !result.includes("Like, Comment") && !result.includes("Like, Komen")) {
+      const hashtagIndex = result.search(/#[A-Za-z0-9_]/);
+      if (hashtagIndex !== -1) {
+        result = result.slice(0, hashtagIndex).trimEnd() + "\n\n" + cta + result.slice(hashtagIndex);
+      } else {
+        result = result.trimEnd() + "\n\n" + cta;
+      }
     }
-    return text.trimEnd() + "\n\n" + cta;
+
+    // Ensure @pengikut tag exists
+    if (!result.includes("@pengikut")) {
+      const hashtagIndex = result.search(/#[A-Za-z0-9_]/);
+      if (hashtagIndex !== -1) {
+        result = result.slice(0, hashtagIndex).trimEnd() + "\n\n@pengikut\n\n" + result.slice(hashtagIndex);
+      } else {
+        result = result.trimEnd() + "\n\n@pengikut";
+      }
+    }
+
+    return result;
   }
 
-  const finalPostText = attachCta(postText);
+  const finalPostText = attachCtaAndTags(postText);
   const escapedText = finalPostText
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')

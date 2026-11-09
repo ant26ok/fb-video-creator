@@ -68,6 +68,7 @@ Strict requirements:
    - MANDATORY ENDING SECTION BEFORE HASHTAGS:
      1. Ask ONE thought-provoking, specific discussion question that sparks engineering debate and invites peers to share their experiences in the comments.
      2. Include Call To Action (CTA): Invite readers to Like, Comment their experience or perspectives below, and Share the post with fellow IT colleagues/teams.
+     3. Always include tag @pengikut right after the CTA before hashtags.
    - 5-7 relevant hashtags.
 10. imagePrompt: ultra-detailed English prompt for an AI-generated 1080x1080 cinematic background:
     - Dramatic high-contrast chiaroscuro, dark obsidian/slate background, neon cyan or warm amber rim lighting.
