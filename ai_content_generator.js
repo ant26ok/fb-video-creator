@@ -3,6 +3,28 @@ const path = require('path');
 const config = require('./config');
 const topicsFallback = require('./topics');
 
+// ponytail: brace-matched scan; models sometimes append prose after the JSON object
+function extractJsonBlock(raw) {
+  const start = raw.indexOf('{');
+  if (start === -1) return null;
+  let depth = 0, inStr = false, esc = false;
+  for (let i = start; i < raw.length; i++) {
+    const ch = raw[i];
+    if (inStr) {
+      if (esc) esc = false;
+      else if (ch === '\\') esc = true;
+      else if (ch === '"') inStr = false;
+      continue;
+    }
+    if (ch === '"') inStr = true;
+    else if (ch === '{') depth++;
+    else if (ch === '}' && --depth === 0) {
+      try { return JSON.parse(raw.slice(start, i + 1)); } catch (e) { return null; }
+    }
+  }
+  return null;
+}
+
 const AI_TOPIC_ANGLES = [
   'Artificial Intelligence & Machine Learning Architecture in Production',
   'Autonomous AI Agents & Multi-Agent Orchestration',
@@ -85,7 +107,7 @@ Return ONLY the raw JSON object.`;
         'Authorization': `Bearer ${config.ROUTER_API_KEY}`
       },
       body: JSON.stringify({
-        model: 'ag/gemini-3.8-flash',
+        model: 'pecut/pecuti/deepseek-v4-flash',
         stream: false,
         temperature: 0.75,
         messages: [
@@ -102,11 +124,12 @@ Return ONLY the raw JSON object.`;
     const data = await res.json();
     const rawContent = data.choices?.[0]?.message?.content || '';
     
-    // Parse JSON safely
+    // Parse JSON safely (model may append prose after the object)
     let parsed = null;
-    const jsonMatch = rawContent.match(/\{[\s\S]*\}/);
-    if (jsonMatch) {
-      parsed = JSON.parse(jsonMatch[0]);
+    try {
+      parsed = extractJsonBlock(rawContent);
+    } catch (e) {
+      parsed = null;
     }
 
     if (!parsed || !parsed.title || !parsed.keyPoints || parsed.keyPoints.length < 3) {
