@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794391365227",
+  "topicId": "covering_index_cyclic_deadlock",
+  "topic": "Missing Covering Indexes Trigger Cyclic Deadlocks",
+  "category": "DATABASE CONCURRENCY",
+  "createdAt": "2026-11-11T10:02:45.227Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_covering_index_cyclic_deadlock_1794391322248.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_covering_index_cyclic_deadlock_1794391364701.jpg",
+  "postText": "At the hospital where I work, night shifts push our admission and lab order systems to their limits. A routine patch dropped an index column, and sudden concurrency spikes turned our DB engine into a deadlock graveyard.\n\nHere is what really happened:\n\nTwo concurrent API transactions updated the same tables in reverse sequence. One searched by admission status, while the other updated billing records. Because the status query lacked a covering index, the query engine performed clustered index bookmark lookups.\n\nProcess A held exclusive locks on Table 1 rows, waiting on shared clustered locks in Table 2. Process B held exclusive locks on Table 2, waiting on Table 1. Classic cyclic deadlock. The DB killed random worker threads to resolve the cycle, dumping failed orders into error queues.\n\nTwo fixes killed the problem for good:\n1. Deterministic sorting: All batch transactions sort target row IDs deterministically before issuing updates. No out-of-order resource acquisition.\n2. Covering non-clustered indexes: Appending filter and projection attributes to the index eliminated bookmark lookups entirely, avoiding unnecessary lock acquisition chains.\n\nHow does your team detect and eliminate cyclic deadlocks before they hit production telemetry?\n\nLike, comment your perspective below, and share with your engineering team.\n\n@pengikut\n\n#DatabaseArchitecture #SoftwareEngineering #PostgreSQL #MSSQL #SystemDesign #HighConcurrency #DevOps"
+}

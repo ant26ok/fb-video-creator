@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1793599306735",
+  "topicId": "continuous_batching_llm_inference",
+  "topic": "LLM Lokal Lemot Antre: Rahasia Continuous Batching",
+  "category": "AI ARCHITECTURE",
+  "createdAt": "2026-11-02T06:01:46.735Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_continuous_batching_llm_inference_1793599273948.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_continuous_batching_llm_inference_1793599306444.jpg",
+  "postText": "Beli GPU puluhan juta untuk deploy LLM lokal di faskes, pas ditest sendiri kencang. Begitu dipakai 5 dokter bersamaan buat resume medis rawat inap, antrean jebol. Response time melonjak dari 1 detik jadi 30 detik per user.\n\nMasalah bukan di spesifikasi VRAM GPU, tapi di scheduler inferensi: Static Batching.\n\nDalam static batching, server nunggu batch selesai digenerate utuh. Dokter A cuma minta perbaikan typo resep (butuh 10 token), tapi dipaksa nunggu Dokter B yang lagi ekstraksi riwayat rawat jalan setahun (butuh 500 token). GPU compute idle, VRAM terikat sia-sia.\n\nSolusi yang kami implementasikan di faskes:\n1. Beralih ke Continuous Batching (Iteration-level Scheduling). Request baru disuntikkan langsung di step iterasi token berikutnya tanpa nunggu request sebelumnya selesai.\n2. Request Dokter A yang selesai dalam 10 token langsung direturn ke client seketika, slotnya langsung diisi dokter berikutnya.\n3. Gunakan inference engine modern seperti vLLM atau TensorRT-LLM yang natively mengombinasikan continuous batching dengan memory paging.\n\nHasilnya? Throughput naik 4x lipat pada GPU yang sama tanpa penurunan akurasi model.\n\nDi tempat Anda, engine apa yang dipakai buat serve LLM lokal di production? Lebih pilih vLLM, Ollama, llama.cpp, atau TGI?\n\nKlik Like jika bermanfaat, tulis pengalaman atau kendala LLM lokal Anda di kolom komentar, dan Share postingan ini ke rekan-rekan engineer lainnya!\n\n#SoftwareArchitecture #MachineLearning #LLMOps #DeepLearning #SelfHosted #SystemDesign #TechLead"
+}

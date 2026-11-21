@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1793674944916",
+  "topicId": "cache_aside_invalidation_race",
+  "topic": "Hapus Cache Duluan? Petaka Data Hantu di Poliklinik",
+  "category": "DISTRIBUTED CACHING",
+  "createdAt": "2026-11-03T03:02:24.916Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_cache_aside_invalidation_race_1793674898650.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_cache_aside_invalidation_race_1793674944525.jpg",
+  "postText": "Database bilang bed kosong, tapi dashboard bangsal teriak penuh. Pasien rujukan IGD sempat tertahan 40 menit gara-gara data hantu di Redis.\n\nPernah alami bug Cache-Aside begini di faskes atau sistem produksi Anda?\n\nAwalnya terlihat sepele: service rawat inap melakukan update status bed ke database, lalu mengeksekusi redis.del(key). Namun urutan eksekusinya keliru: kode menghapus key Redis SEBELUM transaksi database selesai commit.\n\nApa yang terjadi?\nDi sepersekian milidetik jeda commit, query read dari dashboard perawat masuk. Redis miss, query tembak DB (yang masih baca data lama karena isolation level), lalu read mengisi ulang Redis dengan status kamar 'penuh'. Setelah itu barulah DB commit selesai. Hasilnya: Redis terkontaminasi data usang selamanya sampai TTL habis.\n\nBelajar dari insiden ini, kami ubah arsitektur caching:\n1. Write Order: Mutasi DB dulu sampai commit sukses, baru evict (hapus) key di Redis. Jangan pernah timpa nilai cache saat write; selalu hapus key agar read path yang merepopulasi.\n2. Random Jitter TTL: Hindari stampede akibat ribuan key kedaluwarsa serentak di pergantian shift.\n3. Event-Driven CDC: Pindahkan tugas invalidasi ke tailing binlog database jika dependensi relasi data terlalu rumit untuk manual eviction.\n\nDi arsitektur microservices Anda, strategi apa yang Anda pakai untuk jamin konsistensi Cache-Aside: direct eviction di application layer, delayed double delete, atau CDC via Debezium?\n\nYuk Like, tulis argumen dan pengalaman pahit Anda di kolom komentar, dan Share postingan ini ke rekan-rekan engineer lainnya!\n\n#SoftwareArchitecture #Redis #SystemDesign #BackendEngineering #DistributedSystems #DatabaseEngineering"
+}

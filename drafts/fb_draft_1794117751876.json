@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794117751876",
+  "topicId": "dynamic_batching_buffer_bloat",
+  "topic": "Dynamic Batching Buffer Bloat Kills Inference P99",
+  "category": "AI ARCHITECTURE",
+  "createdAt": "2026-11-08T06:02:31.876Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_dynamic_batching_buffer_bloat_1794117710865.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_dynamic_batching_buffer_bloat_1794117751485.jpg",
+  "postText": "Dynamic batching sounds great on paper: aggregate inference requests, saturate GPU tensor cores, and cut compute bills.\nIn production healthcare systems, it quietly wrecked our P99 latency.\n\nWhen staff queried our clinical NLP pipelines during peak shift handovers, requests arrived with widely variable payload sizes. Our model server held requests to assemble full batches. The result? Short queries waited out maximum timeout windows. Worse, zero-padding short inputs to match outlier lengths inflated tensor dimensions, wasting GPU memory bandwidth and stalling compute.\n\nDuring burst traffic, the queue backed up. Upstream HTTP clients timed out, yet GPUs continued crunching orphaned batches. We were burning expensive compute on work nobody was waiting for.\n\nHow we fixed it:\n1. Adaptive Batch Windows: Scaled max queue delay inversely with queue depth. High traffic dropped queue wait time to zero.\n2. Shape Bucketing: Partitioned queues by token length bins, eliminating 70% of pad-token compute waste.\n3. Upstream Context Cancellation: Propagated gRPC deadlines directly into model worker queues, ditching stale inference jobs before tensor allocation.\n\nWhat strategy do you use to balance GPU saturation against strict P99 latency budgets in your production inference stack?\n\nLike if this resonates, share your engineering perspective below, and pass this post along to your tech peers!\n\n#MachineLearning #AIArchitecture #MLOps #SystemDesign #Inference #SoftwareEngineering"
+}

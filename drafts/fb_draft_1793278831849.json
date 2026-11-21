@@ -1,0 +1,9 @@
+{
+  "id": "fb_draft_1793278831849",
+  "topicId": "zero_downtime_deployment",
+  "topic": "Blue-Green & Canary Deployment: Rilis Update Tanpa Jam Istirahat",
+  "category": "DEVOPS & SYSTEM RELIABILITY",
+  "createdAt": "2026-10-29T13:00:31.849Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_zero_downtime_deployment_1793278802767.mp4",
+  "postText": "Dulu waktu awal mengelola sistem faskes, rilis versi baru itu horror.\nHarus pasang pengumuman: \"Sistem offline sementara jam 23.00 - 02.00 untuk pemeliharaan.\"\n\nTapi di rumah sakit tempat saya bekerja, jam 12 malam itu pasien IGD tetap masuk, perawat tetap input terapi infus, dan farmasi tetap racik obat darurat. Istilah \"downtime terencana\" itu tetap mengorbankan kenyamanan pelayanan.\n\nSolusinya: beralih total ke ZERO DOWNTIME DEPLOYMENT (Blue-Green / Rolling Update).\n\nKuncinya ada di 3 pilar:\n1. Database Schema Expand-Contract: Rilis skrip migrasi database yang backward-compatible. Kode lama dan kode baru harus bisa membaca database yang sama secara bersamaan.\n2. Health Check Valid Sebelum Switch: Reverse proxy (seperti Caddy/Nginx) hanya akan mengarahkan traffic ke container baru setelah endpoint /health lulus uji koneksi DB.\n3. Rollback Satu Detik: Versi lama tetap dibiarkan hidup 15 menit. Jika ada bug fatal terdeteksi, traffic dialihkan kembali dalam hitungan detik.\n\nKetika arsitektur deployment sudah benar, rilis update aplikasi di jam kerja siang bolong pun bisa dilakukan dengan tenang tanpa perawat sadar sistem baru saja diperbarui.\n\nBagaimana alur deployment di tim teman-teman sekarang? Masih begadang malam atau sudah otomatis?\n\n#DevOps #ZeroDowntime #CI_CD #SystemArchitecture #Docker #ReverseProxy #HealthTech #SoftwareEngineering"
+}

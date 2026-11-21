@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1795143682523",
+  "topicId": "cache_aside_stampede_guard",
+  "topic": "Cache-Aside Lies: Invalidation Lag & Stampede Kill Switches",
+  "category": "DISTRIBUTED SYSTEMS",
+  "createdAt": "2026-11-20T03:01:22.523Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_cache_aside_stampede_guard_1795143648698.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_cache_aside_stampede_guard_1795143682180.jpg",
+  "postText": "Your cache hit ratio is 98%. Then a single deploy or TTL expiry fires 10,000 concurrent misses at your primary DB. The database doesn't slow down, it stops. Meanwhile stale reads quietly serve yesterday's lab result to the wrong patient.\n\nCache-aside is the most common caching pattern and the most misunderstood. It doesn't protect you by default. Three hard rules from healthcare IT production:\n\n1) Invalidate AFTER the write commits, never before. Update the DB, then DELETE the cache key. Do not UPDATE the cache inline — concurrent writers will race and the loser's stale value survives.\n\n2) Coalesce misses. One request per key hits the DB, the rest wait on a lock or future. Without single-flight, a hot key eviction becomes a self-inflicted DDoS.\n\n3) Jitter your TTLs and serve stale while refreshing. Synchronized expiry is a stampede timer. ±10% jitter plus async background refresh keeps the DB load flat.\n\nWe learned this the hard way on patient lookup endpoints. A Redis flush during a routine maintenance window turned into a DB saturation incident at 2 AM. The fix wasn't a bigger database. It was respecting the cache-aside contract.\n\nQuestion for the community: when your cache goes cold, do you protect the DB with single-flight locks, request coalescing at the gateway, or serve stale-while-revalidate? What has actually held up under real traffic in your systems?\n\nIf this resonated, Like this post, drop your cache war story in the comments, and Share it with your backend and platform teams. @pengikut\n\n#Caching #Redis #SystemDesign #BackendEngineering #DistributedSystems #HealthcareIT #SoftwareArchitecture"
+}

@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794808927872",
+  "topicId": "gap_locks_deadlock_range_scans",
+  "topic": "Gap Locks Turn Range Scans into Deadlock Traps",
+  "category": "DATABASE CONCURRENCY",
+  "createdAt": "2026-11-16T06:02:07.872Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_gap_locks_deadlock_range_scans_1794808878588.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_gap_locks_deadlock_range_scans_1794808927384.jpg",
+  "postText": "We observed database threads freezing during peak admission hours in healthcare IT. CPU stood idle, yet checkout queries queued endlessly until the database aborted transactions with deadlock errors.\n\nRoot cause was not missing indexes. It was gap locking under Repeatable Read isolation.\n\nWhen a transaction updates rows via non-unique secondary indexes or range predicates (`WHERE status = 'PENDING'`), the storage engine locks matching index records AND empty gaps between them to prevent phantom reads. Another concurrent thread inserting a new record into that same empty gap gets blocked. When both transactions request adjacent locks simultaneously, engine detects cycle and aborts one.\n\nFix applied in production:\n1. Replaced range-based update sweeps with deterministic, primary-key batching (`WHERE id IN (...)` sorted by ID beforehand).\n2. Switched application transaction isolation level from Repeatable Read to Read Committed where business logic did not mandate phantom read protection, disabling next-key locking.\n3. Verified unique constraints covered compound predicates, converting index gap scans into single-record locks.\n\nDeadlock spikes dropped to absolute zero, and write throughput scaled smoothly across peak clinic shifts.\n\nHow does your team handle next-key locking and deadlocks when high-concurrency ingestion meets batch processing?\n\nIf you found this breakdown useful, please like, drop your experiences or architectural thoughts in the comments, and share this with your engineering team!\n\n@pengikut\n\n#DatabaseArchitecture #PostgreSQL #MySQL #BackendEngineering #Concurrency #SystemDesign #HighAvailability"
+}

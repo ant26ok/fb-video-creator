@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794290489513",
+  "topicId": "probabilistic_cache_invalidation_herds",
+  "topic": "Probabilistic Early Expiry Kills Invalidation Herds",
+  "category": "DISTRIBUTED CACHING",
+  "createdAt": "2026-11-10T06:01:29.513Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_probabilistic_cache_invalidation_herds_1794290450815.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_probabilistic_cache_invalidation_herds_1794290489186.jpg",
+  "postText": "Your Redis cluster is healthy, but PostgreSQL just crashed under high load.\n\nHere is what happened inside our healthcare facility systems during morning shift change: thousands of concurrent queries hit the doctor schedule and room assignment cache. The keys hit hard TTL and vanished simultaneously. Every app worker missed cache together. Every worker fired an identical 8-way table JOIN against PostgreSQL.\n\nConnection pool exhausted in 600ms. CPU spiked to 100%. P99 latency degraded from 8ms to timeout. Classic stampede.\n\nWe replaced standard Cache-Aside hard expiration with three rules:\n\n1. Probabilistic Early Recompute (XFetch): Workers compute key expiry likelihood based on read compute cost multiplied by negative logarithm of random float. Recompute happens proactively seconds before eviction.\n\n2. Stale-While-Revalidate with Hard/Soft TTL: Store soft expiry inside JSON payload alongside hard Redis TTL. First worker finding soft expiry triggers async fetch. Remaining concurrent readers get fast stale cache instead of blocking.\n\n3. Singleflight Mutex via SET NX: If key missing entirely, only one worker gets lock to touch DB. Rest poll or await channel notification.\n\nResult: 0 database spikes during cache refresh cycles. P99 held flat at 12ms.\n\nHow do you handle hot-key invalidation in your production clusters—distributed mutex, stale-while-revalidate, or deterministic cron pre-warming?\n\nLike, comment your architectural choice below, and share with your team.\n\n@pengikut\n\n#Redis #DistributedCaching #SystemDesign #SoftwareArchitecture #PostgreSQL #BackendEngineering #HighAvailability"
+}

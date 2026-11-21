@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1795179686424",
+  "topicId": "fhir_telemetry_mtls_gap",
+  "topic": "FHIR Feeds Trust Plaintext Telemetry Too Much",
+  "category": "HEALTHCARE INTEGRATION SECURITY",
+  "createdAt": "2026-11-20T13:01:26.424Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_fhir_telemetry_mtls_gap_1795179648776.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_fhir_telemetry_mtls_gap_1795179686089.jpg",
+  "postText": "Your FHIR endpoint has OAuth2, scopes, audit logs. Looks clean on paper. Then a bedside monitor streams vitals over plaintext MLLP across the clinical VLAN and the compliance audit finds it in ten minutes.\n\nThis is the gap I keep seeing in healthcare integration. Teams treat FHIR as the whole interoperability story. It is not. FHIR is the API layer. HL7v2 still runs the device floor, and that floor was built before anyone thought about transport security.\n\nWhat actually holds up in production:\n\n1. mTLS on every telemetry hop. Device certificates, not IP allowlists. Short-lived CA rotation. IPs lie, certs do not.\n2. Sign HL7v2 at the boundary. Wrap legacy feeds in a signed envelope before your bridge parses them. If the bridge dies mid-parse, you still know the payload was authentic.\n3. Segment and encrypt. Monitors on their own VLAN, TLS in transit, PHI encrypted at rest. Never let raw PHI touch a shared topic or a log line.\n\nThe hard part is not the crypto. It is inventory. You cannot secure devices you have not enumerated. Start there.\n\nQuestion for the integration engineers here: when you onboard a new medical device, who owns the certificate lifecycle — biomed, network, or app team? I have seen all three and none of them talk.\n\nIf this matches your reality, like the post, drop your setup in the comments, and share it with the team that owns your device fleet.\n\n@pengikut\n\n#HealthcareIT #FHIR #HL7 #Interoperability #MedicalDeviceSecurity #ZeroTrust #HealthTech"
+}

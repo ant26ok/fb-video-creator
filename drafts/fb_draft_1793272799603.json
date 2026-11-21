@@ -1,0 +1,9 @@
+{
+  "id": "fb_draft_1793272799603",
+  "topicId": "resilient_outbox_pattern",
+  "topic": "Transactional Outbox: Rahasia Integrasi API Tanpa Kehilangan Data",
+  "category": "SYSTEM INTEGRATION & RESILIENCE",
+  "createdAt": "2026-10-29T11:19:59.603Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_resilient_outbox_pattern_1793272767165.mp4",
+  "postText": "Pernah ngalamin kasus ini?\nKasir klik simpan pembayaran: transaksi lokal database sukses, tapi pas kirim notifikasi WhatsApp atau kirim data ke server regulator, koneksi internet mendadak putus (504 Gateway Timeout).\n\nUser panik klik tombol berulang kali. Akhirnya: saldo kepotong dua kali, data ganda, dan rekonsiliasi malam harinya berantakan. 🤦‍♂️\n\nPelajaran arsitektur paling mahal yang saya pelajari:\nJANGAN PERNAH menyatukan komitmen database lokal dengan panggilan network API pihak ketiga. Jaringan internet itu tidak bisa dipercaya (unreliable by nature).\n\nSolusi standarnya adalah: TRANSACTIONAL OUTBOX PATTERN.\n\nCara kerjanya sederhana tapi ampuh:\n1. Buat tabel 'outbox_events' di database yang sama dengan tabel operasional.\n2. Saat simpan data billing, simpan juga event pengiriman ke tabel outbox dalam SATU transaksi atomik lokal.\n3. Background worker membaca antrean outbox secara berkala dan mengirimkan request ke API luar.\n4. Jika API luar down 2 jam sekalipun, worker akan otomatis retry dengan exponential backoff tanpa membuat kasir freeze.\n\nData lokal tetap aman, antarmuka pengguna cepat, dan integrasi luar dijamin terkirim (at-least-once delivery).\n\nBagaimana strategi integrasi API pihak ketiga di aplikasi yang sedang teman-teman bangun saat ini?\n\n#SystemArchitecture #BackendDevelopment #Microservices #SoftwareDesign #IntegrationPatterns #FullstackDeveloper #HealthTech"
+}

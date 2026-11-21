@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794650501489",
+  "topicId": "mllp_fhir_zero_trust_bridge",
+  "topic": "Plaintext MLLP Feeds Cripple FHIR Zero-Trust",
+  "category": "HEALTHCARE SYSTEMS ARCHITECTURE",
+  "createdAt": "2026-11-14T10:01:41.489Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_mllp_fhir_zero_trust_bridge_1794650453991.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_mllp_fhir_zero_trust_bridge_1794650501136.jpg",
+  "postText": "Most hospital integration engines hold a dangerous secret. Behind shiny, encrypted FHIR APIs lies raw HL7 v2 over naked MLLP.\n\nIn healthcare IT, modernization often means putting an API gateway in front of 30-year-old bedside telemetry protocols. HL7 v2 relies on Minimal Lower Layer Protocol (MLLP)—unencrypted plain TCP without native authentication.\n\nWhen bridging legacy telemetry into FHIR datastores, engineers often make a fatal mistake: terminating MLLP inside an open network and mapping it straight to FHIR Observation resources using a single privileged service account. This silently strips patient audit provenance. If a compromised infusion pump or rogue node injects falsified vitals, the FHIR server signs off on it blindly.\n\nTo lock this down:\n1. Isolate legacy MLLP adapters in dedicated zero-trust ingress enclaves with mutual TLS wrappers.\n2. Synthesize FHIR Provenance records at the boundary, binding verified source MAC and network signatures.\n3. Replace broad service tokens with ephemeral SMART-on-FHIR scopes derived from verified device context.\n\nHealthcare integration is never just format conversion; it is threat modeling legacy protocol debt against modern trust boundaries.\n\nHow does your team enforce zero-trust identity when ingesting legacy biomedical device streams?\n\nLike, comment your thoughts below, and share this with your healthcare IT team!\n@pengikut\n\n#HealthcareIT #FHIR #HL7 #HealthTech #SoftwareArchitecture #ZeroTrust"
+}

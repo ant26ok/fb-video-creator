@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1793415774462",
+  "topicId": "blue_green_db_expand_contract",
+  "topic": "Blue-Green Sukses, DB Meledak: Jebakan Dual-Version",
+  "category": "DISTRIBUTED DEPLOYMENT",
+  "createdAt": "2026-10-31T03:02:54.462Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_blue_green_db_expand_contract_1793415739237.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_blue_green_db_expand_contract_1793415774112.jpg",
+  "postText": "Ganti versi aplikasi dalam hitungan milidetik lewat Blue-Green atau Canary deployment itu keren. Sampai akhirnya ada satu migration script ALTER TABLE yang bikin lock tabel billing farmasi di rumah sakit tempat saya bekerja.\n\nBanyak engineer fokus switch traffic via Nginx, Traefik, atau Ingress. Lupa kalau di bawahnya ada single shared database. Saat versi Green butuh kolom baru dan menghapus kolom lama, versi Blue yang masih melayani pasien aktif langsung crash karena error column not found.\n\nDi sistem 24/7 faskes, zero-downtime murni itu ada di layer database, bukan router. Kuncinya disiplin 3 langkah Expand-Contract:\n\n1. Expand: Tambah kolom atau tabel baru nullable. Deploy migration dulu. Versi lama (Blue) tetap jalan normal tanpa peduli kolom baru.\n2. Dual-Write: Rilis Green. Tulis data ke skema lama dan baru bersamaan. Jalankan background job sinkronisasi data lama.\n3. Contract: Setelah trafik 100% di Green dan stabil beberapa hari, rilis skrip cleanup untuk drop kolom lama.\n\nTanpa backward compatibility di level persistence layer, Blue-Green deployment cuma ilusi yang menunggu waktu meledak di production.\n\nBagaimana strategi tim Anda mengelola migrasi skema database saat rilis Canary atau Blue-Green? Masih berani ALTER TABLE langsung di jam kerja atau pakai trik lain?\n\nTulis pandangan atau curhat teknis Anda di kolom komentar. Jangan lupa Like, Komen, dan Share postingan ini ke rekan-rekan engineer lainnya!\n\n#SoftwareArchitecture #DevOps #SystemDesign #DatabaseMigration #HighAvailability #TechLead"
+}

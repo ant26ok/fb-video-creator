@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794988934221",
+  "topicId": "adaptive_gateway_concurrency_limits",
+  "topic": "Adaptive Concurrency Limits Halt Gateway Brownouts",
+  "category": "DISTRIBUTED SYSTEMS",
+  "createdAt": "2026-11-18T08:02:14.221Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_adaptive_gateway_concurrency_limits_1794988882654.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_adaptive_gateway_concurrency_limits_1794988933714.jpg",
+  "postText": "Static rate limiting is a ticking time bomb during partial backend degradation.\n\nIn the healthcare IT systems I support, downstream services occasionally stall under heavy DB locks or intermittent network partitions. When an API gateway uses static rate limits—say, 5,000 requests per second—it keeps admitting inbound traffic at full speed even when downstream response times jump from 30ms to 4 seconds.\n\nThe result? In-flight request concurrency explodes, gateway worker pools starve, and the entire edge cluster experiences an out-of-memory crash. Cascading failure complete.\n\nThe fix we adopted is dynamic load shedding using Adaptive Concurrency Limits (based on Little's Law and TCP Vegas). Instead of enforcing rigid numeric rate limits:\n1. The gateway continuously samples round-trip time (RTT).\n2. When gradient latency increases relative to the baseline, the concurrency ceiling automatically contracts.\n3. Inbound requests are prioritized: non-critical background jobs get shed immediately with HTTP 429, reserving threads for critical clinical transactions.\n\nYour gateway shouldn't just count requests; it must measure system friction and shed accordingly.\n\nHow does your gateway handle latency spikes from struggling downstream dependencies: static hard caps, or dynamic inflight feedback?\n\nDrop your thoughts and architectural experiences below. Like and share this with your engineering team if you build resilient distributed systems!\n@pengikut\n\n#SystemDesign #APIGateway #SoftwareArchitecture #Microservices #Resilience #DistributedSystems"
+}

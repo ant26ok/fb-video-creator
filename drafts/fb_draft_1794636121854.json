@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794636121854",
+  "topicId": "gateway_circuit_breaker_cascade",
+  "topic": "Unbounded Queues Turn Circuit Breakers Toxic",
+  "category": "DISTRIBUTED SYSTEMS",
+  "createdAt": "2026-11-14T06:02:01.854Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_gateway_circuit_breaker_cascade_1794636085833.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_gateway_circuit_breaker_cascade_1794636121563.jpg",
+  "postText": "Your circuit breaker tripped, so why did your API gateway still run out of memory?\n\nDuring high morning admissions in healthcare IT, our lab telemetry service degraded. Response times climbed from 40ms to 8 seconds. The API gateway circuit breaker opened as designed to isolate downstream failure. Yet memory spiked, connection pools dried up, and unrelated clinical services dropped offline.\n\nThe culprit was unbounded queueing ahead of the breaker. Requests piled into worker queues before the circuit breaker logic evaluated state. Each blocked socket consumed memory buffers and socket descriptors. By the time the breaker threw 503s, node resources were exhausted. Tripping a breaker after enqueueing is useless.\n\nFix the architecture at the edge:\n1. Zero-queue worker policies: if workers are saturated, reject at socket acceptance.\n2. Concurrency limits over rate limits: track active in-flight requests per upstream rather than requests-per-second counters.\n3. Shared breaker state at reverse proxy layer: do not let payload parsers run for tripped dependencies.\n\nA circuit breaker is not magic armor. Without strict concurrency caps and aggressive buffer shedding, failed dependencies still kill your gateway.\n\nHow do you prevent thread and memory starvation when downstream breakers trip under peak load? Share your architecture battle scars below.\n\nLike, comment your thoughts, and share this with your engineering team.\n\n@pengikut\n\n#SoftwareArchitecture #DistributedSystems #SystemDesign #APIGateway #ReliabilityEngineering #Microservices"
+}

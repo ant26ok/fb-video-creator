@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1793440934153",
+  "topicId": "cache_stampede_mutex_lock",
+  "topic": "Redis Jebol Saat Antrean Pagi: Tragedi Cache Stampede",
+  "category": "DISTRIBUTED CACHING",
+  "createdAt": "2026-10-31T10:02:14.153Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_cache_stampede_mutex_lock_1793440887781.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_cache_stampede_mutex_lock_1793440933778.jpg",
+  "postText": "Pukul 07.00 WIB, loket pendaftaran rawat jalan rumah sakit tempat saya bekerja mulai diserbu ribuan pasien. Server API normal, CPU aman, sampai tiba-tiba CPU database melonjak 100% dan connection pool habis total.\n\nPenyebabnya klasik tapi fatal: Cache Stampede (Dogpiling).\n\nSistem kami menerapkan cache-aside pattern untuk daftar ketersediaan dokter dan jadwal poli. Masalah terjadi saat key Redis tersebut expired tepat di puncak traffic pendaftaran. Ratusan thread mendapati cache MISS secara bersamaan. Alih-alih satu proses yang membaca DB lalu mengisi cache, semua request langsung menembak query kompleks yang sama ke database.\n\nSolusi yang kami terapkan di faskes:\n1. Mutex Locking via SET key value NX PX: Saat cache miss, hanya request pertama yang dapat izin query database untuk rebuild cache. Request lain disuruh retry sleep 50ms atau menyajikan stale data cadangan.\n2. Probabilistic Early Expiration (XFetch): Key direfresh di background sebelum benar-benar expired berdasarkan komputasi jeda waktu dan traffic.\n3. Jitter pada TTL: Tambahkan random detik pada expiry agar key-key kritikal tidak mati serentak.\n\nDatabase relasional bukan tempat menampung lonjakan read bersamaan untuk data identik.\n\nBagaimana strategi tim Anda menangani lonjakan query saat key cache utama expired di jam sibuk? Masih pakai lock mutex, background cron, atau biarkan database menahan bebannya?\n\nLike jika bermanfaat, tulis pengalaman Anda di kolom komentar, dan share postingan ini ke rekan-rekan engineer lainnya!\n\n#SoftwareArchitecture #Redis #SystemDesign #DatabasePerformance #BackendEngineering #HighAvailability"
+}

@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794477751533",
+  "topicId": "gateway_retry_storm_shield",
+  "topic": "Retry Storms Bypass Naive Gateway Rate Limits",
+  "category": "DISTRIBUTED SYSTEMS",
+  "createdAt": "2026-11-12T10:02:31.533Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_gateway_retry_storm_shield_1794477701164.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_gateway_retry_storm_shield_1794477751100.jpg",
+  "postText": "Downstream API stalls by 2 seconds. Suddenly, your gateway CPU hits 100% and healthy endpoints start timing out.\n\nIn healthcare IT, we integrate with external labs, insurance APIs, and clinical devices. When one upstream hangs, naive client retries trigger a massive retry storm.\n\nA global rate limit will not save you. Queuing requests for a dead upstream exhausts worker threads fast, dragging unrelated services down.\n\nThree patterns keep our gateway standing:\n1. Per-tenant token buckets: Limit by client ID and route, not just IP. Noisy callers get throttled without starving critical workflows.\n2. Jittered circuit breakers: Trip on p99 latency or error spikes. Return 503 with a jittered Retry-After header so clients back off evenly.\n3. Edge load shedding: Drop excess traffic in microseconds before it reaches backend connection pools.\n\nFast rejection protects the core. Queued retries destroy it.\n\nHow do you stop retry storms in your API gateway—strict client backoff headers, or aggressive edge load shedding?\n\nLike if you survived a cascading outage, comment your war stories below, and share with your engineering team.\n\n@pengikut\n\n#APIGateway #RateLimiting #CircuitBreaker #DistributedSystems #SystemArchitecture #BackendEngineering"
+}

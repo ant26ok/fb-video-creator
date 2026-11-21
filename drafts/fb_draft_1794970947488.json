@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794970947488",
+  "topicId": "agent_choreography_state_poisoning",
+  "topic": "Unconstrained Multi-Agent Loops Poison Distributed State",
+  "category": "AI ARCHITECTURE",
+  "createdAt": "2026-11-18T03:02:27.488Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_agent_choreography_state_poisoning_1794970908586.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_agent_choreography_state_poisoning_1794970947006.jpg",
+  "postText": "Giving AI agents free rein to talk to each other sounds great on paper until your token budget explodes and production state gets corrupted by hallucinated consensus.\n\nIn healthcare IT workflows, we evaluated multi-agent systems to verify complex clinical coding and lab telemetry routing. The initial setup used autonomous peer reflection: Agent A drafted, Agent B validated, Agent C executed. In staging edge cases, they hit infinite semantic ping-pong. Two agents convinced each other of an invalid JSON payload, burned API limits, and committed corrupted context downstream.\n\nAutonomous peer-to-peer chatter in critical production systems is an anti-pattern. Reliable multi-agent orchestration demands rigid engineering controls:\n\n1. Deterministic Orchestration: Agents must never negotiate execution flow. Use deterministic state machines or DAG workflows to govern transitions.\n2. Strict Schema Gateways: Never let raw model output touch persistence layers. Force validation through strict schema contracts; quarantine malformed payloads on failure.\n3. Hard Iteration Budgets: Cap hops explicitly. If verification fails after two attempts, trip circuit breaker and route to human review.\n\nTreat LLM agents as untrusted, volatile microservices, not autonomous decision-makers.\n\nHow do you constrain multi-agent systems in production—deterministic DAG engines or open reflection with timeouts?\n\nLike, comment your architectural approach below, and share with your engineering team.\n\n@pengikut\n\n#SoftwareArchitecture #AIEngineering #MultiAgent #LLM #SystemDesign #DistributedSystems"
+}

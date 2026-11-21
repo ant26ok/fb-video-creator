@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1795057345202",
+  "topicId": "llm_local_inference_kv_cache_paging",
+  "topic": "Naive KV Caching OOMs On-Premise LLM Serving",
+  "category": "AI ARCHITECTURE",
+  "createdAt": "2026-11-19T03:02:25.202Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_llm_local_inference_kv_cache_paging_1795057298746.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_llm_local_inference_kv_cache_paging_1795057344732.jpg",
+  "postText": "Running local LLMs inside our on-premise healthcare infrastructure seemed simple until three concurrent doctor queries crashed our 24GB GPUs with Out-Of-Memory errors.\n\nHealthcare privacy rules dictate clinical notes cannot leave local servers. Cloud APIs are off-limits for sensitive medical records. But deploying open-weight models on local hardware immediately hit a brutal wall: KV cache memory fragmentation.\n\nStandard inference runtimes allocate static, contiguous memory for each request KV cache based on max context length. If max context is 4096 tokens but the prompt uses 200, the remaining memory sits locked and idle. Under concurrent loads, VRAM exhausts before GPU cores hit 35% utilization.\n\nWe stabilized our local inference stack through three shifts:\n1. PagedAttention: Manage KV cache like OS virtual memory in non-contiguous physical blocks. Allocation waste dropped from 65% to under 4%.\n2. Continuous Token Batching: Schedule generation at token iteration steps instead of waiting for full sequence completions, saturating tensor cores.\n3. 4-bit AWQ Quantization: Retain critical activation weights while halving memory footprint, enabling 2x batch throughput per card.\n\nLocal AI viability is not about buying enterprise server clusters. It is about stopping memory waste.\n\nHow do you handle KV cache bottlenecks and concurrency in your local or edge inference stacks?\n\nLike, comment your experience below, and share with fellow engineers.\n\n@pengikut\n\n#SystemArchitecture #LLM #MachineLearning #DevOps #OnPrem #AIInfrastructure #SoftwareEngineering"
+}

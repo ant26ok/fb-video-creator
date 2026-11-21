@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794045670199",
+  "topicId": "gateway_circuit_breaker_cascade",
+  "topic": "Gateway Meltdown: Stop Cascading Outages",
+  "category": "DISTRIBUTED SYSTEMS",
+  "createdAt": "2026-11-07T10:01:10.199Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_gateway_circuit_breaker_cascade_1794045631920.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_gateway_circuit_breaker_cascade_1794045669865.jpg",
+  "postText": "One unresponsive downstream legacy lab service once choked our entire healthcare IT network. Gateway worker pools filled with hanging TCP connections, crashing unaffected triage APIs.\n\nWhen downstream services stall, naive retry loops and unbounded queues turn minor latency spikes into catastrophic cascade failures.\n\nHere is how we stabilized our edge gateway:\n\n1. Distributed Token Bucket Limiting\nEnforce tenant and route limits at the edge via Redis cluster. Drop or queue abusive bursts before worker threads allocate memory.\n\n2. Circuit Breakers with Fallback Caches\nMonitor rolling 10-second error and timeout rates. When failure crosses 50%, trip circuit OPEN immediately. Return cached read payloads or fast 503s instead of burning upstream socket pools.\n\n3. Bulkhead Partitioning\nIsolate gateway thread pools and HTTP client connection pools per downstream domain. A frozen archival PACS system must never starve critical pharmacy or triage routing.\n\nResilience is not hoping dependencies never fail. Resilience is building gateways that isolate blast radiuses automatically.\n\nIn your architecture, do you rely on adaptive concurrency limits at the edge, or strict static circuit breaker thresholds?\n\nDrop your real-world battle-tested strategies in the comments below. Like and share this post with your engineering team to keep cascading failures out of production!\n\n#SystemArchitecture #DistributedSystems #Microservices #APIGateway #ReliabilityEngineering #SoftwareEngineering"
+}

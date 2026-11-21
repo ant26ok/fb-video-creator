@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1793379692898",
+  "topicId": "gateway_cascading_failure_shield",
+  "topic": "Satu Service Rontok, Semua Tumbang? Stop Cascading Failure!",
+  "category": "SYSTEM RESILIENCE",
+  "createdAt": "2026-10-30T17:01:32.898Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_gateway_cascading_failure_shield_1793379656244.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_gateway_cascading_failure_shield_1793379692507.jpg",
+  "postText": "Pernahkah Anda melihat satu endpoint lambat, lalu hitungan detik seluruh cluster server ikut tumbang?\nEfek domino ini dinamakan cascading failure.\n\nDi rumah sakit tempat saya bekerja, beban lonjakan pasien pagi hari sangat menguji infrastruktur. Masalah klasik terjadi saat query data klaim tertahan beberapa detik. Tanpa batas tegas, antrean worker pool terkuras habis menunggu response. Efeknya merembet: service pendaftaran, farmasi, hingga laboratorium kehabisan koneksi. Seluruh sistem lumpuh seketika.\n\nSolusinya bukan sekadar menambah RAM, melainkan memasang pertahanan perimeter di API Gateway:\n\n1. Token Bucket Rate Limiting: Kendalikan surge traffic di pintu masuk. Potong anomali request sebelum menyentuh core logic database.\n2. Bulkhead Pattern: Sekat connection pool dan resource antar service. Jika modul billing tersendat, modul IGD dan rawat jalan wajib tetap bernapas lega.\n3. Load Shedding: Lebih baik sistem menolak request baru secara elegan dengan HTTP 429 Too Many Requests daripada menumpuk socket terbuka sampai server crash.\n\nArsitektur yang tangguh bukan yang berharap server tak pernah bermasalah, melainkan yang sanggup melokalisasi kegagalan agar tidak membakar seluruh ekosistem.\n\nJika tulisan ini bermanfaat, silakan Like, Komen pengalaman Anda menangani traffic spike di faskes atau startup Anda, dan Share ke rekan-rekan engineer lainnya!\n\n#SoftwareArchitecture #APIGateway #BackendEngineering #HighAvailability #DistributedSystems #SystemDesign"
+}

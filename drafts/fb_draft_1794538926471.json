@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794538926471",
+  "topicId": "canary_traffic_weighting_mesh",
+  "topic": "Naive Traffic Shifts Cripple Canary Rollouts",
+  "category": "MISSION-CRITICAL DEVOPS",
+  "createdAt": "2026-11-13T03:02:06.471Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_canary_traffic_weighting_mesh_1794538885127.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_canary_traffic_weighting_mesh_1794538926167.jpg",
+  "postText": "Deploying new features at 2 AM to avoid users is an admission of fragile architecture. In healthcare IT, 2 AM is peak time for the emergency department. There is zero room for downtime or degraded state.\n\nMany teams treat Canary and Blue-Green as a simple DNS weight slider. They shift 5% traffic to a new build and watch standard CPU charts. This fails silently. Random DNS-weighted splits shatter sticky sessions, trigger cascade logins, and dilute real error signals across large user pools.\n\nIn our mission-critical deployments, we apply strict Layer 7 routing. Traffic routes by cryptographically salted user tokens or synthetic nurse-station IDs. The canary cluster runs on production data paths without exposing general clinical users to potential regression. Stateful workloads require zero sticky reliance on local pods; state must live in memory grids with backwards-compatible schema serialization.\n\nMore importantly, canary progression requires zero human observation. Automated health analysers scrape Prometheus counters for P99 latency regressions and 5xx thresholds every 30 seconds. One anomalous breach triggers an instantaneous ingress rollback before alerts even wake the on-call engineer.\n\nHow do you handle state persistence and database backwards-compatibility during live traffic shifts in your clusters?\n\nLike, drop your real production rollout battle scars in the comments, and share this with your engineering team!\n\n@pengikut\n\n#DevOps #SoftwareArchitecture #SiteReliabilityEngineering #Kubernetes #DistributedSystems #ZeroDowntime"
+}

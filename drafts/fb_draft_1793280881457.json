@@ -1,0 +1,9 @@
+{
+  "id": "fb_draft_1793280881457",
+  "topicId": "api_rate_limiting_circuit_breaker",
+  "topic": "Circuit Breaker: Menyelamatkan Server Saat Layanan Mitra Down",
+  "category": "API RESILIENCE & SECURITY",
+  "createdAt": "2026-10-29T13:34:41.457Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_api_rate_limiting_circuit_breaker_1793280851142.mp4",
+  "postText": "Satu skenario yang paling sering bikin server crash bukan karena serangan hacker, melainkan CASCADING FAILURE.\n\nContoh nyata:\nAplikasi kasir memanggil API verifikasi asuransi pihak ketiga. Biasanya API itu merespons dalam 200ms.\nTiba-tiba server pihak ketiga mengalami gangguan dan response time melonjak jadi 30 detik.\n\nApa yang terjadi di server kita?\nSemua worker thread tertahan menunggu response. Koneksi database ikut menggantung. Dalam 3 menit, memory habis, request queue penuh, dan seluruh aplikasi kasir lokal ikut mati.\n\nPola penyelamatnya adalah: CIRCUIT BREAKER PATTERN.\n\nSama seperti sekring listrik di rumah yang langsung jeglek saat ada korsleting:\n1. Status CLOSED: Request diteruskan secara normal.\n2. Status OPEN: Jika dalam 1 menit ada 10 kali kegagalan/timeout, sekring otomatis memutus sirkuit. Request berikutnya langsung ditolak seketika (fail fast) tanpa menunggu timeout 30 detik.\n3. Status HALF-OPEN: Secara berkala, satu request uji coba dilewatkan. Jika sukses, sekring ditutup kembali.\n\nDengan Circuit Breaker, kegagalan layanan luar tidak akan pernah bisa menumbangkan sistem inti di tempat kita bekerja.\n\nApakah di backend teman-teman sudah terpasang circuit breaker dan timeout yang ketat?\n\n#BackendEngineering #SystemResilience #Microservices #CircuitBreaker #SoftwareArchitecture #API #TechLeadership"
+}

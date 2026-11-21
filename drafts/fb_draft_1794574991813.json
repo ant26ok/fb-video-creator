@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794574991813",
+  "topicId": "gateway_breaker_cascade_failure",
+  "topic": "Slow Dependencies Kill Gateways Faster Than Outages",
+  "category": "SYSTEM RESILIENCE",
+  "createdAt": "2026-11-13T13:03:11.813Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_gateway_breaker_cascade_failure_1794574954231.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_gateway_breaker_cascade_failure_1794574991471.jpg",
+  "postText": "A hard crash is loud, but slow dependencies are silent killers in distributed systems.\n\nDuring peak morning patient registration hours at the healthcare facility where I work, our API Gateway started dropping connections across all services—including critical clinical wards. The culprit wasn't high traffic or database deadlocks. A third-party insurance verification endpoint had degraded from 60ms to 4.5 seconds.\n\nBecause standard circuit breakers were configured to trip only on HTTP 5xx error ratios, the breaker stayed closed. Downstream requests piled up. The API Gateway exhausted all worker threads and OS sockets waiting on stalled TCP I/O. One sluggish dependency brought down completely unrelated medical workflows.\n\nThree hard rules we deployed to prevent cascading failure:\n\n1. Concurrency-Based Breakers: Don't rely solely on error rates. Measure in-flight saturation per upstream route and trip the breaker immediately when concurrent slots peak.\n2. Edge Token Bucket Limits: Place aggressive rate limits at the gateway edge to reject traffic surges before upstream connection pools saturate.\n3. Fail-Fast Fallbacks: Return deterministic fallback responses or immediate HTTP 503s with Retry-After headers to free edge workers within 200ms.\n\nWhat specific metrics do you monitor to trip circuit breakers before slow I/O locks up your gateway connection pools?\n\nLike this breakdown if you manage distributed backends, share your production battle scars in the comments, and pass this along to your engineering team.\n@pengikut\n\n#SystemArchitecture #APIGateway #CircuitBreaker #Microservices #ReliabilityEngineering #DistributedSystems"
+}

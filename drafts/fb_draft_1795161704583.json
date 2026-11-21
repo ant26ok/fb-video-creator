@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1795161704583",
+  "topicId": "fhir_hl7_telemetry_security",
+  "topic": "FHIR Feeds Leak PHI Through Unencrypted Telemetry",
+  "category": "HEALTHCARE INTEROPERABILITY",
+  "createdAt": "2026-11-20T08:01:44.583Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_fhir_hl7_telemetry_security_1795161665818.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_fhir_hl7_telemetry_security_1795161704295.jpg",
+  "postText": "Your FHIR API passes pen test. Your HL7 feed validates. Then auditor asks: 'Who reads the bedside monitor telemetry?' Silence.\n\nIn healthcare IT, we obsess over API security and forget the 30-year-old telemetry layer. Monitors, infusion pumps, ventilators stream HL7 v2 over flat VLANs. No TLS. No auth. Patient name, MRN, vitals, all cleartext.\n\nReal production lesson from the hospital where I work:\n\n1. Segment first. Telemetry devices go on isolated VLAN. No route to EHR core. Firewall rules deny by default.\n2. Wrap legacy streams. mTLS sidecar proxy per device group. Devices can't do TLS, proxy does it.\n3. FHIR gateway validates schema at edge. Malformed resources rejected before DB. Prevents injection and garbage-in.\n4. Audit with hashed patient IDs. Immutable log, no raw PHI in logs. Compliance happy, forensics possible.\n\nInteroperability is not just FHIR vs HL7. It is trust boundaries between clinical systems and medical devices. One unencrypted telemetry port is a breach waiting for a packet capture.\n\nQuestion for the engineers here: how do you handle legacy medical devices that cannot do TLS? Reverse proxy, network segmentation, or replace the device entirely?\n\nLike if this hit home. Comment your architecture below. Share with your healthcare IT team.\n\n@pengikut\n\n#HealthcareIT #FHIR #HL7 #Interoperability #MedicalDeviceSecurity #ZeroTrust #HealthTech"
+}

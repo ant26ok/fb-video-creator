@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1793624525422",
+  "topicId": "cache_aside_singleflight_stampede",
+  "topic": "Lonjakan Pasien Pagi Hari: Redis Jebol Kena Stampede",
+  "category": "DISTRIBUTED SYSTEMS",
+  "createdAt": "2026-11-02T13:02:05.422Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_cache_aside_singleflight_stampede_1793624480906.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_cache_aside_singleflight_stampede_1793624524928.jpg",
+  "postText": "Pukul 07.00 pagi, ratusan loket faskes dan aplikasi pasien serentak cek kuota poliklinik spesialis. Key Redis untuk jadwal dokter mendadak expired. Dalam 100 milidetik, 3.000 concurrent request langsung bypass menabrak PostgreSQL. Database lock, pool koneksi habis, CPU server sentuh 100% seketika.\n\nIni mimpi buruk klasik: Cache Stampede pada pola Cache-Aside.\n\nBanyak tim berasumsi pasang Redis otomatis selesaikan urusan beban baca. Faktanya, saat TTL habis di jam sibuk, Redis bukan lagi penahan beban melainkan pintu air jebol. Tiga jurus mitigasi yang kami terapkan di faskes:\n\n1. Singleflight / Mutex Coalescing: Saat cache miss, hanya request worker pertama yang dapat hak query DB. Ribuan request lain antre nunggu hasil worker pertama di memory, bukan serbu DB.\n2. Invalidation Jitter: Jangan set TTL seragam (misal fix 1 jam). Tambahkan rentang acak acak (+/- 10-20%) agar ribuan master data medis tidak expired pada detik yang sama.\n3. Background Soft Expiry: Baca data pakai stale-while-revalidate. Jika sisa umur cache < 15%, return data lama langsung ke user sambil trigger background job async buat refresh Redis.\n\nArsitektur yang tangguh bukan cuma cepat saat cache hit, tapi tetap tenang saat cache miss massal.\n\nBagaimana strategi tim Anda di kantor menghadapi cache stampede saat traffic melonjak: andalkan singleflight di app, queue worker, atau lock distributed via Redis Redlock?\n\nSilakan Like, bagikan pengalaman arsitektur Anda di kolom komentar, dan Share postingan ini ke rekan-rekan software engineer lainnya!"
+}

@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794711686921",
+  "topicId": "continuous_batching_tail_latency",
+  "topic": "Continuous Batching Spikes Inference Tail Latencies",
+  "category": "AI ARCHITECTURE",
+  "createdAt": "2026-11-15T03:01:26.921Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_continuous_batching_tail_latency_1794711642789.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_continuous_batching_tail_latency_1794711686521.jpg",
+  "postText": "Maxing GPU utilization looks pristine on Grafana dashboards.\nUntil a 200ms real-time clinical alert halts behind a 4,000-token record summarization.\n\nModern serving engines rely on continuous batching and iteration-level scheduling to maximize throughput. Every generation step dynamically inserts new requests into active compute passes. But when mixed workloads hit identical model replicas, long-generation jobs monopolize iteration slots. GPU tensor cores run at 98% saturation, while P99 latency spikes out of control.\n\nIn healthcare IT systems where I work, mixing diagnostic classifiers and generative pipelines on shared GPU instances caused critical delays. Diagnostic endpoints must return deterministic responses within tight deadlines. Waiting for multi-second prompt prefills to clear decode loops destroys reliability.\n\nFixing this bottleneck requires defensive runtime design:\n1. Workload Separation: Partition ingress traffic into latency-critical and throughput-tolerant pools with dedicated GPU clusters.\n2. Chunked Prefills: Cap input chunk size so heavy prompts do not stall active decoding loops.\n3. Priority Preemption: Evict speculative tokens and yield tensor cores immediately when high-priority tasks enter queue.\n\nHow do you handle noisy-neighbor isolation between interactive inference and heavy batch generation in production?\n\nLike, comment your perspective below, and share with fellow engineering peers.\n\n@pengikut\n#MachineLearning #SoftwareArchitecture #SystemDesign #MLOps #AIInfrastructure #DistributedSystems"
+}

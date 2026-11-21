@@ -14,6 +14,14 @@ async function fetchWithRetry(url, options, maxRetries = 3) {
   }
 }
 
+function deriveCaption(text) {
+  // ponytail: fallback when AI omits caption; trim long posts to 2 lines + CTA question
+  const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
+  const body = lines.slice(0, 2).join(' ');
+  const cut = body.length > 200 ? body.slice(0, 197).trimEnd() + '...' : body;
+  return `${cut}\n\nWhat would you fix first? Comment below 👇`;
+}
+
 async function sendContentToTelegram(topic, videoPath, postText, thumbnailPath = null) {
   const token = config.TELEGRAM_BOT_TOKEN;
   const chatId = config.TELEGRAM_CHAT_ID;
@@ -22,7 +30,6 @@ async function sendContentToTelegram(topic, videoPath, postText, thumbnailPath =
   }
 
   console.log(`[TELEGRAM] Mengunggah file video ${path.basename(videoPath)} ke Telegram...`);
-  
   // 1. Kirim Video terlebih dahulu (dengan Thumbnail jika tersedia)
   const videoFormData = new FormData();
   videoFormData.append('chat_id', chatId);
@@ -47,50 +54,32 @@ async function sendContentToTelegram(topic, videoPath, postText, thumbnailPath =
   }
   console.log('[TELEGRAM SUCCESS] Video berhasil terkirim ke Telegram.');
 
-  // 2. Kirim Pesan Teks Draft Lengkap (Siap Salin)
-  function attachCtaAndTags(text) {
-    let result = text;
-    const cta = "How does your engineering team approach this architectural challenge in production? Drop your thoughts or real-world battle scars in the comments below, Like if this resonated, and Share with your fellow engineers!\n\n";
+  // 2. Kirim Caption Reels (150-250 char + 2-3 hashtag + transkripsi)
+  const caption = (topic.caption || deriveCaption(topic.postText || '')).trim();
+  const hashtags = topic.hashtags || '#SystemArchitecture #LLMOps #HealthTech';
+  const transcription = topic.transcription || '';
+  const reelText =
+    `${caption}\n\n${hashtags}\n\n@pengikut` +
+    (transcription ? `\n\n---\n📝 TRANSCRIPT\n${transcription}` : '');
 
-    if (!result.includes("Share with your fellow") && !result.includes("in the comments below") && !result.includes("Like, Comment") && !result.includes("Like, Komen")) {
-      const hashtagIndex = result.search(/#[A-Za-z0-9_]/);
-      if (hashtagIndex !== -1) {
-        result = result.slice(0, hashtagIndex).trimEnd() + "\n\n" + cta + result.slice(hashtagIndex);
-      } else {
-        result = result.trimEnd() + "\n\n" + cta;
-      }
-    }
-
-    // Ensure @pengikut tag exists
-    if (!result.includes("@pengikut")) {
-      const hashtagIndex = result.search(/#[A-Za-z0-9_]/);
-      if (hashtagIndex !== -1) {
-        result = result.slice(0, hashtagIndex).trimEnd() + "\n\n@pengikut\n\n" + result.slice(hashtagIndex);
-      } else {
-        result = result.trimEnd() + "\n\n@pengikut";
-      }
-    }
-
-    return result;
-  }
-
-  const finalPostText = attachCtaAndTags(postText);
-  const escapedText = finalPostText
+  const escapedText = reelText
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;');
 
   const messagePayload = {
     chat_id: chatId,
-    text: `📘 <b>FACEBOOK VIDEO CONTENT (READY TO POST)</b>\n` +
+    text: `📘 <b>FACEBOOK REEL (READY TO POST)</b>\n` +
           `━━━━━━━━━━━━━━━━━━━━\n` +
           `📌 <b>Topic:</b> ${topic.title}\n` +
           `🏷️ <b>Category:</b> ${topic.category}\n` +
+          `🔢 <b>Key number:</b> ${topic.oneNumber || '—'} ${topic.oneNumberLabel || ''}\n` +
+          `📏 <b>Caption length:</b> ${caption.length} chars\n` +
           `🕒 <b>Slot:</b> ${new Date().toLocaleTimeString('id-ID', { timeZone: 'Asia/Jakarta', hour: '2-digit', minute: '2-digit' })} WIB\n\n` +
-          `📋 <b>Tap the text block below to copy:</b>\n\n` +
+          `📋 <b>Caption + hashtags + transcript (tap to copy):</b>\n\n` +
           `<pre><code>${escapedText}</code></pre>\n\n` +
           `━━━━━━━━━━━━━━━━━━━━\n` +
-          `💡 <i>Save the video and thumbnail cover above to your gallery, tap the text block to copy, and paste directly to your Facebook feed.</i>`,
+          `💡 <i>Upload the 9:16 video above as a Reel, then paste this caption.</i>`,
     parse_mode: 'HTML'
   };
 

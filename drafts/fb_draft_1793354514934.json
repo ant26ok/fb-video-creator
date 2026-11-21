@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1793354514934",
+  "topicId": "multi_agent_orchestration_loop",
+  "topic": "Multi-Agent AI: Mengapa Satu Model LLM Sering Gagal?",
+  "category": "AI ARCHITECTURE",
+  "createdAt": "2026-10-30T10:01:54.934Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_multi_agent_orchestration_loop_1793354475093.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_multi_agent_orchestration_loop_1793354514494.jpg",
+  "postText": "Banyak engineer terjebak anggapan bahwa model LLM tercanggih bisa menyelesaikan alur bisnis rumit dalam satu prompt panjang.\n\nFaktanya di production, single agent sering halusinasi dan boros token.\n\nDi rumah sakit tempat saya bekerja, mengotomatisasi validasi klaim asuransi dan audit berkas medis dengan satu LLM serba bisa adalah mimpi buruk. Prompt ribuan token rentan lolos validasi aturan ICD-10 dan membuat latency membengkak.\n\nSolusinya beralih ke arsitektur Multi-Agent Orchestration dengan pola deterministic state machine:\n\n1. Spesialisasi Domain (Role-based Agents): Agent A hanya ekstrak entitas klinis, Agent B validasi eligibilitas asuransi, Agent C audit regulasi tarif. Kontrak I/O wajib tervalidasi ketat via schema JSON/Pydantic.\n2. Orchestrator Deterministik: Alur koordinasi antar agent dikontrol state machine deterministik, bukan membiarkan model AI looping tanpa batas.\n3. Human-in-the-Loop Boundary: Agent otonom hanya mengajukan draft rekomendasi. Mutasi akhir ke database rekam medis tetap butuh otorisasi verifikator manusia.\n\nAgentic AI bukan soal memberi kebebasan mutlak pada mesin, melainkan mendesain pagar isolasi tanggung jawab sistemik.\n\nJika tulisan ini bermanfaat, silakan Like, tinggalkan Komen pengalaman rekan-rekan saat deploy agentic workflow di production, dan Share ke rekan-rekan IT lainnya!\n\n#SoftwareArchitecture #ArtificialIntelligence #MultiAgent #EngineeringLeadership #HealthcareIT #SystemDesign"
+}

@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794304949936",
+  "topicId": "transactional_outbox_dual_write_trap",
+  "topic": "Dual-Writes Kill Consistency: Why You Need Outbox Pattern",
+  "category": "DISTRIBUTED SYSTEMS",
+  "createdAt": "2026-11-10T10:02:29.936Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_transactional_outbox_dual_write_trap_1794304900524.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_transactional_outbox_dual_write_trap_1794304949481.jpg",
+  "postText": "Every engineer learns dual-writes the hard way.\nYou save a patient prescription into PostgreSQL, then immediately call Kafka or RabbitMQ. It works flawlessly in local tests. Then production spikes hit. The database commit succeeds, but network latency kills the broker call. Or broker accepts the message, but the database transaction rollbacks on a constraint violation.\n\nNow, your downstream inventory and billing services act on phantom events, or critical pharmacy notifications vanish into thin air. Distributed 2-phase commits across relational DBs and message brokers are slow, fragile, and virtually dead in modern architectures.\n\nThe fix is the Transactional Outbox pattern.\n\nInstead of invoking the message broker inside your business logic, write your domain entity and an outbox event record within the exact same local ACID transaction. Zero distributed lock overhead. Then, let a dedicated asynchronous process—either log-based CDC (like Debezium reading the WAL) or a lightweight worker polling with SKIP LOCKED—tail the outbox table and push messages to the broker.\n\nPair this with idempotent downstream consumers using unique idempotency keys, and you guarantee at-least-once delivery without phantom states or data corruption.\n\nHow does your team handle dual-write consistency between databases and message brokers: Change Data Capture (CDC), scheduled outbox polling, or distributed sagas?\n\nLike this post if it saved you from a production desync, comment your battle-tested approach below, and share with your team!\n\n@pengikut\n\n#SoftwareArchitecture #DistributedSystems #Kafka #SystemDesign #BackendEngineering #Microservices"
+}

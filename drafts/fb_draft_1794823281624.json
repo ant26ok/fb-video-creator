@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794823281624",
+  "topicId": "ephemeral_port_exhaustion_proxy",
+  "topic": "Port Exhaustion Silently Strangles Blue-Green Flips",
+  "category": "MISSION-CRITICAL DEVOPS",
+  "createdAt": "2026-11-16T10:01:21.624Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_ephemeral_port_exhaustion_proxy_1794823240594.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_ephemeral_port_exhaustion_proxy_1794823281238.jpg",
+  "postText": "Midnight deployment in healthcare IT. Zero room for downtime. ICU telemetry and lab systems run non-stop. Blue-green deployment triggers. Green cluster health checks green. Traffic cutover fires instantly.\n\nSeconds later: gateway throws HTTP 502 Bad Gateway. Green nodes report near-zero CPU. Database idle. Why failure?\n\nReverse proxy hit ephemeral port exhaustion. Default Linux configuration reserves roughly 28,000 ports (`net.ipv4.ip_local_port_range`). Default reverse proxy configurations without upstream HTTP keep-alive close TCP sockets instantly. Closed sockets linger in `TIME_WAIT` for 60 seconds (`2 * MSL`). Under 1,000 requests per second, available local source ports for upstream target IP vanish in 30 seconds. Proxy cannot bind new client sockets. Outage begins.\n\nTwo critical fixes prevent this disaster:\n1. Upstream Keep-Alive: Configure proxy upstream connection pooling (`keepalive 128` in Nginx, `max_idle_conns_per_host` in Go). Reuse existing TCP pipes instead of opening raw handshakes per HTTP call.\n2. Kernel socket recycling: Enable `net.ipv4.tcp_tw_reuse = 1` and expand `net.ipv4.ip_local_port_range = 10240 65535` on reverse proxy edge hosts.\n\nBlue-green cutovers test network limits, not just app code.\n\nHow does your team handle upstream socket pooling during major traffic shifts?\n\nLike, comment your architectural approaches below, and share with your engineering team.\n\n@pengikut\n\n#DevOps #HighAvailability #SystemArchitecture #SoftwareEngineering #Networking #CloudInfrastructure"
+}

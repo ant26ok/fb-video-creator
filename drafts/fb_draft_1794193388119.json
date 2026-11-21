@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794193388119",
+  "topicId": "ml_training_serving_skew",
+  "topic": "Training-Serving Skew Silently Kills Production ML",
+  "category": "AI ARCHITECTURE",
+  "createdAt": "2026-11-09T03:03:08.119Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_ml_training_serving_skew_1794193341091.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_ml_training_serving_skew_1794193387499.jpg",
+  "postText": "Your model hit 99% validation accuracy in Jupyter. In production, clinical risk predictions collapse silently. No HTTP 500 errors. No OOM kills. Just wrong outputs corrupting triage decisions.\n\nThe killer is Training-Serving Skew: divergence between features generated during training and features computed at live inference.\n\nIn healthcare IT systems, timing dictates reality. When batch training queries join patient vitals with discharge tables, SQL queries often accidentally pull data recorded after admission. That is future leakage. When live inference runs, future data does not exist yet. The model evaluates missing signals, producing confident garbage.\n\nProduction fixes we enforce:\n1. Point-in-Time Correctness: Feature stores must use time-travel joins. Offline datasets must only see state valid at exact event timestamps.\n2. Unified Transformations: Stop rewriting Python data prep into Go or Java for production APIs. Use shared transformation definitions to guarantee identical arithmetic.\n3. Log Live Ingestion Payloads: Store exact feature vectors fed into models at inference. Compare production distributions against training baselines via Population Stability Index (PSI) to catch drift immediately.\n\nHow does your team guarantee parity between training features and real-time inference payloads?\n\nShare your architecture strategies below. Like and share this post with your fellow engineers!\n\n@pengikut\n\n#MachineLearning #MLOps #SystemArchitecture #FeatureStore #DataEngineering #HealthcareIT"
+}

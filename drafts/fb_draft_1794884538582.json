@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794884538582",
+  "topicId": "lock_ordering_deadlock_batches",
+  "topic": "Mismatched Lock Order Deadlocks Concurrent Batch Updates",
+  "category": "DATABASE CONCURRENCY",
+  "createdAt": "2026-11-17T03:02:18.582Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_lock_ordering_deadlock_batches_1794884494964.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_lock_ordering_deadlock_batches_1794884538251.jpg",
+  "postText": "High concurrency looks smooth until database deadlock graphs light up during peak hospital operations.\nIn healthcare IT, concurrent workflows continuously mutate shared resources: bed allocations, ward stocks, and vital registries.\n\nThe classic trap is non-deterministic lock acquisition. Transaction A updates Resource 101 then 102. Transaction B updates Resource 102 then 101. Both secure exclusive row locks on step one, then hang indefinitely waiting on each other. The database engine resolves the cycle by killing one transaction as deadlock victim.\n\nIndexing flaws compound the blast radius. Missing covering indexes forces engine scan across broader page ranges. A simple filtered update escalates from granular row-level locks into coarse page or table locks, turning isolated mutations into global bottlenecks.\n\nThree rules keep production database engines stable under high concurrency:\n1. Deterministic lock ordering: Always sort mutation arrays by primary key before entering transaction scope.\n2. Tight index coverage: Ensure update predicates match indexes cleanly to avoid lock escalation across adjacent leaf nodes.\n3. Shrink lock windows: Keep non-DB calculations, schema validations, and third-party IO outside transaction boundaries. Lock late, commit immediately.\n\nHow does your team handle high-concurrency writes: strict application-level sorting, optimistic version checks, or serialized event queues?\n\nLike this breakdown? Comment your experience or perspectives below, and share this post with fellow IT colleagues!\n@pengikut\n\n#DatabaseEngineering #HighConcurrency #SoftwareArchitecture #BackendDevelopment #SQLPerformance #SystemDesign"
+}

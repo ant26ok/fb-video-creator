@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1795266133070",
+  "topicId": "llm_inference_optimization_local_deploy",
+  "topic": "Your LLM Bill Is Killing You. Quantize It.",
+  "category": "AI ARCHITECTURE",
+  "createdAt": "2026-11-21T13:02:13.070Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_llm_inference_optimization_local_deploy_1795266098095.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_llm_inference_optimization_local_deploy_1795266132783.jpg",
+  "postText": "Your monthly LLM inference bill just exceeded your GPU budget. Again.\n\nI've seen teams burn $8K/month on cloud API calls for a chatbot that handles 50K queries/day. The model was 70B parameters. The queries were mostly simple triage questions.\n\nHere's the architecture that fixed it:\n\n1. QUANTIZE TO 4-BIT GGUF\nINT4 quantization cuts VRAM from 140GB to 35GB for a 70B model. Quality drop is under 2% on most benchmarks. llama.cpp runs it on a single A100. vLLM serves it with PagedAttention.\n\n2. CONTINUOUS BATCHING + KV CACHE REUSE\nStatic batching wastes GPU cycles waiting for the slowest request. Continuous batching fills gaps dynamically. Prefix caching reuses KV state across similar prompts. Throughput jumps 5-8x on the same hardware.\n\n3. TIERED ROUTING BY COMPLEXITY\n80% of queries don't need a 70B model. Route simple triage to a 7B quantized model. Escalate only complex cases to the large model. Latency drops, cost drops, accuracy holds.\n\nThe result: $8K/month cloud bill became $800/month on-prem GPU. Same latency. Same accuracy. Full data control.\n\nIn healthcare IT, local deployment isn't just about cost. It's about PHI never leaving the network. Quantized local models give you both.\n\nQuestion for the engineers here: What's your threshold for local vs cloud inference? Is it cost per token, latency SLA, or data residency? Drop your numbers below.\n\nIf this breakdown helped, hit Like, share your own inference optimization war stories in the comments, and Share this post with your team. They're probably overpaying too.\n\n@pengikut\n\n#LLMInference #LocalDeployment #ModelQuantization #AIArchitecture #HealthcareIT #MLOps #GPUOptimization"
+}

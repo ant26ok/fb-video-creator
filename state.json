@@ -2,11 +2,355 @@
   "lastTopicIndex": 0,
   "history": [
     {
-      "id": "fb_draft_1793252074158",
-      "topicId": "db_deadlock_concurrency",
-      "title": "Deadlock di Jam Sibuk: Mengapa Tambah RAM Tidak Cukup?",
-      "timestamp": "2026-10-29T05:34:37.539Z",
-      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_db_deadlock_concurrency_1793252040871.mp4"
+      "id": "fb_draft_1794463389321",
+      "topicId": "cache_aside_stampede_lock",
+      "title": "Naive Cache-Aside Loops Trigger Thundering Herd Outages",
+      "timestamp": "2026-11-12T06:03:16.153Z",
+      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_cache_aside_stampede_lock_1794463349478.mp4"
+    },
+    {
+      "id": "fb_draft_1794470532897",
+      "topicId": "pod_termination_race_deploy",
+      "title": "Pod Termination Races Break Zero-Downtime Deploys",
+      "timestamp": "2026-11-12T08:03:48.409Z",
+      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_pod_termination_race_deploy_1794470493505.mp4"
+    },
+    {
+      "id": "fb_draft_1794477754841",
+      "topicId": "silent_embedding_drift_rag",
+      "title": "Silent Embedding Drift Corrupts Production RAG",
+      "timestamp": "2026-11-12T10:02:39.305Z",
+      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_silent_embedding_drift_rag_1794477710257.mp4"
+    },
+    {
+      "id": "fb_draft_1794488560409",
+      "topicId": "gateway_retry_storm_shield",
+      "title": "Stop Retry Storms Before They Melt Your API Gateway",
+      "timestamp": "2026-11-12T13:05:13.679Z",
+      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_gateway_retry_storm_shield_1794488520683.mp4"
+    },
+    {
+      "id": "fb_draft_1794538926471",
+      "topicId": "canary_traffic_weighting_mesh",
+      "title": "Naive Traffic Shifts Cripple Canary Rollouts",
+      "timestamp": "2026-11-13T03:02:10.875Z",
+      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_canary_traffic_weighting_mesh_1794538885127.mp4"
+    },
+    {
+      "id": "fb_draft_1794549733356",
+      "topicId": "circular_delegation_multi_agent_swarms",
+      "title": "Circular Delegation Traps Multi-Agent Swarms",
+      "timestamp": "2026-11-13T06:02:16.905Z",
+      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_circular_delegation_multi_agent_swarms_1794549683847.mp4"
+    },
+    {
+      "id": "fb_draft_1794556993914",
+      "topicId": "dual_write_outbox_cdc",
+      "title": "Dual-Write Bugs Poison Event-Driven Systems",
+      "timestamp": "2026-11-13T08:04:41.246Z",
+      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_dual_write_outbox_cdc_1794556956692.mp4"
+    },
+    {
+      "id": "fb_draft_1794564137829",
+      "topicId": "feature_skew_ml_inference",
+      "title": "Feature Skew Silently Breaks Real-Time ML Inference",
+      "timestamp": "2026-11-13T10:02:22.278Z",
+      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_feature_skew_ml_inference_1794564099959.mp4"
+    },
+    {
+      "id": "fb_draft_1794574991813",
+      "topicId": "gateway_breaker_cascade_failure",
+      "title": "Slow Dependencies Kill Gateways Faster Than Outages",
+      "timestamp": "2026-11-13T13:05:07.831Z",
+      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_gateway_breaker_cascade_failure_1794574954231.mp4"
+    },
+    {
+      "id": "fb_draft_1794625319209",
+      "topicId": "context_bleed_multi_agent_orchestration",
+      "title": "Context Bleed Corrupts Multi-Agent Orchestrations",
+      "timestamp": "2026-11-14T03:02:03.372Z",
+      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_context_bleed_multi_agent_orchestration_1794625283670.mp4"
+    },
+    {
+      "id": "fb_draft_1794636121854",
+      "topicId": "gateway_circuit_breaker_cascade",
+      "title": "Unbounded Queues Turn Circuit Breakers Toxic",
+      "timestamp": "2026-11-14T06:02:11.490Z",
+      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_gateway_circuit_breaker_cascade_1794636085833.mp4"
+    },
+    {
+      "id": "fb_draft_1794643313195",
+      "topicId": "fhir_telemetry_stream_bottleneck",
+      "title": "Telemetry Floods Crush Naive FHIR Pipelines",
+      "timestamp": "2026-11-14T08:02:06.868Z",
+      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_fhir_telemetry_stream_bottleneck_1794643275309.mp4"
+    },
+    {
+      "id": "fb_draft_1794650515204",
+      "topicId": "db_deadlocks_lock_contention",
+      "title": "Missing Indexes Turn Row Locks Into Deadlock Storms",
+      "timestamp": "2026-11-14T10:01:59.396Z",
+      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_db_deadlocks_lock_contention_1794650478186.mp4"
+    },
+    {
+      "id": "fb_draft_1794661321551",
+      "topicId": "uncapped_kv_cache_oom_ml_serving",
+      "title": "Uncapped KV Caches OOM Production LLM Nodes",
+      "timestamp": "2026-11-14T13:03:21.226Z",
+      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_uncapped_kv_cache_oom_ml_serving_1794661285580.mp4"
+    },
+    {
+      "id": "fb_draft_1794711711708",
+      "topicId": "schema_locks_blue_green_cutover",
+      "title": "Schema Locks Shatter Blue-Green Deployments",
+      "timestamp": "2026-11-15T03:02:20.388Z",
+      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_schema_locks_blue_green_cutover_1794711673042.mp4"
+    },
+    {
+      "id": "fb_draft_1794722513404",
+      "topicId": "dynamic_batch_latency_trap",
+      "title": "Dynamic Batch Timeouts Cripple ML Inference Tail Latency",
+      "timestamp": "2026-11-15T06:01:57.550Z",
+      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_dynamic_batch_latency_trap_1794722474761.mp4"
+    },
+    {
+      "id": "fb_draft_1794729832753",
+      "topicId": "cache_stampede_redis_invalidation",
+      "title": "Cache Stampedes Crush Cold DBs on TTL Expiry",
+      "timestamp": "2026-11-15T08:04:03.719Z",
+      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_cache_stampede_redis_invalidation_1794729795784.mp4"
+    },
+    {
+      "id": "fb_draft_1794736955321",
+      "topicId": "transactional_outbox_dual_write_trap",
+      "title": "Dual Writes Silently Corrupt Distributed Event Streams",
+      "timestamp": "2026-11-15T10:02:38.996Z",
+      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_transactional_outbox_dual_write_trap_1794736918221.mp4"
+    },
+    {
+      "id": "fb_draft_1794747762633",
+      "topicId": "canary_traffic_bleed_session_state",
+      "title": "Sticky Sessions Silently Poison Canary Rollouts",
+      "timestamp": "2026-11-15T13:02:52.454Z",
+      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_canary_traffic_bleed_session_state_1794747725737.mp4"
+    },
+    {
+      "id": "fb_draft_1794798141348",
+      "topicId": "outbox_table_cdc_lag",
+      "title": "Outbox Table Bloat Cripples CDC Event Relays",
+      "timestamp": "2026-11-16T03:02:26.718Z",
+      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_outbox_table_cdc_lag_1794798091539.mp4"
+    },
+    {
+      "id": "fb_draft_1794808934880",
+      "topicId": "gap_locks_deadlock_concurrency",
+      "title": "Gap Locks Turn Concurrent Inserts Into Deadlock Traps",
+      "timestamp": "2026-11-16T06:02:21.346Z",
+      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_gap_locks_deadlock_concurrency_1794808891501.mp4"
+    },
+    {
+      "id": "fb_draft_1794816144887",
+      "topicId": "circuit_breaker_cascading_meltdown",
+      "title": "Slow Dependencies Bleed Gateway Threads Into Full Outage",
+      "timestamp": "2026-11-16T08:02:28.376Z",
+      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_circuit_breaker_cascading_meltdown_1794816101876.mp4"
+    },
+    {
+      "id": "fb_draft_1794823374719",
+      "topicId": "unindexed_foreign_key_lock_escalation",
+      "title": "Unindexed Foreign Keys Silently Deadlock Parent Updates",
+      "timestamp": "2026-11-16T10:02:58.464Z",
+      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_unindexed_foreign_key_lock_escalation_1794823332500.mp4"
+    },
+    {
+      "id": "fb_draft_1794834129976",
+      "topicId": "gateway_circuit_breaker_resilience",
+      "title": "Circuit Breakers Stop Cascading Microservice Death",
+      "timestamp": "2026-11-16T13:02:16.142Z",
+      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_gateway_circuit_breaker_resilience_1794834093448.mp4"
+    },
+    {
+      "id": "fb_draft_1794884538582",
+      "topicId": "lock_ordering_deadlock_batches",
+      "title": "Mismatched Lock Order Deadlocks Concurrent Batch Updates",
+      "timestamp": "2026-11-17T03:02:22.829Z",
+      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_lock_ordering_deadlock_batches_1794884494964.mp4"
+    },
+    {
+      "id": "fb_draft_1794895338062",
+      "topicId": "cache_aside_race_invalidation",
+      "title": "Cache-Aside Races Silently Resurrect Stale DB State",
+      "timestamp": "2026-11-17T06:02:23.143Z",
+      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_cache_aside_race_invalidation_1794895296440.mp4"
+    },
+    {
+      "id": "fb_draft_1794902556199",
+      "topicId": "event_queue_out_of_order_retries",
+      "title": "Out-of-Order Queue Retries Corrupt Outbox State",
+      "timestamp": "2026-11-17T08:02:40.650Z",
+      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_event_queue_out_of_order_retries_1794902512929.mp4"
+    },
+    {
+      "id": "fb_draft_1794909781394",
+      "topicId": "adaptive_gateway_concurrency_limits",
+      "title": "Static Rate Limits Shatter Under Client Retry Storms",
+      "timestamp": "2026-11-17T10:03:05.503Z",
+      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_adaptive_gateway_concurrency_limits_1794909742211.mp4"
+    },
+    {
+      "id": "fb_draft_1794920540489",
+      "topicId": "redis_stampede_xfetch_prevention",
+      "title": "Hot Key Expiry Stampedes Crush Production Databases",
+      "timestamp": "2026-11-17T13:02:23.635Z",
+      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_redis_stampede_xfetch_prevention_1794920502632.mp4"
+    },
+    {
+      "id": "fb_draft_1794970949664",
+      "topicId": "dual_write_outbox_pattern",
+      "title": "Direct Dual Writes Silently Corrupt Distributed State",
+      "timestamp": "2026-11-18T03:02:32.806Z",
+      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_dual_write_outbox_pattern_1794970910541.mp4"
+    },
+    {
+      "id": "fb_draft_1794981748934",
+      "topicId": "xfetch_probabilistic_cache_refresh",
+      "title": "Probabilistic Early Refresh Halts Redis Stampedes",
+      "timestamp": "2026-11-18T06:02:38.500Z",
+      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_xfetch_probabilistic_cache_refresh_1794981709751.mp4"
+    },
+    {
+      "id": "fb_draft_1794988941962",
+      "topicId": "outbox_table_bloat_kills_db_iops",
+      "title": "Unpartitioned Outbox Tables Cripple Relational DB IOPS",
+      "timestamp": "2026-11-18T08:02:25.510Z",
+      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_outbox_table_bloat_kills_db_iops_1794988897548.mp4"
+    },
+    {
+      "id": "fb_draft_1794996218300",
+      "topicId": "outbox_consumer_idempotency_ledger",
+      "title": "Missing Idempotency Stores Corrupt At-Least-Once Queues",
+      "timestamp": "2026-11-18T10:03:44.296Z",
+      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_outbox_consumer_idempotency_ledger_1794996172656.mp4"
+    },
+    {
+      "id": "fb_draft_1795007055656",
+      "topicId": "gateway_worker_thread_exhaustion",
+      "title": "Slow Upstreams Starve Shared Gateway Thread Pools",
+      "timestamp": "2026-11-18T13:04:34.671Z",
+      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_gateway_worker_thread_exhaustion_1795007017657.mp4"
+    },
+    {
+      "id": "fb_draft_1795057348642",
+      "topicId": "zero_downtime_canary_deployment",
+      "title": "Naive Blue-Green Shifts Crash 24/7 DB Migrations",
+      "timestamp": "2026-11-19T03:02:32.506Z",
+      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_zero_downtime_canary_deployment_1795057302654.mp4"
+    },
+    {
+      "id": "fb_draft_1795068115315",
+      "topicId": "llm_inference_kv_cache_thrashing",
+      "title": "Naive KV Caching OOMs Local Medical LLMs",
+      "timestamp": "2026-11-19T06:01:58.566Z",
+      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_llm_inference_kv_cache_thrashing_1795068082913.mp4"
+    },
+    {
+      "id": "fb_draft_1795075334782",
+      "topicId": "feature_store_training_serving_skew",
+      "title": "Training-Serving Skew Silently Destroys ML Accuracy",
+      "timestamp": "2026-11-19T08:02:19.664Z",
+      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_feature_store_training_serving_skew_1795075296854.mp4"
+    },
+    {
+      "id": "fb_draft_1795082507789",
+      "topicId": "unindexed_foreign_keys_deadlock_db",
+      "title": "Unindexed Foreign Keys Trigger Hidden Cascade Deadlocks",
+      "timestamp": "2026-11-19T10:01:50.991Z",
+      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_unindexed_foreign_keys_deadlock_db_1795082473207.mp4"
+    },
+    {
+      "id": "fb_draft_1795093340811",
+      "topicId": "outbox_cdc_read_your_writes_lag",
+      "title": "Outbox CDC Lag Violates Read-Your-Writes Guarantees",
+      "timestamp": "2026-11-19T13:02:28.336Z",
+      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_outbox_cdc_read_your_writes_lag_1795093301947.mp4"
+    },
+    {
+      "id": "fb_draft_1795143682523",
+      "topicId": "cache_aside_stampede_guard",
+      "title": "Cache-Aside Lies: Invalidation Lag & Stampede Kill Switches",
+      "timestamp": "2026-11-20T03:01:26.225Z",
+      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_cache_aside_stampede_guard_1795143648698.mp4"
+    },
+    {
+      "id": "fb_draft_1795154486035",
+      "topicId": "llm_inference_gpu_oom_guard",
+      "title": "Unbounded LLM Inference OOMs Production GPU Nodes",
+      "timestamp": "2026-11-20T06:01:29.236Z",
+      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_llm_inference_gpu_oom_guard_1795154448758.mp4"
+    },
+    {
+      "id": "fb_draft_1795161704583",
+      "topicId": "fhir_hl7_telemetry_security",
+      "title": "FHIR Feeds Leak PHI Through Unencrypted Telemetry",
+      "timestamp": "2026-11-20T08:01:47.977Z",
+      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_fhir_hl7_telemetry_security_1795161665818.mp4"
+    },
+    {
+      "id": "fb_draft_1795168886602",
+      "topicId": "cache_stampede_coalesce_lock",
+      "title": "Cache Stampede: 500 Threads Hit DB at Once",
+      "timestamp": "2026-11-20T10:01:32.614Z",
+      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_cache_stampede_coalesce_lock_1795168849683.mp4"
+    },
+    {
+      "id": "fb_draft_1795179686424",
+      "topicId": "fhir_telemetry_mtls_gap",
+      "title": "FHIR Feeds Trust Plaintext Telemetry Too Much",
+      "timestamp": "2026-11-20T13:01:29.847Z",
+      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_fhir_telemetry_mtls_gap_1795179648776.mp4"
+    },
+    {
+      "id": "fb_draft_1795240884916",
+      "topicId": "db_lock_contention_index_deadlock",
+      "title": "Row Locks Aren't Free: Deadlocks Hiding in Plain Index",
+      "timestamp": "2026-11-21T06:01:30.318Z",
+      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_db_lock_contention_index_deadlock_1795240848272.mp4"
+    },
+    {
+      "id": "fb_draft_1795248086513",
+      "topicId": "ml_feature_store_drift_poisoning",
+      "title": "Your Model Didn't Decay. Your Features Did.",
+      "timestamp": "2026-11-21T08:01:36.981Z",
+      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_ml_feature_store_drift_poisoning_1795248048541.mp4"
+    },
+    {
+      "id": "fb_draft_1795255286384",
+      "topicId": "feature_store_skew_production",
+      "title": "Feature Store Skew: When Training Data Lies to Production",
+      "timestamp": "2026-11-21T10:01:29.457Z",
+      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_feature_store_skew_production_1795255248831.mp4"
+    },
+    {
+      "id": "fb_draft_1795266133070",
+      "topicId": "llm_inference_optimization_local_deploy",
+      "title": "Your LLM Bill Is Killing You. Quantize It.",
+      "timestamp": "2026-11-21T13:02:17.331Z",
+      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_llm_inference_optimization_local_deploy_1795266098095.mp4"
+    },
+    {
+      "id": "fb_draft_1795303171882",
+      "topicId": "blue_green_canary_zero_downtime",
+      "title": "Zero-Downtime Deploys: Blue-Green vs Canary",
+      "timestamp": "2026-11-21T23:19:48.257Z",
+      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_blue_green_canary_zero_downtime_1795303125357.mp4"
+    },
+    {
+      "id": "fb_draft_1795303469935",
+      "topicId": "api_gateway_circuit_breaker_cascade",
+      "title": "API Gateway: Rate Limiting & Circuit Breaker to Stop Cascading Failures",
+      "timestamp": "2026-11-21T23:24:33.817Z",
+      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_api_gateway_circuit_breaker_cascade_1795303431042.mp4"
     }
-  ]
+  ],
+  "lastExecutedSlot": "2026-11-22_06"
 }

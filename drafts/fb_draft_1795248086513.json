@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1795248086513",
+  "topicId": "ml_feature_store_drift_poisoning",
+  "topic": "Your Model Didn't Decay. Your Features Did.",
+  "category": "AI ARCHITECTURE",
+  "createdAt": "2026-11-21T08:01:26.513Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_ml_feature_store_drift_poisoning_1795248048541.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_ml_feature_store_drift_poisoning_1795248086170.jpg",
+  "postText": "Model accuracy dropped 11% in production. We retrained. It got worse.\n\nThat was the moment I stopped trusting my own ML pipeline.\n\nHere's the trap. In healthcare IT, our patient risk model was trained on features computed by a nightly batch job. But inference ran against a real-time feature service. Same feature names. Different logic. Different null handling. Different time windows.\n\nClassic training-serving skew, but worse: the features themselves were drifting. Lab result distributions shift when a new analyzer goes live. Admission patterns change every flu season. Our model was stable. The ground beneath it was moving.\n\nWhat fixed it:\n\n1. Feature definitions versioned in the same commit as the model artifact. No feature without a model. No model without a feature hash.\n2. Log the actual online feature vector at inference time. Not the request. The resolved values the model consumed. Replay those offline.\n3. Daily distribution checks per feature. PSI and KS tests against a rolling baseline. Alert when drift crosses threshold, not when accuracy tanks weeks later.\n\nThe hard lesson: retraining on drifted features doesn't fix anything. It just poisons the new model faster.\n\nQuestion for the ML engineers and data leads here: when your model silently degrades, how do you prove whether it's the model or the features? Do you have feature-level observability, or are you still guessing from accuracy dashboards?\n\nDrop your war story in the comments. Like if this hit close to home, share it with your data team, and follow for more production ML postmortems.\n\n@pengikut\n\n#MachineLearning #MLOps #FeatureStore #DataDrift #HealthcareIT #ProductionML #AIArchitecture"
+}

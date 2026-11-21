@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1795007055656",
+  "topicId": "gateway_worker_thread_exhaustion",
+  "topic": "Slow Upstreams Starve Shared Gateway Thread Pools",
+  "category": "DISTRIBUTED SYSTEMS",
+  "createdAt": "2026-11-18T13:04:15.656Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_gateway_worker_thread_exhaustion_1795007017657.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_gateway_worker_thread_exhaustion_1795007055316.jpg",
+  "postText": "One lagging insurance verification API almost paralyzed our entire hospital edge gateway during peak morning check-in.\n\nThe culprit was not high CPU or memory exhaustion. It was shared worker starvation at the ingress layer. The API gateway used a global thread pool to proxy requests. When downstream insurance calls slowed from 200ms to 12s, incoming connections piled up. Within seconds, all gateway worker threads were blocked waiting on I/O sockets. Lightweight, sub-10ms endpoints like patient barcode scans and nurse triage lookups were instantly starved out.\n\nA few architectural safeguards stopped this cascade:\n1. Strict route-level bulkheads. Partition thread pools and HTTP connection limits per upstream service. When insurance degrades, only its isolated slice fails.\n2. Adaptive concurrency limits over static rate limits. Algorithms like Netflix Vegas gauge round-trip latency at the gateway edge and reject excess load early instead of buffering.\n3. Edge-level circuit breaking. Trip immediately when p99 latency exceeds SLA, serving cached degraded responses or explicit 503s in under 5ms.\n\nIn mission-critical healthcare systems, graceful partial degradation always beats total edge collapse.\n\nHow do you prevent slow internal microservices from saturating your API gateway: hard isolated gateway clusters per domain or dynamic concurrency bulkheads?\n\nLike this insight, comment your production setup below, and share this with your engineering team!\n\n@pengikut\n\n#APIGateway #DistributedSystems #Microservices #SoftwareArchitecture #Resilience #SystemDesign #SiteReliability"
+}

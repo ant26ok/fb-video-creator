@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794452557006",
+  "topicId": "retry_storms_priority_shedding",
+  "topic": "Retry Storms Bypass Circuit Breakers and Starve Core APIs",
+  "category": "DISTRIBUTED SYSTEMS",
+  "createdAt": "2026-11-12T03:02:37.006Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_retry_storms_priority_shedding_1794452506884.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_retry_storms_priority_shedding_1794452556527.jpg",
+  "postText": "One slow lab integration in healthcare IT recently turned a minor glitch into an API Gateway traffic jam. Client SDKs retried timed-out calls blindly, multiplying traffic 5x before alerts even fired.\n\nUniform rate limiting made things worse. Once the shared bucket emptied, the gateway dropped urgent ER and pharmacy calls alongside routine batch exports.\n\nThree guardrails stopped cascading retry storms at the hospital where I work:\n\n1. Global Retry Budgets: Cap retries at 10% of active volume so struggling upstreams get room to recover instead of drowning in duplicate calls.\n2. Priority Token Buckets: Split rate limits by criticality. Patient-care routes keep reserved capacity while low-priority sync jobs shed first.\n3. Latency-Driven Circuit Breakers: Trip breakers on p99 latency spikes—not just 5xx errors—and serve cached fallbacks before gateway workers starve.\n\nRate limits protect capacity; priority shedding protects critical uptime.\n\nHow does your gateway stop aggressive client retries from starving core endpoints during a partial outage?\n\nHit Like if you survived a retry storm, Comment your pattern below, and Share with your engineering team. @pengikut\n\n#APIGateway #DistributedSystems #CircuitBreaker #RateLimiting #SystemArchitecture #HealthcareIT"
+}

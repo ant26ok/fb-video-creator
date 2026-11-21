@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794470532897",
+  "topicId": "pod_termination_race_deploy",
+  "topic": "Pod Termination Races Break Zero-Downtime Deploys",
+  "category": "MISSION-CRITICAL DEVOPS",
+  "createdAt": "2026-11-12T08:02:12.897Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_pod_termination_race_deploy_1794470493505.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_pod_termination_race_deploy_1794470532477.jpg",
+  "postText": "We pushed a \"zero-downtime\" Blue-Green deploy in a 24/7 healthcare environment—and users still hit random 502 errors.\n\nNo pods crashed. Health checks were green. Yet for 4 seconds, active requests dropped.\n\nThe culprit is a race condition: when an orchestrator terminates an old Blue pod, the app gets SIGTERM and closes its port while the load balancer still takes seconds to purge that IP.\n\nIn that gap, live traffic hits a dead socket.\n\nIn healthcare IT, a dropped clinical or billing request means real friction on the floor. Here is how we eliminated cutover 502s:\n\n1. PreStop Sleep Buffer: Run a 10-second preStop hook before SIGTERM fires so ingress controllers stop routing new traffic first.\n\n2. Separate Readiness & Liveness: Return 503 on /readyz immediately on shutdown while letting active requests finish cleanly.\n\n3. Match Grace Periods: Set terminationGracePeriodSeconds above your preStop delay plus max request SLA to prevent mid-write SIGKILLs.\n\nZero-downtime isn't just spinning up Green—it's letting Blue leave the room politely.\n\nWhat preStop drain window do you use in production, and have you ever been bitten by load balancer propagation lag?\n\nHit Like, drop your experience in the Comments, and Share this with your engineering team! @pengikut\n\n#DevOps #ZeroDowntime #BlueGreenDeployment #CanaryDeployment #Kubernetes #SRE"
+}

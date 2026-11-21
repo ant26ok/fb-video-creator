@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794747762633",
+  "topicId": "canary_traffic_bleed_session_state",
+  "topic": "Sticky Sessions Silently Poison Canary Rollouts",
+  "category": "MISSION-CRITICAL DEVOPS",
+  "createdAt": "2026-11-15T13:02:42.633Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_canary_traffic_bleed_session_state_1794747725737.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_canary_traffic_bleed_session_state_1794747762307.jpg",
+  "postText": "Zero-downtime deployment sounds neat in whitepapers. In 24/7 healthcare IT, reality hits hard.\n\nPicture this: ICU stations and nurse carts run non-stop. You spin up a canary pool for 2% of live traffic to test a critical billing and order-entry update. Within 15 minutes, memory leaks on canary nodes don't trigger alerts because traffic volume is too small. But users hit by the canary get pinned by sticky sessions at load balancer level.\n\nTheir sessions slowly corrupt shared cache states. When you notice errors and pull canary traffic, those pinned sessions get abruptly tossed back to baseline nodes with half-written data structures. Boom: instant cascade failure across both clusters.\n\nTo make blue-green and canary releases truly resilient in mission-critical environments:\n1. Eliminate stateful routing at ingress. Canary shifts must leverage header-based hashing, not sticky cookies that trap real hospital workflows.\n2. Apply strict forward-backward schema compatibility. Never deploy canary nodes expecting new DB columns without dual-read fallbacks.\n3. Implement metric-driven circuit breakers. Wire canary gates directly to Prometheus tail latencies (p99) and automated rollbacks; do not wait for human approval while bedsides are active.\n\nHow does your team handle data compatibility and state routing when canarying state-heavy enterprise systems? Let's discuss in the comments below.\n\nLike, share your perspective below, and pass this along to your engineering team!\n\n@pengikut\n\n#DevOps #DistributedSystems #SoftwareArchitecture #SiteReliabilityEngineering #CloudNative #SystemDesign"
+}

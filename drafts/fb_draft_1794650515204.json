@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794650515204",
+  "topicId": "db_deadlocks_lock_contention",
+  "topic": "Missing Indexes Turn Row Locks Into Deadlock Storms",
+  "category": "DATABASE CONCURRENCY",
+  "createdAt": "2026-11-14T10:01:55.204Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_db_deadlocks_lock_contention_1794650478186.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_db_deadlocks_lock_contention_1794650514888.jpg",
+  "postText": "During morning outpatient rushes at the hospital where I work, database transactions ground to a sudden halt. CPU usage sat under 20%, but application connection pools evaporated within seconds as deadlock alarms lit up the dashboard.\n\nWhen multiple clinic counters admitted patients and reserved pharmacy slots simultaneously, our engine fell apart. The culprit was not write volume. It was an unindexed foreign key inside a concurrent update query.\n\nIn PostgreSQL and MySQL, updating rows requires write locks. When an update lacks an index scan, the engine falls back to a sequential scan. Under standard transaction isolation levels, this holds broad locks or gap locks far longer than anticipated. When Transaction A updates patient status while touching ward queues, and Transaction B updates ward occupancy while touching patient records in reverse order, cyclic lock dependencies trigger instant deadlocks.\n\nWe solved this with three architectural rules:\n1. Index every join and filter predicate on mutable tables to isolate locks strictly to affected rows.\n2. Enforce deterministic lock ordering. When multiple records must be locked via SELECT FOR UPDATE, sort target IDs numerically before acquisition.\n3. Shrink transaction lifecycles. Zero external API calls or telemetry logging inside open transactions.\n\nHow does your team detect and eliminate lock contention before it hits peak traffic?\n\nLike, share your perspective in the comments below, and pass this post to your engineering peers.\n\n@pengikut\n\n#DatabaseEngineering #PostgreSQL #SystemDesign #SoftwareArchitecture #Concurrency #BackendDevelopment"
+}

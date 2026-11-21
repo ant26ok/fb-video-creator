@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1793624528555",
+  "topicId": "db_deadlock_gap_locks",
+  "topic": "Deadlock Misterius: Index Hilang Picu Gap Lock",
+  "category": "DATABASE CONCURRENCY",
+  "createdAt": "2026-11-02T13:02:08.555Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_db_deadlock_gap_locks_1793624484584.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_db_deadlock_gap_locks_1793624528204.jpg",
+  "postText": "Pernah alami lonjakan antrean obat faskes, server DB mendadak spike CPU 100%, lalu transaksi saling bunuh kena deadlock?\n\nKisah nyata di rumah sakit tempat saya bekerja: dua kasir farmasi proses resep dua pasien berbeda. Tidak ada data bertumpuk. Anehnya, DB lempar error 1213: Deadlock found when trying to get lock.\n\nSetelah bedah SHOW ENGINE INNODB STATUS, biangnya terkuak. Query `SELECT ... FOR UPDATE` lupa covering index pada kolom filter status racikan. Akibatnya fatal: DB tidak kunci 1 row, tapi fallback ke Next-Key Lock dan Gap Lock. Rentang ID kosong ikut terkunci rapat. Dua transaksi paralel coba ambil rentang sama secara berlawanan: macet seketika.\n\nSolusi ringkas:\n1. Beri composite index tepat sasaran pada filter locking query agar lock eksklusif hanya kunci target row.\n2. Samakan urutan akses resource di seluruh service logic (selalu urut ASC by record ID) cegah cyclical wait.\n3. Pertahankan isolasi Read Committed bila Repeatable Read terlalu agresif sebar gap lock.\n\nBagaimana strategi tim Anda saat menelusuri deadlock gaib di DB produksi: andalkan APM log query lambat, matikan Gap Lock, atau bedah engine status langsung?\n\nLike jika bermanfaat, bagikan pengalaman Anda di kolom komentar, dan share postingan ini ke rekan-rekan tech lead lain!"
+}

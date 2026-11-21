@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794722488862",
+  "topicId": "redis_stampede_cache_aside_collapse",
+  "topic": "Cache Stampedes Turn Redis Outages Into Database Disasters",
+  "category": "DISTRIBUTED CACHING",
+  "createdAt": "2026-11-15T06:01:28.862Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_redis_stampede_cache_aside_collapse_1794722443758.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_redis_stampede_cache_aside_collapse_1794722488449.jpg",
+  "postText": "A single expired cache key brought our clinic inventory query to its knees.\n\n500 concurrent doctors querying medication stock during morning shift change. Redis key hit its TTL. Every request missed cache at the exact same millisecond.\n\nInstead of serving from memory, 500 identical complex SQL aggregations slammed our primary database. Connection pool depleted in 3 seconds. API gateway timed out.\n\nClassic cache-aside trap: Cache Stampede (Thundering Herd).\n\nIn high-throughput healthcare IT, naive cache-aside fails under load. When hot data expires, concurrent workers race to repopulate it. Your database absorbs the blast radius.\n\nThree production patterns we use to stop this:\n\n1. SingleFlight / Distributed Mutex: First worker acquires lock via Redis SETNX with brief TTL. Only this worker queries DB and warms cache. Remaining requests wait or fall back gracefully.\n2. Probabilistic Early Recompute (XFetch): As TTL approaches expiration, background workers probabilistically compute and refresh value before it dies, scaling with read velocity.\n3. TTL Jitter: Never set hard uniform TTLs. Add randomized jitter so keys never expire in lockstep.\n\nCaching is easy. Keeping invalidation from nuking your persistent storage is the real battle.\n\nHow do you handle cache stampedes in your production stack? Do you prefer distributed locks, SingleFlight in memory, or background warmers?\n\nLike, comment your approach below, and share with your engineering team!\n\n@pengikut\n\n#SoftwareEngineering #SystemDesign #Redis #DistributedSystems #BackendDevelopment #DatabaseArchitecture"
+}

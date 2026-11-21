@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1793390478299",
+  "topicId": "db_locking_index_gap_locks",
+  "topic": "Bukan Karena Query Lambat: Jebakan Gap Lock Bikin Freeze",
+  "category": "DATABASE CONCURRENCY",
+  "createdAt": "2026-10-30T20:01:18.299Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_db_locking_index_gap_locks_1793390439757.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_db_locking_index_gap_locks_1793390477968.jpg",
+  "postText": "Pernah alami query UPDATE sangat simpel tapi bikin seluruh modul faskes mendadak hang?\n\nDi rumah sakit tempat saya bekerja, antrean billing tiba-tiba mengular bukan karena beban CPU tinggi. CPU santai di 15%, RAM aman. Ternyata biang keroknya: Next-Key Locking di database transaksional (InnoDB).\n\nKetika kita mengeksekusi UPDATE atau SELECT FOR UPDATE tanpa index unik yang presisi, DB tidak cuma mengunci satu baris target. DB mengunci celah kosong di antara baris (Gap Lock). Transaksi lain yang mau INSERT data baru di rentang tersebut dipaksa menunggu. Terjadilah efek domino: antrean koneksi menumpuk, timeout massal, hingga deadlock acak.\n\nSolusi praktis yang kami terapkan:\n1. Strict Indexing: Pastikan kolom di klausa WHERE punya index unik agar engine hanya memasang Record Lock murni, bukan mengunci range tabel.\n2. Urutan Akses Identik: Semua service harus mengakses tabel dan urutan baris secara konsisten (misal selalu SORT BY id ASC) untuk cegah siklus deadlock.\n3. Transaksi Ramping: Jangan pernah taruh pemanggilan API pihak ketiga di dalam blok BEGIN TRANSACTION. Selesaikan komputasi dulu, baru lock DB secepat kilat.\n\nIndex bukan sekadar alat pencari, tapi tameng proteksi concurrency database Anda.\n\nJika tulisan ini bermanfaat, silakan Like, tinggalkan Komen cerita concurrency nightmare Anda di kolom komentar, dan Share postingan ini ke rekan-rekan IT lainnya!\n\n#DatabaseArchitecture #SoftwareEngineering #HighConcurrency #SystemDesign #TechLead #BackendDevelopment #DatabasePerformance"
+}

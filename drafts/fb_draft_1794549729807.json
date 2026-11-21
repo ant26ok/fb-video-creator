@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794549729807",
+  "topicId": "gateway_cascading_breaker_shield",
+  "topic": "Dumb Gateways Turn Slow Microservices into Total Outages",
+  "category": "DISTRIBUTED RESILIENCE",
+  "createdAt": "2026-11-13T06:02:09.807Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_gateway_cascading_breaker_shield_1794549659887.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_gateway_cascading_breaker_shield_1794549729207.jpg",
+  "postText": "In healthcare IT, a slow reporting service once drained our API gateway worker pools. Because routes shared one connection pool, critical triage systems stalled alongside routine report queries.\n\nHere is the hard truth: when one downstream service crawls, an unprotected API gateway amplifies the failure instead of containing it.\n\nHere is how we stopped cascading outages at our gateway:\n\n1. Bulkhead Connection Pools\nNever allow all routes to draw from a shared thread or connection pool. Allocate discrete, bounded pools per upstream domain. If billing or analytics stalls, critical patient registration keeps humming.\n\n2. Distributed Token-Bucket Throttling\nGlobal IP rate limits are not enough. Rate limit by upstream route sensitivity. When downstream latency spikes, dynamically tighten ingress token generation to preserve backend headroom.\n\n3. Fast-Failing Circuit Breakers with Fallbacks\nTrip circuits on p99 latency breaches, not just 5xx errors. When tripped, fail fast with an explicit HTTP 503 or return a cached read-model fallback. Holding gateway sockets open waiting on 30-second timeouts kills your cluster.\n\nHow do you balance circuit breaker trip sensitivity between critical write endpoints and heavy read queries?\n\nLike, comment your architectural approaches below, and share this post with fellow IT colleagues!\n\n@pengikut\n\n#DistributedSystems #APIGateway #SoftwareArchitecture #SystemDesign #Microservices #ReliabilityEngineering"
+}

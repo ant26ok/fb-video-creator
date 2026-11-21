@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1793710899881",
+  "topicId": "mllp_backpressure_telemetry_reorder",
+  "topic": "MLLP Lemah Backpressure: Data Telemetri Pasien Jadi Out-of-Order",
+  "category": "HEALTHCARE INTEROPERABILITY",
+  "createdAt": "2026-11-03T13:01:39.881Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_mllp_backpressure_telemetry_reorder_1793710856133.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_mllp_backpressure_telemetry_reorder_1793710899363.jpg",
+  "postText": "Pernah bayangkan monitor pasien ICU menunjukkan saturasi oksigen turun ke 80%, tapi 5 detik kemudian grafik melompat balik ke 98% seolah ada mukjizat, padahal kondisi pasien memburuk?\n\nInsiden ini terjadi saat pipeline integrasi perangkat bedside ke FHIR server rumah sakit tempat saya bekerja kebanjiran beban. Jalur telemetri memakai protokol klasik HL7 v2 over MLLP (Minimal Lower Layer Protocol). Masalahnya, MLLP tidak punya native flow control modern. Begitu database FHIR alami IO spike singkat, acknowledge (ACK) tertunda beberapa ratus milidetik.\n\nPerangkat monitor menganggap transmisi gagal, lalu firing retry agresif. Hasilnya terjadi retry storm: paket lama dan paket baru berebut socket TCP yang sama. Engine ingestion memproses pesan HL7 secara concurrent tanpa locking sequence MSH-7. Pesan pengamatan SpO2 yang lama justru tersimpan terakhir di resource FHIR Observation. Status pasien jadi rollback ke masa lalu secara gaib.\n\nSolusinya, kami pasang edge-gateway tipis di depan engine MLLP. Gateway ini memvalidasi frame header, menolak koneksi liar, dan melempar payload mentah ke messaging queue terpartisi berdasarkan ID pasien sebelum transformasi ke FHIR. Urutan waktu vital sign kembali presisi dan deterministik.\n\nBagaimana strategi interoperabilitas di faskes atau sistem Anda: masih mempertahankan direct socket MLLP warisan vendor lama, atau sudah dibungkus event streaming queue?\n\nLike jika insight ini relevan, bagikan pengalaman teknis Anda di kolom komentar, dan share ke rekan arsitek software medis lainnya!"
+}

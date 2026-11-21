@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794315739455",
+  "topicId": "dynamic_batching_latency_spike",
+  "topic": "Unbounded Dynamic Batching Kills Real-Time ML Latency",
+  "category": "AI ARCHITECTURE",
+  "createdAt": "2026-11-10T13:02:19.455Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_dynamic_batching_latency_spike_1794315689140.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_dynamic_batching_latency_spike_1794315739049.jpg",
+  "postText": "Your model benchmarks show 1,200 tokens/sec. Then production traffic hits, and suddenly critical p99 latency spikes past 8 seconds.\n\nHere is what happens inside model serving engines: to squeeze every drop of compute out of expensive GPUs, architects enable dynamic batching. The server collects incoming inference requests over a time window to form a single tensor. If queue arrival rates stutter, early requests sit idle waiting for batch windows to fill.\n\nIn healthcare IT, this failure pattern is fatal. An interactive diagnostic assist query gets batched together with a 4,000-token patient discharge summary. The short, latency-sensitive query is trapped in lockstep execution with the long generation task due to static tensor padding.\n\nTo eliminate this bottleneck:\n1. Move to continuous iteration-level batching (like vLLM or TensorRT-LLM) so requests join and leave GPU execution at token step boundaries.\n2. Set strict hard timeout caps on queues; never allow batch saturation goals to violate latency SLAs.\n3. Segment model replicas: keep interactive bedside endpoints strictly physically isolated from batch summarization pipelines.\n\nHow does your team balance GPU saturation efficiency against strict p99 latency SLAs in production?\n\nDrop your thoughts and architectural trade-offs below. If you found this breakdown valuable, hit Like, share your perspective in the comments, and share this with your engineering team!\n\n@pengikut\n\n#MachineLearning #SystemDesign #MLOps #SoftwareArchitecture #ArtificialIntelligence #DistributedSystems"
+}

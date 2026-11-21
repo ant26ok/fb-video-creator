@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1793944893192",
+  "topicId": "multi_agent_memory_bleed",
+  "topic": "Memory Bleed Multi-Agent: Konteks Kemarin Cemari Triase",
+  "category": "AI ARCHITECTURE",
+  "createdAt": "2026-11-06T06:01:33.192Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_multi_agent_memory_bleed_1793944849098.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_multi_agent_memory_bleed_1793944892617.jpg",
+  "postText": "Triase IGD rumah sakit tempat saya bekerja kedatangan pasien baru gejala demam biasa. Tiba-tiba AI agent rekomendasi injeksi insulin dosis tinggi. Kenapa? Pasien sebelumnya syok hiperglikemia.\n\nMasalah: shared episodic memory antar-agent. Orchestrator pakai long-term context pool tanpa reset metadata encounter_id. Embedding keluhan pasien lama nyangkut di vector store lokal agent spesialis. Terjadi memory bleed.\n\nArsitektur multi-agent otonom wajib disiplin state:\n1. Stateless Worker Nodes: Agent diagnosa dan resep dibuat stateless murni. State hanya dipegang State Machine Orchestrator (Saga/Temporal).\n2. Session Scoped Memory: Context window dan episodic memory dikunci per ID kunjungan pasien. Begitu sesi selesai, context langsung dibuang.\n3. Hard TTL pada Vector Memory: Memori semantik wajib punya time-to-live ketat agar fakta transien tidak mencemari diagnosa jangka panjang.\n\nSistem otonom bukan cuma soal prompt canggih, tapi disiplin sanitasi state antar proses.\n\nBagaimana tim Anda mengisolasi state dan memory antar AI agent agar tidak saling bocor konteks? Tulis pengalaman Anda di kolom komentar.\n\nLike jika bermanfaat, bagikan ke rekan IT Anda!"
+}

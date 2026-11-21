@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1793772071934",
+  "topicId": "canary_traffic_weighting_failure",
+  "topic": "Canary Bocor: Sesi Pasien Nyasar Picu Crash Loop",
+  "category": "MISSION-CRITICAL DEVOPS",
+  "createdAt": "2026-11-04T06:01:11.934Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_canary_traffic_weighting_failure_1793772032001.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_canary_traffic_weighting_failure_1793772071567.jpg",
+  "postText": "Rilis jam 2 pagi, traffic diset 5% ke pod Canary. Niat hati uji fitur registrasi rawat inap baru tanpa ganggu operasional faskes.\n\nPetaka datang 10 menit kemudian: antrean IGD macet total. Pod v1 dan v2 saling lempar request gRPC. Pasien yang session handshake-nya di v2, request berikutnya nyasar ke v1. Server panic parsing protobuf field yang belum dikenal v1. Pod crash loop, OOM beruntun, 5% traffic bocor jadi 100% outage.\n\nDalam sistem 24/7 rumah sakit tempat saya bekerja, zero-downtime bukan cuma soal pasang ingress controller lalu putar weight traffic.\n\nTiga fondasi wajib sebelum lepas Canary:\n1. Strict Session Affinity: Ingress wajib kunci user ke versi pod yang sama via hash cookie sampai flow transaksi selesai. Jangan pakai round-robin mentah.\n2. Additive Wire Format: Gunakan prinsip Tolerant Reader. Field baru wajib optional. Backend lama jangan reject field asing; ignore silently.\n3. Prometheus Canary Rollback: Rollback otomatis berbasis rate error P99 dan 5xx. Jangan tunggu user teriak di WhatsApp baru panik klik manual.\n\nKalian yang pegang sistem 24/7: canary routing pakai session hash di layer Ingress atau main feature flag di application layer? Ada insiden pahit gara-gara state loncat versi?\n\nTulis pengalaman kalian di kolom komentar. Like postingan ini jika relate dan share ke tim DevOps atau backend engineer kalian!\n\n#DevOps #ZeroDowntime #CanaryDeployment #SystemArchitecture #SoftwareEngineering #BackendEngineering #MissionCritical"
+}

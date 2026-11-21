@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794884529480",
+  "topicId": "kv_cache_fragmentation_vram_oom",
+  "topic": "KV Cache Fragmentation Exhausts Local VRAM",
+  "category": "AI ARCHITECTURE",
+  "createdAt": "2026-11-17T03:02:09.480Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_kv_cache_fragmentation_vram_oom_1794884481184.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_kv_cache_fragmentation_vram_oom_1794884529023.jpg",
+  "postText": "Local LLM deployment in healthcare IT hits hard limits fast. Patient data privacy demands on-premise execution, but dual RTX 4090 or single A100 nodes quickly hit Out-Of-Memory (OOM) errors during peak concurrent chart summarization.\n\nRoot cause was not model parameter size. 70B parameter model loaded with 4-bit quantization fit inside memory. Real bottleneck was KV cache fragmentation.\n\nNaive HuggingFace transformers allocate continuous memory buffers for maximum context length. With variable medical record lengths (500 to 8,000 tokens), internal memory fragmentation reached 60-80%. VRAM exhausted, concurrent inference halted.\n\nThree architectural shifts stabilized local deployment:\n\n1. PagedAttention Engine: Migrated to vLLM. Maps non-contiguous physical GPU pages to virtual tokens like OS paging. Slashed memory waste to under 4%.\n2. AWQ Quantization: Protected salient outlier weights while packing parameters to 4-bit integers. Memory freed for dynamic KV blocks.\n3. Continuous Iteration Batching: Replaced static batching with token-level scheduling. Long discharge summaries no longer block fast prescription parses.\n\nResult: 4x throughput increase, zero VRAM OOM crashes on on-prem hardware.\n\nWhen deploying private LLMs on-premise, how do you handle memory allocation between context size peaks and concurrency?\n\nLike, comment your architectural choices below, and share with your engineering team.\n\n@pengikut\n\n#LLMArchitecture #MachineLearning #SystemDesign #vLLM #HealthcareIT #LocalLLM #InferenceOptimization"
+}

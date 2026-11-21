@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1793440934279",
+  "topicId": "llm_prefix_caching_ttft",
+  "topic": "TTFT 4 Detik Bikin Dokter Ngamuk: Solusi Prefix Caching",
+  "category": "LLM INFERENCE",
+  "createdAt": "2026-10-31T10:02:14.279Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_llm_prefix_caching_ttft_1793440888532.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_llm_prefix_caching_ttft_1793440933913.jpg",
+  "postText": "Baru 3 detik menunggu token pertama muncul, dokter di IGD sudah keburu menutup tab aplikasi.\n\nSaat deploy LLM lokal di rumah sakit tempat saya bekerja untuk resume medis, komplain utama bukan akurasi jawaban, melainkan TTFT (Time-To-First-Token) yang lambat. Pengguna merasa sistem hang, padahal begitu mulai streaming, output token berjalan sangat kencang.\n\nSetelah profilisasi runtime engine, akar masalah terlihat: System prompt memuat ribuan token panduan klinis, format ICD-10, dan batasan respon. Tiap request masuk dari poli, engine memproses ulang KV cache dari token ke-0 untuk teks panduan yang sebenarnya identik.\n\nSolusinya bukan langsung belanja GPU baru:\n1. Aktifkan Automatic Prefix Caching (Radix Attention) di inference engine lokal.\n2. Standardisasi posisi prompt: Instruksi statis wajib di depan, variabel data rekam medis pasien di akhir. Prefix yang cocok langsung hit cache VRAM tanpa re-prefill.\n\nHasilnya, TTFT terpangkas dari 3.8 detik ke bawah 400 milidetik. Utilisasi compute prefill anjlok, respon terasa instan bagi user klinis.\n\nDi arsitektur inference tim Anda, sudahkah membedakan optimasi fase prefill vs decode, atau sistem masih menghitung ulang prompt panjang tiap request?\n\nKlik Like jika postingan ini membuka sudut pandang baru, tulis pengalaman Anda di kolom komentar, dan Share postingan ini ke rekan engineer Anda!\n\n#SoftwareEngineering #LLMInference #ArtificialIntelligence #SystemDesign #TechLead #DevOps #HealthcareIT"
+}

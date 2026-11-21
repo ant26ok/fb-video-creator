@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794564126223",
+  "topicId": "gap_lock_insert_deadlocks",
+  "topic": "Next-Key Gap Locks Turn Concurrent Inserts into Deadlocks",
+  "category": "DATABASE CONCURRENCY",
+  "createdAt": "2026-11-13T10:02:06.223Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_gap_lock_insert_deadlocks_1794564078396.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_gap_lock_insert_deadlocks_1794564125782.jpg",
+  "postText": "High-volume shifts in healthcare IT test database limits fast. During peak medication dispensing, concurrent inserts started dropping with deadlock errors—even though every record had unique keys.\n\nRoot cause: MySQL InnoDB default isolation level (REPEATABLE READ) uses Next-Key locks. When queries filter on non-unique indexes or search ranges without exact hits, the engine locks not just rows, but the gaps between index records.\n\nTwo concurrent transactions scanning missing IDs lock the identical gap. When both attempt to insert new records into that guarded space, each waits for the other to yield. Immediate cyclic deadlock.\n\nThree production patterns solved this:\n1. Switch isolation to READ COMMITTED. Gap locking turns off for simple searches; only actual matching rows get locked.\n2. Sort batch inputs deterministically. Pre-sorting records by Primary Key in memory prevents inverted lock acquisition orders.\n3. Convert range checks into exact point lookups backed by strict unique composite indexes.\n\nDon't let invisible index gaps paralyze high-throughput writes.\n\nHow does your team mitigate gap locks and deadlocks under heavy write traffic? Do you downgrade isolation levels or restructure queries?\n\nLike, comment your experience below, and share this post with your IT colleagues.\n@pengikut\n\n#DatabaseArchitecture #MySQL #HighConcurrency #SystemDesign #SoftwareEngineering #BackendDev"
+}

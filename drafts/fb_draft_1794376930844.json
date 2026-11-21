@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794376930844",
+  "topicId": "replay_attacks_poison_bedside_telemetry",
+  "topic": "Replay Attacks Silently Poison Bedside Telemetry",
+  "category": "HEALTHCARE IT & SECURITY",
+  "createdAt": "2026-11-11T06:02:10.844Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_replay_attacks_poison_bedside_telemetry_1794376886207.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_replay_attacks_poison_bedside_telemetry_1794376930464.jpg",
+  "postText": "Most hospital bedside monitors still pump vitals across internal subnets using legacy multicast protocols. If an attacker or a misconfigured switch replays stale UDP frames, your EHR flowsheets record normal heart rates while the patient is crashing.\n\nIn healthcare IT, clinical data integrity is patient safety. When engineering telemetry ingestion pipelines from ICU patient monitors to our FHIR and HL7 observation stores, direct ingestion is an architectural liability.\n\nHere is how we lock down clinical telemetry ingestion:\n\n1. Hardware Identity via mTLS: Isolate device VLANs. Terminate device traffic at dedicated edge brokers using IEEE 802.1AR secure device identifiers. No cert, no packet ingestion.\n\n2. Monotonic Nonce & Drift Checks: Strip raw timestamps from legacy feeds. Enforce monotonic sequence counters with strict 500ms sliding windows at the edge gateway to neutralize network replay attacks.\n\n3. Zero-Trust Gateway Parsing: Convert raw telemetry into validated FHIR Observation resources inside a sandboxed ingestion enclave before any message hits message brokers or EHR stores.\n\nProtect your data in transit, or clinical decisions run on ghost packets.\n\nHow does your engineering team isolate legacy medical hardware from modern clinical event streams without introducing ingestion lag?\n\nLike, comment your architectural approach below, and share with your healthcare IT and systems engineering teams.\n\n@pengikut\n\n#HealthcareIT #FHIR #CyberSecurity #SystemArchitecture #HealthTech #IoTTelemetry"
+}

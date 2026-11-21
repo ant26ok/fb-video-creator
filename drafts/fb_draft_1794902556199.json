@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794902556199",
+  "topicId": "event_queue_out_of_order_retries",
+  "topic": "Out-of-Order Queue Retries Corrupt Outbox State",
+  "category": "EVENT-DRIVEN ARCHITECTURE",
+  "createdAt": "2026-11-17T08:02:36.199Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_event_queue_out_of_order_retries_1794902512929.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_event_queue_out_of_order_retries_1794902555883.jpg",
+  "postText": "Transactional outbox guarantees atomic publish. It does not save downstream consumers from out-of-order queue retries.\n\nIn healthcare systems where I work, order matters. When lab orders, bed admissions, or prescription status change, state transitions must apply sequentially.\n\nMany teams emit events atomically into an outbox table and relay them to Kafka or RabbitMQ. But when temporary network glitches trigger consumer retries, message two often executes before message one finishes retry backoff. Downstream systems then apply terminal states before initial states.\n\nThree patterns prevent event stream corruption:\n\n1. Route by Aggregate Key: Partition messages deterministically by entity ID. Never publish sequential state changes across uncoordinated queue workers.\n\n2. Monotonic State Guard: Consumers must enforce aggregate version checks (e.g., event_version == current_version + 1). Reject or park stale events arriving out of order.\n\n3. Dead-Letter Queuing: Isolate unprocessable events immediately. Never block partition consumption trying to brute-force poison messages.\n\nOutbox solves atomic dispatch. Consumer idempotency and causal ordering solve correctness.\n\nHow does your team guarantee causal ordering when message queue consumers fail and retry concurrently?\n\nDrop your experience below, hit Like if this helps, and share this with your engineering team!\n\n@pengikut\n\n#SystemDesign #EventDrivenArchitecture #MessageQueues #SoftwareArchitecture #Microservices #DistributedSystems #BackendEngineering"
+}

@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794290541761",
+  "topicId": "multi_agent_choreography_split_brain",
+  "topic": "Choreographed Multi-Agent Swarms Spawn Split-Brain State",
+  "category": "AI ARCHITECTURE",
+  "createdAt": "2026-11-10T06:02:21.761Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_multi_agent_choreography_split_brain_1794290502771.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_multi_agent_choreography_split_brain_1794290541390.jpg",
+  "postText": "We gave autonomous AI agents freedom to coordinate via event pub/sub. Within hours, our multi-agent pipeline tore the staging environment apart.\n\nIn healthcare IT, we piloted multi-agent orchestration for clinical report triaging and resource scheduling. One agent extracted radiology findings, another evaluated ICU priority levels, and a third reserved transit resources. We avoided a central orchestrator, letting agents react dynamically to event topics.\n\nThe result was catastrophic semantic drift. Latency in note processing caused Agent B to update records Agent A had already closed, re-triggering Agent A in an infinite semantic ping-pong. Worse: Agent C reserved physical transfer slots twice based on stale uncommitted inferences. Decentralized choreography turns benign network jitter into split-brain mutations.\n\nHere is how we stabilized multi-agent systems:\n1. Replace peer choreography with a centralized Supervisor DAG. No agent triggers another agent directly.\n2. Model workflows as explicit finite state machines. Agents emit structured intent proposals; the supervisor verifies pre-conditions before committing.\n3. Wrap all mutating tool executions behind deterministic idempotency tokens.\n\nReliable multi-agent systems require rigorous orchestrators, not unregulated swarms.\n\nHow do you handle causal state consistency and rollback safety across multi-agent handoffs? Share your approach below.\n\nIf this perspective resonated, like, leave your thoughts in the comments, and share this with your architecture peers.\n@pengikut\n\n#SoftwareArchitecture #AIEngineering #MultiAgentSystems #DistributedSystems #SystemDesign #AIAgents"
+}

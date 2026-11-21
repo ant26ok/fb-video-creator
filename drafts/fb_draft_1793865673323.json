@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1793865673323",
+  "topicId": "gap_lock_deadlock_secondary_index",
+  "topic": "Gap Lock Liar: Index Bolong Picu Deadlock Massal Kasir",
+  "category": "DATABASE CONCURRENCY",
+  "createdAt": "2026-11-05T08:01:13.323Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_gap_lock_deadlock_secondary_index_1793865634470.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_gap_lock_deadlock_secondary_index_1793865672978.jpg",
+  "postText": "Pernah alami lonjakan CPU database mendadak 100% dan log penuh pesan 'Deadlock found when trying to get lock; try restarting transaction'?\n\nKasus ini nyata terjadi di rumah sakit tempat saya bekerja saat pergantian shift kasir rawat jalan. Puluhan loket memproses penutupan billing dan cetak kwitansi secara bersamaan. Logika backend tampak biasa: SELECT * FROM tagihan_pasien WHERE status = 'PENDING' AND penjamin_id = 5 FOR UPDATE, lalu update status jadi 'LUNAS'.\n\nMasalahnya: kolom penjamin_id tidak punya index. Engine InnoDB terpaksa lakukan clustered index scan. Alih-alih mengunci baris target saja, DB memasang Next-Key Lock dan Gap Lock di sepanjang rentang data yang dipindai. Transaksi kasir loket A menyandera 'gap' data kasir loket B, dan sebaliknya. Hasilnya: mutual waiting. Deadlock massal terjadi beruntun, transaksi dibatalkan paksa oleh DB engine, dan antrean pasien mengular.\n\nSolusi langsung: buat composite index (penjamin_id, status) agar engine cukup memasang record lock tepat di baris sasaran tanpa menyandera gap data kosong di sekitarnya. Untuk workload tinggi semacam ini, evaluasi juga pemakaian level isolasi READ COMMITTED untuk mematikan agresivitas gap lock bawaan.\n\nBagaimana strategi Anda di tim saat mendeteksi kueri locking nakal: cukup optimasi index DB, turunkan level isolasi transaksi, atau geser kontrol konkurensi pakai distributed lock seperti Redis?\n\nSilakan Like postingan ini jika bermanfaat, tulis pengalaman atau unek-unek optimasi DB Anda di kolom komentar, dan Share postingan ini ke rekan tech lead serta backend engineer Anda!"
+}

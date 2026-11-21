@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794488545874",
+  "topicId": "outbox_idempotent_consumer_order",
+  "topic": "Outbox Queues Corrupt State Without Idempotent Consumers",
+  "category": "DISTRIBUTED SYSTEMS",
+  "createdAt": "2026-11-12T13:02:25.874Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_outbox_idempotent_consumer_order_1794488495178.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_outbox_idempotent_consumer_order_1794488545448.jpg",
+  "postText": "Your Transactional Outbox saved the event. The broker delivered it. Yet your downstream database just corrupted a patient's status.\n\nIn healthcare IT, teams often treat the Transactional Outbox as a silver bullet. It is not. Outbox and message queues only guarantee at-least-once delivery, never exactly-once processing or global order.\n\nWhen a relay retries or workers pull from separate partitions, events arrive duplicated or out of order. A \"Discharged\" event processed before a delayed \"Admitted\" event silently reverts live state.\n\nMake your Outbox consumers production-safe with three rules:\n1. Partition by Aggregate ID: Key queue partitions by entity ID so one record's events stay sequential.\n2. Transactional Inbox: Store consumed event_id in an inbox table inside the same DB transaction as your state update.\n3. Version Guards: Attach a monotonic version to each outbox row. Drop any event older than current state.\n\nOutbox guarantees durability. Idempotent consumers guarantee correctness.\n\nHow do you prevent out-of-order event corruption in production: strict partition keys, version checks, or full event sourcing?\n\nComment your approach below, hit Like if you fought ghost state bugs, and Share with your team!\n\n@pengikut\n\n#DistributedSystems #EventDrivenArchitecture #TransactionalOutbox #MessageQueues #BackendEngineering"
+}

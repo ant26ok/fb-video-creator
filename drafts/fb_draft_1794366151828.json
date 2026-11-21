@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794366151828",
+  "topicId": "transactional_outbox_queue_sync",
+  "topic": "Dual-Writes Silently Poison Distributed Event Queues",
+  "category": "DISTRIBUTED SYSTEMS",
+  "createdAt": "2026-11-11T03:02:31.828Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_transactional_outbox_queue_sync_1794366112476.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_transactional_outbox_queue_sync_1794366151443.jpg",
+  "postText": "You persist critical clinical order to database, then publish message to queue for downstream processing. Broker call times out. Did database commit? Did broker receive payload? \n\nDirect dual-writes destroy distributed systems. If DB commits but queue publish crashes, event vanishes forever. If you reverse order and publish first, DB rollback leaves orphan events poisoning downstream consumers with ghost state.\n\nIn healthcare IT where I work, dropped medication event or lab routing means corrupted patient journeys. Distributed 2PC transactions are too heavy and fragile for modern microservices.\n\nSolution is Transactional Outbox pattern:\n1. Open single relational transaction.\n2. Mutate business records.\n3. Write domain event payload into dedicated `outbox` table in same database.\n4. Commit atomically. Both succeed or both roll back.\n\nIndependent background process (Debezium CDC or lightweight poller) reads outbox table, pushes events to message broker, marks records processed. Network failure? Poller retries safely. Downstream services handle deduplication via unique event idempotency keys.\n\nClean separation. Zero dual-write hazard. Guaranteed at-least-once delivery without distributed locks.\n\nHow does your team guarantee consistency between database updates and event queues: polling outbox, Debezium CDC, or 2PC?\n\nLike, comment your architectural experience below, and share with your engineering team!\n\n@pengikut\n\n#SoftwareArchitecture #DistributedSystems #Microservices #Kafka #SystemDesign #BackendEngineering"
+}

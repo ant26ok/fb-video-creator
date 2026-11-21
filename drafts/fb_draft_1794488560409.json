@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794488560409",
+  "topicId": "gateway_retry_storm_shield",
+  "topic": "Stop Retry Storms Before They Melt Your API Gateway",
+  "category": "DISTRIBUTED SYSTEMS",
+  "createdAt": "2026-11-12T13:02:40.409Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_gateway_retry_storm_shield_1794488520683.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_gateway_retry_storm_shield_1794488560080.jpg",
+  "postText": "Last month at the hospital where I work, a slow lab API nearly took down our entire patient portal.\n\nOur circuit breakers tripped on time, yet clients immediately hammered the API Gateway with synchronized retries—turning a minor hiccup into a cascading failure.\n\nNaive fixed-window rate limits and default breakers fail during recovery. The moment a breaker flips half-open, queued retries hit simultaneously and trip it again.\n\nHere is the 3-layer gateway shield we use to stop cascades cold:\n\n1. Token Bucket Limiting: Smooths legitimate bursts and sheds excess load predictably before it reaches downstream services.\n2. Edge Retry-After + Jitter: Return 429/503 with randomized backoff headers so recovery traffic arrives as a gentle wave, not a tsunami.\n3. Per-Upstream Bulkheads: Isolate connection pools per service. If one API stalls, only its lane saturates while core services stay online.\n\nHow do you tame retry storms in production—do you enforce backoff at the gateway, or trust client SDKs?\n\nIf this helped, hit Like, drop your experience in the Comments, and Share with your engineering team! @pengikut\n\n#APIGateway #DistributedSystems #CircuitBreaker #RateLimiting #SystemDesign #Microservices"
+}

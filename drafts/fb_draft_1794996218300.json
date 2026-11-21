@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794996218300",
+  "topicId": "outbox_consumer_idempotency_ledger",
+  "topic": "Missing Idempotency Stores Corrupt At-Least-Once Queues",
+  "category": "DISTRIBUTED SYSTEMS",
+  "createdAt": "2026-11-18T10:03:38.300Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_outbox_consumer_idempotency_ledger_1794996172656.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_outbox_consumer_idempotency_ledger_1794996217961.jpg",
+  "postText": "We solved the distributed dual-write dilemma with the Transactional Outbox pattern. Then downstream billing still charged duplicate lab orders during production failover.\n\nHere is the trap: Transactional Outbox guarantees at-least-once delivery. It never guarantees single execution.\n\nIn the hospital where I work, core clinical events write to an outbox table in the same ACID transaction as medical charts. A relay worker publishes events to our message broker. Reliability is bulletproof—zero dropped events.\n\nThe real failure happens at the consumer boundary.\n\nDuring peak traffic, a consumer service finished processing a lab order mutation, but network latency delayed the acknowledgment (ACK) back to the broker. The broker marked the consumer timed out and redelivered identical payload to a standby worker. Without deduplication, the lab order executed twice.\n\nThe fix is simple: an Atomic Idempotency Ledger on the consumer side.\n\nEvery event carries a deterministic UUID. When the consumer processes the payload, it executes an atomic `INSERT INTO processed_events (event_id) VALUES ($1)` inside the same local database transaction as the business entity update. If the unique key conflicts, abort write and ACK broker. Duplicate eliminated.\n\nHow do you handle consumer deduplication in your services: DB-level unique constraints, distributed Redis locks, or event-sourcing hashes?\n\nLike this post, comment your battle-tested approach below, and share this with your engineering team.\n@pengikut\n\n#SoftwareArchitecture #DistributedSystems #Microservices #SystemDesign #EventDrivenArchitecture #MessageQueues"
+}

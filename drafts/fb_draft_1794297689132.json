@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794297689132",
+  "topicId": "canary_telemetry_gate_failover",
+  "topic": "Canary Deployments Die Without Telemetry Gates",
+  "category": "MISSION-CRITICAL DEVOPS",
+  "createdAt": "2026-11-10T08:01:29.132Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_canary_telemetry_gate_failover_1794297647909.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_canary_telemetry_gate_failover_1794297688779.jpg",
+  "postText": "In healthcare IT, 99.9% uptime is failure. When emergency room monitors and intensive care units depend on hospital systems 24/7, zero-downtime deployment is life-and-death requirement.\n\nMost teams think canary deployment means routing 5% traffic to new build, watching Slack alerts for 10 minutes, then pushing 100%. In mission-critical systems, that approach crashes production.\n\nReal zero-downtime canary deployment demands strict automation:\n\n1. Mirror Production Traffic First: Route read-only dark traffic to canary instances. Verify memory foot-print and connection pools under production load without touching live patient workflows.\n\n2. Telemetry Gated Promotion: Human eyes are too slow. Metric analyzers must monitor Service Level Indicators directly at gateway level. If p99 latency spikes over 200ms or error rate breaches 0.05%, trigger automated sub-second traffic drain.\n\n3. Stateful Connection Pinning: Websockets powering ICU live charts cannot bounce randomly between blue and green pods. Use consistent hashing at reverse proxy to keep long-lived connections stable during phased cutover.\n\nSoftware deployment in 24/7 environments must be boring, deterministic, and fully automated.\n\nWhen canary testing in production, how do you handle stateful connections and database schema shifts without dropping single active user session?\n\nLike, comment your architectural battle scars below, and share with your engineering team!\n\n@pengikut\n\n#DevOps #DistributedSystems #SiteReliabilityEngineering #SystemArchitecture #MissionCritical #HealthcareIT #CloudEngineering"
+}

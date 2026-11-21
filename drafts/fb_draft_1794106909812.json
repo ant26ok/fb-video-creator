@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794106909812",
+  "topicId": "gateway_socket_exhaustion_storm",
+  "topic": "Gateway Socket Exhaustion: Slow Backends Kill Routers",
+  "category": "DISTRIBUTED SYSTEMS",
+  "createdAt": "2026-11-08T03:01:49.812Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_gateway_socket_exhaustion_storm_1794106864048.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_gateway_socket_exhaustion_storm_1794106909263.jpg",
+  "postText": "Your API Gateway passes rate-limiting checks with zero throttle alerts. Yet incoming client requests suddenly stall, gateway CPU spikes, and reverse proxies crash with socket exhaustion.\n\nIn healthcare IT, clinical portals query downstream electronic health record services through an API Gateway. Under standard load, an endpoint handles 500 requests per second at 20ms response time. That requires only 10 concurrent gateway connections.\n\nThen a slow query locks the downstream database. Response time jumps from 20ms to 4,000ms.\n\nEven with rate limits strictly holding traffic at 500 RPS, Little's Law strikes: 500 RPS multiplied by 4 seconds requires 2,000 active concurrent connections. The gateway runs out of ephemeral ports, exhausts thread pools, and starves unrelated hospital services like pharmacy dispatch and lab reporting.\n\nStandard token-bucket rate limiting does not protect edge proxies from sluggish downstreams. Architecture remedies:\n1. Apply strict inflight concurrency limits (bulkheading) per upstream target alongside RPS.\n2. Configure circuit breakers to trip on p95/p99 latency degradation, not just explicit HTTP 5xx codes.\n3. Keep edge gateway read timeouts aggressively lower than downstream timeouts to shed hung connections.\n\nHow does your team protect edge gateways when downstream services degrade into high latency rather than throwing clean errors? Do you enforce concurrency caps or rely purely on rate limiting?\n\nHit Like, share your war stories in the comments below, and forward this post to your engineering colleagues!\n\n#APIGateway #SoftwareArchitecture #DistributedSystems #ResilienceEngineering #SystemDesign"
+}

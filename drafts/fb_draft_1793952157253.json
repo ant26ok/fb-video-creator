@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1793952157253",
+  "topicId": "vram_kv_cache_fragmentation_oom",
+  "topic": "VRAM Bocor Senyap: Petaka Fragmentasi KV Cache di GPU Faskes",
+  "category": "AI INFRASTRUCTURE & INFERENCE",
+  "createdAt": "2026-11-06T08:02:37.253Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_vram_kv_cache_fragmentation_oom_1793952118380.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_vram_kv_cache_fragmentation_oom_1793952156949.jpg",
+  "postText": "Pernah pasang LLM di server GPU lokal, tes prompt pendek jalan mulus, tapi langsung tewas OOM waktu disuruh telusuri riwayat rekam medis pasien rawat inap?\n\nWaktu implementasi model 8B di workstation GPU 24GB on-premise rumah sakit tempat saya bekerja, kalkulasi teori tampak aman. Bobot FP16 makan 16GB, sisa 8GB VRAM diproyeksikan cukup buat context window. Nyatanya, begitu dokter meminta resume komorbiditas pasien dengan riwayat 7.000 token, CUDA out-of-memory langsung menumbangkan service.\n\nBiang keroknya: alokasi KV Cache konvensional.\nArsitektur transformer menyimpan tensor key-value tiap token agar tak dihitung ulang. Tanpa engine inferensi modern:\n1. Alokasi VRAM butuh memori kontigu berurutan. Fragmentasi internal membuang hingga 60% VRAM jadi ruang hampa tak terpakai.\n2. Solusinya, tinggalkan backend inferensi vanilla. Migrasi ke vLLM dengan PagedAttention. Konsep virtual memory paging OS diterapkan ke VRAM, memecah cache jadi blok-blok kecil non-kontigu.\n3. Padukan dengan kuantisasi AWQ 4-bit. Bobot model menyusut ke 5,5GB, memberi ruang lega bagi KV Cache melayani concurrent request dokter jaga.\n\nEfeknya, konsumsi VRAM stabil, zero OOM, throughput inferensi melonjak 3x lipat pada GPU yang sama.\n\nDi lingkungan faskes atau kantor rekan-rekan, engine mana yang terbukti paling stabil untuk local deployment: vLLM, TensorRT-LLM, atau cukup llama.cpp?\n\nLike jika insight ini relevan, bagikan pengalaman atau racikan hardware Anda di kolom komentar, dan Share ke rekan engineer lainnya!\n\n#LLMInference #MachineLearning #vLLM #HealthcareIT #LocalAI #SystemArchitecture #AIEngineering"
+}

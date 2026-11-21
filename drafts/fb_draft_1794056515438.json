@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794056515438",
+  "topicId": "retry_storm_circuit_breaker_pattern",
+  "topic": "Why Circuit Breakers Fail Without Adaptive Shedding",
+  "category": "DISTRIBUTED RESILIENCE",
+  "createdAt": "2026-11-07T13:01:55.438Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_retry_storm_circuit_breaker_pattern_1794056473588.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_retry_storm_circuit_breaker_pattern_1794056515003.jpg",
+  "postText": "A slight latency spike on our hospital lab service recently threatened to take down every clinical dashboard across the entire network.\nDownstream was slow, not dead. But frontends did what frontends love to do: hammer immediate retries every 500ms.\n\nA minor database lock contention amplified into an inward denial-of-service.\n\nMost teams assume putting a standard circuit breaker inside the API gateway stops cascading collapses. It does not. If your breaker trips on error rates while thousands of pending connections wait out 15-second upstream timeouts, the gateway exhausts its socket pool and collapses before the breaker even opens.\n\nHere is the triage architecture that keeps our healthcare ingress stable:\n1. Edge Rate Limiting via Token Bucket: Cut burst spikes at edge ingress before thread workers allocate memory.\n2. Concurrency Bulkheading: Bound downstream request pools strictly. When target pool fills, reject with immediate HTTP 503 instead of buffering.\n3. Decorrelated Jitter Retries: Mandate randomized backoff on client SDKs to shatter synchronized thundering herds.\n\nResilience is not hoping downstreams never stall. Resilience is failing fast and failing cheap.\n\nHow does your gateway handle sudden retry storms when critical downstream dependencies slow down? Do you shed traffic adaptively, or do you rely strictly on static circuit breakers?\n\nHit Like if this hit close to home, drop your production mitigation strategy in the comments below, and share this post with your backend team.\n\n#SystemArchitecture #DistributedSystems #SoftwareEngineering #Microservices #ReliabilityEngineering #CloudArchitecture"
+}

@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1793599359893",
+  "topicId": "iomt_mtls_cert_rotation_outage",
+  "topic": "mTLS Medis Expire: Telemetri Monitor Pasien Putus Seketika",
+  "category": "HEALTHCARE IT & SECURITY",
+  "createdAt": "2026-11-02T06:02:39.893Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_iomt_mtls_cert_rotation_outage_1793599325525.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_iomt_mtls_cert_rotation_outage_1793599359581.jpg",
+  "postText": "Jam 2 pagi, alarm di nurse station mendadak sunyi bukan karena pasien membaik, tapi puluhan monitor ICU serentak gagal kirim telemetri ke server sentral.\n\nDi rumah sakit tempat saya bekerja, perlindungan data vital pasien adalah harga mati. Demi cegah penyadapan di jaringan LAN, kami pasang mutual TLS (mTLS) dari edge gateway monitor bedside menuju ingestion engine FHIR. Arsitekturnya aman dan compliant, sampai suatu malam sertifikat client x509 kedaluwarsa serentak.\n\nIngress gateway langsung reject koneksi TLS. Handshake gagal total. Karena sertifikat dulu di-flash manual satu per satu tanpa automasi rotasi, puluhan telemetry hub terputus seketika dari sentral pantau perawat.\n\nLangkah mitigasi arsitektur yang kami pelajari dari insiden ini:\n1. Terapkan protokol EST (Enrollment over Secure Transport) atau SCEP agar perangkat IoMT auto-renew sertifikat ke internal CA sebelum expired.\n2. Pasang cert-exporter ke Prometheus dengan alert bertingkat mulai H-30, H-7, hingga H-1.\n3. Perketat sinkronisasi NTP lokal faskes. Clock skew hitungan detik saja bisa bikin sertifikat baru dianggap invalid atau prematurely expired.\n\nEnkripsi ketat tanpa automasi lifecycle sertifikat hanyalah bom waktu yang menunggu meledak di sistem produksi.\n\nPernahkah infrastruktur Anda lumpuh cuma gara-gara sertifikat TLS kedaluwarsa di saat kritis? Bagaimana strategi tim Anda mengelola rotasi cert pada ratusan perangkat edge?\n\nSilakan Like, tuliskan pengalaman Anda di kolom komentar, dan Share postingan ini ke rekan-rekan engineer lainnya!\n\n#HealthcareIT #SoftwareArchitecture #IoMT #CyberSecurity #SystemDesign #DevOps #Interoperability"
+}

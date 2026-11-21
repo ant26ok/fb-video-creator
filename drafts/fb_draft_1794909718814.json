@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794909718814",
+  "topicId": "fhir_hl7_telemetry_isolation",
+  "topic": "Raw Telemetry Ingestion Breaks FHIR Data Pipelines",
+  "category": "HEALTHCARE SYSTEMS",
+  "createdAt": "2026-11-17T10:01:58.814Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_fhir_hl7_telemetry_isolation_1794909679955.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_fhir_hl7_telemetry_isolation_1794909718518.jpg",
+  "postText": "Bedside monitors spit 200 physiological samples per second. Many teams map these directly to FHIR Observation resources. Then production breaks.\n\nIn healthcare IT, bridging legacy HL7 v2 and modern FHIR R4 is standard work. But piping raw telemetry into an operational FHIR datastore kills your persistence tier. A 500-bed hospital running continuous vital sign streaming produces millions of write operations hourly. Relational and document-based FHIR backends choke on index maintenance, search parameter indexing, and audit logging for transient values.\n\nTreat telemetry ingestion as a tiered streaming architecture:\n1. Ingest raw MLLP/HL7 v2 feeds at network edge using an event buffer like Kafka or Redis streams.\n2. Apply sliding-window aggregation. Average heart rates over 60 seconds; detect abnormal thresholds locally.\n3. Write only clinically significant aggregate states or alarm events as immutable FHIR Observation payloads.\n4. Protect unpatched bedside medical devices using mTLS boundary reverse proxies with rigid network segmentation.\n\nKeep high-frequency waveforms in specialized time-series storage. Reserve FHIR resources for interoperable clinical context.\n\nHow does your healthcare IT stack handle real-time medical IoT streams without choking standard transactional EHR databases?\n\nLike, drop your architectural setup in comments, and share this post with your engineering team.\n\n@pengikut\n\n#HealthTech #Interoperability #FHIR #SystemDesign #SoftwareArchitecture #IoMT"
+}

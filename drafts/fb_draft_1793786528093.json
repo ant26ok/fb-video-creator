@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1793786528093",
+  "topicId": "hl7_fhir_telemetry_leak",
+  "topic": "Payload HL7 Bocor: Petaka Telemetri Medis Tanpa Enkripsi",
+  "category": "HEALTHCARE INTEROPERABILITY",
+  "createdAt": "2026-11-04T10:02:08.093Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_hl7_fhir_telemetry_leak_1793786486829.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_hl7_fhir_telemetry_leak_1793786527612.jpg",
+  "postText": "Banyak faskes memprioritaskan integrasi FHIR demi standar SatuSehat, tapi lupa lubang hitam paling purba di bangsal: mesin bedside monitor.\n\nDi rumah sakit tempat saya bekerja, saya sering ingatkan tim tentang bahaya protokol lawas. Monitor vital sign rata-rata masih mengandalkan HL7 v2 berbasis MLLP (Minimal Lower Layer Protocol). Masalahnya: MLLP berjalan di raw TCP tanpa enkripsi bawaan. Jika workstation perawat atau switch LAN faskes disusupi malware bertipe packet sniffer, seluruh metrik EKG, saturasi oksigen, hingga identitas pasien (PID segment) terbongkar telanjang.\n\nSolusi lazy & solid yang kami terapkan:\n1. Isolasi Layer Jaringan: Bedside monitor dilarang satu VLAN dengan komputer kasir atau poliklinik. Taruh di VLAN terisolasi dengan firewall ketat.\n2. Ingestion Gateway Berbasis mTLS: MLLP stream ditangkap Envoy/Stunnel proxy terdekat, dibungkus TLS sebelum masuk cluster integrasi.\n3. Adapter HL7 ke FHIR Async: Parser mengonversi message ORU_R01 menjadi FHIR Observation resource lalu dioper ke message queue, bukan langsung insert synchronous ke DB utama.\n\nInteroperabilitas bukan cuma soal data nyambung, tapi bagaimana pipa penyalur tetap kedap intip.\n\nDi faskes rekan-rekan, integrasi mesin monitor pasien ke SIMRS sudah pakai gateway terenkripsi atau masih tembak IP langsung via raw socket MLLP?\n\nYuk bagikan pengalaman Anda di kolom komentar. Jangan lupa Like dan Share postingan ini ke rekan-rekan IT rumah sakit dan system analyst lainnya!\n\n#HealthcareIT #HL7 #FHIR #HealthTech #CyberSecurity #SystemAnalyst #SoftwareArchitecture"
+}

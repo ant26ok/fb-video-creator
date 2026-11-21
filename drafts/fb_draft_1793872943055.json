@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1793872943055",
+  "topicId": "blue_green_db_schema_drift",
+  "topic": "Migrasi Skema Pecah: Petaka Rilis Blue-Green di ICU",
+  "category": "DISTRIBUTED SYSTEMS",
+  "createdAt": "2026-11-05T10:02:23.055Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_blue_green_db_schema_drift_1793872897649.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_blue_green_db_schema_drift_1793872942703.jpg",
+  "postText": "Rilis jam 2 pagi. Load balancer switch 100% traffic dari Blue ke Green. Niatnya zero downtime, tapi monitor IGD mendadak banjir alert HTTP 500.\n\nMasalah klasik: tim deploy app Green bareng migration script yang drop kolom lama. Pod Blue yang masih handle sisa in-flight request langsung panik: column does not exist. Sistem resep dan telemetry ICU sempat staggered 4 menit.\n\nDi rumah sakit tempat saya bekerja, downtime nol detik itu harga mati. Solusi teknis kami:\n\n1. Pola Expand and Contract (Parallel Change):\nDatabase diubah dalam dua siklus rilis terpisah. Fase Expand: tambah kolom baru, app versi lama tetap jalan, app baru nulis ke dua kolom. Fase Contract: setelah versi lama mati total di rilis berikutnya, baru hapus kolom usang.\n\n2. Canary Routing presisi:\nJangan langsung lempar traffic acak. Gunakan Envoy/Ingress routing berbasis cookie atau header staff IT dulu. Validasi error rate, p99 latency, dan DB lock duration.\n\n3. Health check berbasis deep dependency:\nLiveness probe bukan cuma ping endpoint 200 OK kosong, tapi verifikasi koneksi pool DB dan consumer worker.\n\nArsitektur deployment bukan soal tool CI/CD mentereng. Arsitektur deployment itu soal backward compatibility layer sampai level storage.\n\nBagaimana strategi tim Anda menangani migrasi skema database relasional tanpa bikin app versi lama tumbang saat zero-downtime deployment?\n\nLike jika insight ini bermanfaat, tulis pengalaman atau perdebatan teknis Anda di kolom komentar, dan share postingan ini ke rekan-rekan engineer lainnya!\n\n#SoftwareArchitecture #DevOps #SystemDesign #ZeroDowntime #DatabaseMigration #DistributedSystems #ReliabilityEngineering"
+}

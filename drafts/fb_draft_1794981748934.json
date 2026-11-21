@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794981748934",
+  "topicId": "xfetch_probabilistic_cache_refresh",
+  "topic": "Probabilistic Early Refresh Halts Redis Stampedes",
+  "category": "DISTRIBUTED CACHING",
+  "createdAt": "2026-11-18T06:02:28.934Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_xfetch_probabilistic_cache_refresh_1794981709751.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_xfetch_probabilistic_cache_refresh_1794981748596.jpg",
+  "postText": "Every night shift, when clinical duty rosters rotated, identical cache keys expired at the exact same second.\nOur Postgres connection pool spiked to 100% capacity in milliseconds, freezing emergency triage read paths.\n\nWe relied on classic Cache-Aside:\nCache miss -> Query DB -> Set Redis key with static 10-minute TTL.\n\nThe flaw? When hundreds of ward tablets poll duty rosters simultaneously at 07:00, hard TTL expiry triggers a brutal cache stampede. Every app replica hits a cache miss simultaneously and hammers the primary database with identical heavy JOIN queries.\n\nDistributed mutex locks (SETNX) mitigate this, but lock contention at peak throughput spikes p99 tail latency and burns application worker threads.\n\nOur production fix: Probabilistic Early Expiration (the XFetch algorithm).\nInstead of waiting for TTL to hit zero, incoming reads evaluate DB recompute latency against remaining key lifetime with an exponential random variable:\n-(delta * beta * ln(random())) > remaining_ttl\n\nWhen condition triggers, that single client initiates a background cache recompute while immediately returning current data. No thread blockage, no database pileup, and cache remains continuously warm.\n\nHow do you handle hot key stampedes in your production clusters—distributed mutex, XFetch probabilistic refresh, or scheduled cron warming?\n\nDrop your battle stories and architectural perspectives below! Like and share this post with your engineering team.\n\n@pengikut\n\n#SoftwareArchitecture #Redis #DistributedSystems #DatabaseOptimization #SystemDesign #BackendEngineering"
+}

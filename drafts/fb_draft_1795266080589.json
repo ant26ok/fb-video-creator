@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1795266080589",
+  "topicId": "fhir_telemetry_plaintext_interop",
+  "topic": "FHIR Interop Is Easy. Telemetry Security Is Not.",
+  "category": "HEALTHCARE IT INTEGRATION",
+  "createdAt": "2026-11-21T13:01:20.589Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_fhir_telemetry_plaintext_interop_1795266044251.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_fhir_telemetry_plaintext_interop_1795266080249.jpg",
+  "postText": "FHIR makes integration look solved. Point two systems at each other, exchange a Patient resource, done. Then you deploy to production and discover the telemetry pipeline is shipping vitals over plaintext MLLP.\n\nI have seen this pattern in healthcare IT more than once. The FHIR API is behind TLS and OAuth. The HL7 v2 feed to the lab is a raw socket on port 2575. The monitoring agent exports device metrics with patient MRN embedded in the payload. Three different security postures for the same patient data.\n\nWhat actually works:\n\n1. Terminate TLS at the integration gateway and reject plaintext at the edge. Do not rely on app code to enforce it.\n2. Tokenize or strip identifiers before telemetry leaves the clinical VLAN. Metrics do not need MRNs.\n3. Audit FHIR reads per resource, not just auth events. Scopes tell you what was allowed, not what was accessed.\n4. Treat HL7 v2 MLLP as legacy but sensitive. Wrap it, do not ignore it.\n\nThe hard part of interoperability is not the schema mapping. It is proving the data stayed protected from source to sink.\n\nQuestion for the room: when you audit a FHIR integration, do you check transport encryption on every hop, or only at the public API boundary?\n\nLike this if it reflects your production reality. Comment your audit checklist below. Share it with your integration and security teams.\n\n@pengikut\n\n#HealthcareIT #FHIR #HL7 #Interoperability #HealthDataSecurity #MedicalTelemetry #SystemArchitecture"
+}

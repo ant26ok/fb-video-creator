@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1795303171882",
+  "topicId": "blue_green_canary_zero_downtime",
+  "topic": "Zero-Downtime Deploys: Blue-Green vs Canary",
+  "category": "MISSION-CRITICAL DEVOPS",
+  "createdAt": "2026-11-21T23:19:31.882Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_blue_green_canary_zero_downtime_1795303125357.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_blue_green_canary_zero_downtime_1795303171509.jpg",
+  "postText": "A 3 a.m. deploy took down patient registration for 47 minutes. 200+ admissions delayed, nurses back to paper forms, and one very tired on-call engineer.\n\nIn 24/7 healthcare IT, downtime isn't a metric — it's a patient safety event. Here's how we fixed it with zero-downtime deployment patterns.\n\nBlue-Green: Two identical environments (blue = live, green = new). Deploy to green, run smoke tests, then flip the load balancer. If anything breaks, flip back in seconds. Atomic, clean, instant rollback. Downside: double infrastructure cost and database migrations need care.\n\nCanary: Route 1-5% of traffic to the new version, watch error rates, latency, and business KPIs. Ramp to 100% only if metrics stay green. Perfect for risky schema changes or gradual validation. Downside: more complex routing and observability requirements.\n\nOur rule: Blue-green for atomic cutovers where rollback must be instant. Canary for high-risk changes where we need real traffic validation before full commitment.\n\nThe critical piece most teams miss: automated health gates and auto-rollback. Probes check readiness, SLO monitors check error budgets, and the pipeline reverts automatically on breach. No human panic at 3 a.m.\n\nWhat's your deployment strategy in mission-critical systems — blue-green, canary, or something else? Have you ever had a deploy go sideways in production?\n\nLike this post if it resonated. Comment your deployment war stories below. Share it with your DevOps and platform engineering colleagues.\n\n@pengikut\n\n#ZeroDowntime #DevOps #BlueGreenDeployment #CanaryRelease #HealthTech #SRE #PlatformEngineering"
+}

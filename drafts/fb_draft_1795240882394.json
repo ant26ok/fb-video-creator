@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1795240882394",
+  "topicId": "multi_agent_orchestration_loop",
+  "topic": "Multi-Agent Orchestration Without the Infinite Loop",
+  "category": "AI ARCHITECTURE",
+  "createdAt": "2026-11-21T06:01:22.394Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_multi_agent_orchestration_loop_1795240843562.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_multi_agent_orchestration_loop_1795240881968.jpg",
+  "postText": "Four AI agents debating one clinical summary. Nobody owns the final answer. The token bill explodes, latency spikes, and the output drifts by the second. Sound familiar?\n\nI have seen this pattern in healthcare IT where teams bolt on autonomous agents for triage, coding suggestions, and discharge summaries. The moment you let agents talk to each other freely, you get emergent chaos: circular handoffs, duplicated reasoning, and a state that no single component can explain.\n\nThe fix is boring architecture, not smarter prompts:\n\n1. Single writer, many readers. One orchestrator owns the shared state. Sub-agents return proposals only. No peer-to-peer writes, no shared mutable memory.\n\n2. Hard step and token budgets. Cap hops, tokens, and wall-clock time per task. When the budget is exceeded, degrade to a deterministic fallback instead of looping forever.\n\n3. Typed contracts, not chat. Agents exchange schema-validated JSON. Reject malformed output at the boundary, not three steps downstream where it corrupts the final answer.\n\nIn production, the orchestrator is the only component allowed to commit state. Everything else is a pure function with a timeout. That single rule removes most of the failure modes people blame on the model.\n\nQuestion for you: when an agent returns a proposal that conflicts with another agent, who arbitrates in your system, and how do you audit that decision later?\n\nLike this post if it saved you a debugging session. Comment your orchestration war stories below. Share it with your team before the next agent sprint.\n\n@pengikut\n\n#AIAgents #MultiAgentSystems #SoftwareArchitecture #HealthcareIT #LLMOps #SystemDesign #EngineeringLeadership"
+}

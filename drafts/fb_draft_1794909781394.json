@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794909781394",
+  "topicId": "adaptive_gateway_concurrency_limits",
+  "topic": "Static Rate Limits Shatter Under Client Retry Storms",
+  "category": "DISTRIBUTED RESILIENCE",
+  "createdAt": "2026-11-17T10:03:01.394Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_adaptive_gateway_concurrency_limits_1794909742211.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_adaptive_gateway_concurrency_limits_1794909780999.jpg",
+  "postText": "Fixed rate limits give a false sense of security. When an EMR downstream dependency slows from 20ms to 2000ms in the healthcare facility where I work, throughput collapses before any RPS threshold ever trips.\n\nClients hit timeouts, panic, and retry simultaneously. The static rate limiter permits the requests because request count matches configured quotas. In reality, inflight worker threads spike tenfold. Gateway memory balloons, buffers fill, and edge proxies crash.\n\nThree rules we enforce to stop cascading gateway failure:\n\n1. Enforce Adaptive Concurrency Limits: Static RPS assumes constant latency. Measure round-trip latency continuously. Use Little's Law to dynamically constrain inflight slots when downstream latency creeps up, rejecting traffic before worker pools starve.\n2. Fast Shedding Over Deep Queues: Buffering requests during brownouts kills recovery. Drop excess traffic at the gateway perimeter immediately with HTTP 429 or 503 instead of letting TCP sockets linger.\n3. Mandatory Jittered Client Retries: Raw retries synchronize into destructive thundering herds. Enforce exponential backoff with full randomized jitter across all clients.\n\nDo you rely on static RPS thresholds at your edge gateway, or have you implemented dynamic inflight concurrency limits? Share your perspective in the comments below.\n\nLike this post, comment your experience below, and share it with your engineering colleagues.\n\n@pengikut\n\n#SoftwareArchitecture #DistributedSystems #APIGateway #ReliabilityEngineering #SystemDesign #DevOps"
+}

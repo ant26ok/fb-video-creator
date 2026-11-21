@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794477754841",
+  "topicId": "silent_embedding_drift_rag",
+  "topic": "Silent Embedding Drift Corrupts Production RAG",
+  "category": "AI ARCHITECTURE",
+  "createdAt": "2026-11-12T10:02:34.841Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_silent_embedding_drift_rag_1794477710257.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_silent_embedding_drift_rag_1794477754554.jpg",
+  "postText": "AI pipeline threw zero HTTP 500s, yet our clinical RAG assistant suddenly retrieved irrelevant protocols.\nCulprit was not the LLM. It was silent embedding drift.\n\nAt the hospital where I work, we upgraded our embedding model for semantic search. New docs indexed with the new model, while legacy docs stayed on the old one in the same collection.\n\nSame dimensions, incompatible latent spaces. Cosine similarity still returned scores, feeding garbage context to the LLM. In healthcare IT, silent context corruption is worse than downtime.\n\nTreat vector space like strict DB schema. Three rules protect production RAG:\n\n1. Version vector collections. Namespace indexes by model ID and chunking hash. Never mix vector spaces.\n2. Shadow dual-index upgrades. Backfill a parallel collection asynchronously, then swap read aliases atomically.\n3. Gate on retrieval recall. Run golden-dataset Recall@K checks in CI before flipping production traffic.\n\nHow does your team manage zero-downtime vector re-indexing when upgrading embedding models?\n\nLike this breakdown, comment your ML production lessons below, and share with fellow IT teams.\n@pengikut\n\n#AIArchitecture #MLOps #RAG #VectorDatabase #ProductionAI #HealthcareIT"
+}

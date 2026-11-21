@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794636067633",
+  "topicId": "llm_kv_cache_thrashing",
+  "topic": "KV-Cache Thrashing Kills Local LLM Inference",
+  "category": "AI ARCHITECTURE",
+  "createdAt": "2026-11-14T06:01:07.633Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_llm_kv_cache_thrashing_1794636030109.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_llm_kv_cache_thrashing_1794636067312.jpg",
+  "postText": "Running local LLMs inside hospital infrastructure sounds like the ultimate privacy win until three doctors query clinical discharge summaries simultaneously and your inference node crashes with CUDA OOM.\n\nMost teams benchmark single-stream latency using raw HuggingFace pipelines or basic Ollama setups. Single prompt: blazingly fast. Production load: catastrophic failure.\n\nThe culprit is rarely compute capacity. It is KV-cache thrashing. Static tensor allocations pre-reserve memory buffers for max sequence lengths across every request. When long patient histories hit 8k context windows, memory fragmentation destroys your GPU VRAM before compute reaches 40%.\n\nFixing on-prem inference requires treating VRAM like OS virtual memory:\n1. Implement PagedAttention: Partition KV tensors into non-contiguous physical pages. Stop reserving worst-case contiguous blocks.\n2. Continuous dynamic batching: Do not hold inference locks until the longest sequence completes. Inject new requests at token-generation steps.\n3. AWQ over naive INT4: Keep salient weight channels at FP16. Memory drops 60% without corrupting medical terminology extraction.\n\nEdge hardware is expensive. Smarter memory paging makes 24GB VRAM do work previously reserved for quad A100 nodes.\n\nHow do you handle memory fragmentation and multi-tenant eviction when hosting LLMs locally on constrained hardware?\n\nLike this post, share your deployment setup below, and pass this to your infrastructure team.\n\n@pengikut\n\n#MachineLearning #LLMOps #SystemArchitecture #EdgeAI #HealthcareIT #LocalLLM"
+}

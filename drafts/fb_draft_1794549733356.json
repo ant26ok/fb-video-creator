@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794549733356",
+  "topicId": "circular_delegation_multi_agent_swarms",
+  "topic": "Circular Delegation Traps Multi-Agent Swarms",
+  "category": "AI ARCHITECTURE",
+  "createdAt": "2026-11-13T06:02:13.356Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_circular_delegation_multi_agent_swarms_1794549683847.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_circular_delegation_multi_agent_swarms_1794549732975.jpg",
+  "postText": "Deploying autonomous multi-agent systems sounds great until two agents enter an infinite delegation loop. Agent A asks Agent B for clinical triage enrichment. Agent B queries Agent A for patient context. Result: 40 recursive LLM calls, $180 token burn, zero resolved output.\n\nIn our healthcare IT pipelines, unconstrained autonomy is fatal. Autonomous swarms fail because developers treat LLM reasoning as control flow. It is not control flow. Probabilistic agents cannot guarantee loop termination.\n\nTo run multi-agent workflows safely in production:\n\n1. Deterministic Orchestrator Pattern: Strip execution control from agents. Use LangGraph or Temporal state machines. LLMs decide payloads; deterministic code decides next node transitions.\n\n2. Strict Hop TTLs: Treat inter-agent requests like IP packets. Pass immutable execution counter. When hops exceed threshold (e.g., max 4), force human-in-the-loop fallback.\n\n3. Ephemeral Scratchpads: Never let agents write directly to global shared state. Each sub-agent outputs structured JSON mutations reviewed by static validation schemas before state merge.\n\nLLM agents need rigid architectural guardrails, not blind autonomy.\n\nHow do you prevent circular delegation loops in your agent workflows: deterministic state machines or strict budget caps?\n\nLike if this helped, comment your production agent horror stories below, and share with your engineering team.\n\n@pengikut\n\n#AIEngineering #SoftwareArchitecture #MultiAgent #LLMOps #DistributedSystems #SoftwareEngineering"
+}

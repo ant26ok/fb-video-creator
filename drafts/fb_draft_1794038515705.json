@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794038515705",
+  "topicId": "unindexed_fk_deadlock",
+  "topic": "Unindexed Foreign Keys Will Silently Deadlock You",
+  "category": "DATABASE CONCURRENCY",
+  "createdAt": "2026-11-07T08:01:55.705Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_unindexed_fk_deadlock_1794038480719.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_unindexed_fk_deadlock_1794038515417.jpg",
+  "postText": "A 2-row delete in your parent table should take 1ms. Under load, it deadlocks your entire billing queue.\nThe culprit is almost never the parent table. It is the unindexed foreign key on the child.\n\nIn healthcare IT, patient visits spawn dozens of dependent tables: billables, vitals, drug charts. Relational engines enforce referential integrity by verifying child records whenever parent keys change or delete.\n\nWithout an index on the child table's foreign key column, the engine cannot do a targeted lookup to verify orphaned records. Instead, it must scan the entire child table or place wide share locks across child rows.\n\nWhen two concurrent transactions delete or update different parent records, both try to acquire conflicting locks across the shared child table. Result: sudden lock escalation, execution graph stalls, and catastrophic deadlocks.\n\nThe fix is simple:\n1. Enforce migration checks: every foreign key must have an explicit secondary index.\n2. Avoid direct cascading deletes on hot transactional tables; move cleanup to async batch workers.\n3. Audit lock wait queries under load to detect child table lock escalation before production breaks.\n\nDoes your team's CI/CD schema pipeline automatically reject unindexed foreign keys, or do you still discover them during production outages?\n\nDrop your perspective in the comments below. Like and share this post with fellow engineers navigating high-concurrency systems!\n\n#DatabaseArchitecture #PostgreSQL #MySQL #SoftwareEngineering #BackendEngineering #HighConcurrency"
+}

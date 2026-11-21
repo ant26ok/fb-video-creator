@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1793797349253",
+  "topicId": "multi_agent_saga_failure",
+  "topic": "Multi-Agent Liar: Petaka Eksekusi Tool Tanpa Pola Saga",
+  "category": "AI ARCHITECTURE & DISTRIBUTED SYSTEMS",
+  "createdAt": "2026-11-04T13:02:29.253Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_multi_agent_saga_failure_1793797307717.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_multi_agent_saga_failure_1793797348787.jpg",
+  "postText": "Beri LLM akses API mutasi database faskes, Anda sedang bermain api dengan state terdistribusi.\n\nDi faskes tempat saya bekerja, kami pernah mengevaluasi arsitektur Multi-Agent. Idenya rapi: Agen A membaca rujukan IGD, Agen B memesan ruang isolasi, dan Agen C memesan paket farmasi via tool calling.\n\nPetaka tiba saat Agen B sukses mengunci kamar, tapi Agen C gagal karena stok habis. Agen A mengira flow selesai, Agen B tidak sadar Agen C kolaps.\n\nHasilnya? Kamar isolasi berstatus 'BOOKED' selamanya di DB. Pasien riil di IGD tertahan karena sistem membaca ruangan penuh tanpa ada mekanisme rollback.\n\nArsitektur Multi-Agent otonom BUKAN alasan membuang fondasi distributed system:\n\n1. Hindari Choreography Liar: Gunakan Orchestrator deterministik (state machine) sebagai koordinator transaksi antar-agen.\n2. Terapkan Pola Saga: Setiap tool mutasi wajib memiliki compensating action (pembatalan operasi) otomatis jika salah satu agen gagal.\n3. Pasang Idempotency Key: Jangan izinkan loop penalaran ulang agen memicu mutasi data berulang ke tabel yang sama.\n\nAgen AI boleh berpikir bebas, tapi urusan commit data wajib tunduk pada aturan ACID dan Saga.\n\nApakah tool calling multi-agent di sistem Anda sudah dipasangi transaksi kompensasi, atau masih direct write ke database produksi?\n\nBeri Like dan bagikan pengalaman Anda di kolom komentar. Share postingan ini ke rekan tech lead dan engineer lainnya!\n\n#SoftwareArchitecture #AIAgents #MultiAgent #SystemDesign #DistributedSystems #SoftwareEngineering #TechLead"
+}

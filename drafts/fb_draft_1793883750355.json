@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1793883750355",
+  "topicId": "canary_traffic_shift_disaster",
+  "topic": "Canary Bocor: Sesi IGD Nyasar ke Node Lawas",
+  "category": "DISTRIBUTED SYSTEMS",
+  "createdAt": "2026-11-05T13:02:30.355Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_canary_traffic_shift_disaster_1793883705122.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_canary_traffic_shift_disaster_1793883750030.jpg",
+  "postText": "Rilis jam 2 pagi tanpa downtime terdengar keren di atas kertas. Realitanya di faskes 24 jam: begitu traffic dialihkan 10% ke versi canary, dokter IGD mendadak terlempar ke layar login saat input obat darurat.\n\nPenyebabnya klasik tapi mematikan: sticky session di layer reverse proxy bentrok dengan canary routing. User yang terikat di node Blue dipaksa baca token format baru dari node Green yang belum sinkron state lokalnya.\n\nTiga fondasi wajib sebelum klaim zero-downtime:\n\n1. Externalize State Sepenuhnya. Jangan simpan session di memory container. Buang ke Redis atau gunakan stateless JWT dengan revocable token store terpusat.\n\n2. Canary Bertahap Berbasis Atribut. Pisahkan traffic bukan acak via round-robin, tapi lewat custom header staging atau tenant ID non-kritis terlebih dahulu.\n\n3. Circuit Breaker Rollback Otomatis. Jangan andalkan mata manusia pantau Grafana. Jika latency p99 naik 200ms atau error 5xx sentuh 0.5%, router wajib auto-drain traffic canary kembali ke baseline dalam hitungan detik.\n\nZero-downtime sejati tidak boleh mengorbankan integritas data pasien walau satu milidetik.\n\nDi sistem produksi tempat rekan-rekan bekerja, strategi canary rollback-nya sudah full otomatis via metrics pipeline atau masih manual klik tombol saat user mulai komplain?\n\nYuk bagikan pengalaman pahit kalian di kolom komentar. Jangan lupa Like dan Share postingan ini ke rekan engineer lainnya!\n\n#SoftwareArchitecture #DevOps #SystemDesign #DistributedSystems #ReliabilityEngineering #HighAvailability"
+}

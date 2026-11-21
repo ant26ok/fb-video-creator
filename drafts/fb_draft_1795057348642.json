@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1795057348642",
+  "topicId": "zero_downtime_canary_deployment",
+  "topic": "Naive Blue-Green Shifts Crash 24/7 DB Migrations",
+  "category": "MISSION-CRITICAL DEVOPS",
+  "createdAt": "2026-11-19T03:02:28.642Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_zero_downtime_canary_deployment_1795057302654.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_zero_downtime_canary_deployment_1795057348325.jpg",
+  "postText": "Deploying updates at 2 AM on a Sunday is not continuous delivery. In healthcare IT, emergency rooms, ICUs, and lab units run 24/7. Halting hospital operations for maintenance windows is never an option.\n\nMost teams think Blue-Green deployment is just switching a load balancer target. Then reality hits:\n\n1. Database Schema Desync: Green requires a new column; Blue still runs old queries. Dropping or renaming columns directly breaks Blue instantly.\n2. In-flight Connection Drops: Hard target cuts terminate active clinician sessions mid-prescription, corrupting client state.\n3. Latent Failures: Switching 100% traffic immediately exposes subtle edge-case deadlocks to all users at once.\n\nHow we maintain true zero-downtime:\n\n- Phase 1: Expand/Contract Database Pattern. Database updates are strictly non-breaking (additive only). Old and new app versions run simultaneously against the same DB.\n- Phase 2: Canary Routing. Ingress shifts 1% to 5% of synthetic and non-critical traffic to Green. Telemetry checks error budgets, CPU spikes, and DB lock contention.\n- Phase 3: Graceful Draining. Load balancer shifts primary weight while allowing existing TCP streams on Blue to complete cleanly before termination.\n\nHow does your team handle breaking schema migrations without scheduled downtime windows? Let's discuss your deployment patterns in the comments below.\n\nLike, comment with your operational war stories, and share this with your engineering team!\n\n@pengikut\n\n#DevOps #ZeroDowntime #SystemArchitecture #SoftwareEngineering #CloudNative #ContinuousDelivery"
+}

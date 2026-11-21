@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794625268118",
+  "topicId": "hl7_fhir_telemetry_isolation",
+  "topic": "Unsegmented HL7 Pipes Bleed Unencrypted Patient Vitals",
+  "category": "HEALTHCARE ARCHITECTURE",
+  "createdAt": "2026-11-14T03:01:08.118Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_hl7_fhir_telemetry_isolation_1794625232802.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_hl7_fhir_telemetry_isolation_1794625267815.jpg",
+  "postText": "Bedside monitors still talk in HL7 v2 over raw TCP sockets via MLLP. No TLS. No auth. Zero encryption. \n\nIn hospital environments, hooking these monitors directly into modern analytics or cloud-based EHR endpoints creates an invisible attack surface. One rogue device on the clinical VLAN can passively sniff patient cardiac waveforms, arterial blood pressure, and oxygen saturation in cleartext.\n\nWe solved this by establishing a zero-trust medical telemetry boundary:\n\n1. Edge Termination: Legacy devices broadcast MLLP strictly within an isolated, non-routable VLAN. An edge parser terminates the unencrypted TCP connection inside the hospital perimeter.\n2. In-Memory FHIR Parsing: We convert raw HL7 segments into HL7 FHIR 'Observation' JSON resources in-memory. No intermediate PHI hits local disk storage.\n3. Outbound Zero-Trust Pipeline: Cleaned FHIR payloads exit the edge proxy via mTLS with strict certificate pinning, hitting our core ingestion cluster through short-lived OAuth tokens.\n\nInteroperability must not compromise bedside safety. Protocol conversion belongs at the physical edge, never inside your cloud ingestion layer.\n\nHow does your engineering team isolate legacy protocol streams like HL7 v2 or DICOM without bottlenecking real-time vital sign feeds?\n\nLike this post, drop your architectural perspective below, and share with your engineering team.\n\n@pengikut\n\n#HealthcareIT #SoftwareArchitecture #FHIR #HealthTech #CyberSecurity #SystemDesign"
+}

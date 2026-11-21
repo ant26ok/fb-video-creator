@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1793959319837",
+  "topicId": "cache_aside_redis",
+  "topic": "Cache-Aside Pattern: Kapan Sebaiknya Pakai Redis?",
+  "category": "PERFORMANCE & SCALABILITY",
+  "createdAt": "2026-11-06T10:01:59.837Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_cache_aside_redis_1793959275993.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_cache_aside_redis_1793959319241.jpg",
+  "postText": "Ada mitos populer di kalangan developer: \"Kalau query lambat, tinggal bungkus pakai Redis!\" 😅\n\nKenyataan di lapangan:\nRedis dipasang di semua tabel. Dua minggu kemudian, komplain baru muncul: \"Kenapa harga tindakan di struk beda sama di kasir?\", \"Kenapa status antrean di display dokter tidak berubah?\"\n\nCache bukan obat ajaib untuk query yang tidak punya index.\n\nAturan praktis saya sebelum pasang Cache-Aside:\n1. Pahami Rasio Read vs Write: Kalau datanya diupdate tiap detik, simpan di cache cuma buang-buang siklus CPU dan bandwidth internal.\n2. Kuasai Strategi Invalidasi: Siapa yang bertugas menghapus cache saat data master diedit? Selalu pasang TTL (Time-To-Live) realistis sebagai benteng pengaman terakhir.\n3. Antisipasi Cache Stampede: Ketika 500 user mengakses halaman yang sama tepat saat cache kedaluwarsa, seluruh request akan menghantam database bersamaan. Pakai locking atau early refresh.\n\nSistem yang tangguh bukan yang paling banyak lapisannya, tapi yang setiap komponennya punya alasan jelas kenapa harus ada di sana.\n\nPengalaman teman-teman saat implementasi Redis: apa drama cache invalidation paling berkesan yang pernah dialami?\n\n#SoftwareArchitecture #Redis #PerformanceOptimization #SystemAnalyst #Backend #Database #HighThroughput"
+}

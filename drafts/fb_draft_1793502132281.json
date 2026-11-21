@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1793502132281",
+  "topicId": "gateway_breaker_rate_limiting",
+  "topic": "API Eksternal Lemot, Gateway Hang: Trik Breaker & Throttling",
+  "category": "SYSTEM RESILIENCE",
+  "createdAt": "2026-11-01T03:02:12.281Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_gateway_breaker_rate_limiting_1793502097359.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_gateway_breaker_rate_limiting_1793502131980.jpg",
+  "postText": "Pernah ngalamin server pendaftaran faskes mendadak freeze bukan karena DB internal overcommit, tapi gara-gara API verifikasi pihak ketiga lagi down?\n\nIni studi kasus nyata di faskes tempat saya bekerja. Saat bridging asuransi luar melonjak latensinya dari 200ms ke 30 detik, traffic registrasi pagi tetap membanjir deras. Efek fatalnya: worker pool dan connection sockets di API Gateway ludes terkunci cuma buat menanti socket timeout. Modul IGD dan farmasi lokal yang independen ikut lumpuh total terseret.\n\nProteksi cascading failure yang kami terapkan:\n\n1. Route Isolation & Strict Timeout: Jangan samakan toleransi rute lokal dengan eksternal. Terapkan aggressive timeout (maks 3 detik) plus thread pool isolation agar saturasi vendor tidak menyedot resource rute internal.\n2. Distributed Rate Limiting (Token Bucket via Redis): Tahan lonjakan spam retry dari client yang panik langsung di perimeter layer gateway.\n3. Circuit Breaker + Graceful Fallback: Begitu rolling failure rate tembus ambang batas 50%, breaker langsung pindah ke OPEN state. Request baru otomatis diputus seketika (fail-fast) dan diarahkan ke antrean asinkron tanpa menahan socket gateway.\n\nHasilnya: vendor eksternal boleh mati suri, tapi operasional core sistem faskes tetap melaju stabil.\n\nDi sistem kalian, kalau third-party API mendadak lemot parah, arsitektur gateway sudah fail-fast atau masih pasrah nunggu antrean thread ludes terbakar?\n\nYuk Like, bagikan pengalaman arsitektur kalian di kolom komentar, dan Share postingan ini ke rekan-rekan engineer lainnya!\n\n#SoftwareArchitecture #SystemResilience #APIGateway #BackendEngineering #DevOps #Microservices #TechLead"
+}

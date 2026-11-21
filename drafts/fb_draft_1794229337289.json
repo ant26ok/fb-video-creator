@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794229337289",
+  "topicId": "cache_aside_stampede_xfetch",
+  "topic": "Cache-Aside Stampedes Crush DBs on Hot Key Eviction",
+  "category": "DISTRIBUTED CACHING",
+  "createdAt": "2026-11-09T13:02:17.289Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_cache_aside_stampede_xfetch_1794229296386.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_cache_aside_stampede_xfetch_1794229336844.jpg",
+  "postText": "Two minutes into morning shift handover at the healthcare facility where I work, our primary database CPU pinned at 100%. Latency spiked from 12ms to 18 seconds.\n\nThe culprit? An innocent key caching operational ward availability expired. Over 1,200 concurrent worker threads missed Redis at the exact same millisecond. \n\nThis is the classic Cache Stampede (Thundering Herd) inherent in naive Cache-Aside patterns. When a hot key expires, every incoming reader triggers the fallback: identical expensive joins hit the underlying storage engine simultaneously.\n\nWe solved this with three architectural guardrails:\n1. Distributed Mutex (Single-Flight): Acquire a Redis lock via SETNX on cache miss. Exactly one worker queries the database and populates the cache; remaining threads sleep 50ms and read the fresh cache.\n2. Probabilistic Expiration (XFetch): Instead of static TTLs, compute an early recompute probability based on read delta and remaining TTL. Hot keys refresh asynchronously before they ever expire.\n3. Stale-While-Revalidate: Keep a soft TTL and hard TTL. Return slightly stale data immediately while an asynchronous task updates Redis behind the scenes.\n\nHow do you prevent stampedes on critical hot keys in your architecture: distributed locks, probabilistic refresh, or event-driven invalidation workers?\n\nShare your battle-tested approach in the comments below. Like and share this post with fellow backend engineers building resilient systems.\n\n@pengikut\n\n#SoftwareArchitecture #Redis #DistributedSystems #DatabaseOptimization #SystemDesign #BackendEngineering"
+}

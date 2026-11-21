@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794279736170",
+  "topicId": "gateway_circuit_breaker_cascade",
+  "topic": "When API Gateways Turn Slow Dependencies Lethal",
+  "category": "DISTRIBUTED SYSTEMS",
+  "createdAt": "2026-11-10T03:02:16.170Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_gateway_circuit_breaker_cascade_1794279697107.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_gateway_circuit_breaker_cascade_1794279735830.jpg",
+  "postText": "One slow downstream dependency can silently assassinate your entire microservice fleet.\n\nIn healthcare IT, we saw this unfold during morning outpatient registration. A third-party diagnostic integration slowed down from 120ms to 5000ms. It did not throw 500 errors—it just crawled. Within minutes, automated retries flooded the API Gateway. The gateway thread pool saturated, holding idle TCP connections while waiting for socket reads. Unrelated services—prescription dispatch, triage intake, patient verification—promptly collapsed under HTTP 504 gateway timeouts.\n\nHere is the survival architecture we implemented:\n\n1. Edge Rate Limiting: Apply distributed token-bucket throttling at ingress. Stop stampeding clients before requests touch internal service meshes.\n2. Latency-Based Circuit Breakers: Do not wait for hard error responses. Trip the circuit open when rolling P95 latency crosses strict ceilings. Return fast fallbacks immediately.\n3. Bulkhead Partitioning: Segregate gateway worker pools per downstream route. If external diagnostic APIs crawl, only that isolated pool fills up; emergency and outpatient registration continue uninterrupted.\n\nResilience means assuming downstream dependencies will stall and cutting ties before edge threads run dry.\n\nHow do you balance latency thresholds versus error percentages when tripping circuit breakers in your production pipelines?\n\nLike, comment your perspective below, and share this post with fellow engineers navigating distributed systems.\n\n@pengikut\n\n#SoftwareArchitecture #DistributedSystems #APIGateway #Microservices #SystemDesign #DevOps"
+}

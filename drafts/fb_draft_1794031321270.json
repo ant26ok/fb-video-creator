@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794031321270",
+  "topicId": "batch_lock_order_inversion",
+  "topic": "Lock Order Inversion: Why Unsorted Batches Deadlock",
+  "category": "DATABASE CONCURRENCY",
+  "createdAt": "2026-11-07T06:02:01.270Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_batch_lock_order_inversion_1794031280792.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_batch_lock_order_inversion_1794031320911.jpg",
+  "postText": "Deadlocks spiked to 40% during peak morning discharge hours across our healthcare IT infrastructure.\n\nThe database CPU hovered around 15%, and queries had proper index coverage. Yet transactions collapsed under lock contention.\n\nThe culprit was lock order inversion inside batch mutations. Two services processed medical supplies concurrently. Service A ran a bulk update on IDs [102, 305, 512]. Service B processed IDs [512, 102, 804]. Databases lock clustered index rows sequentially as matching records are discovered. Service A claimed row 102 and requested 512. Service B claimed row 512 and requested 102. An unresolvable circular lock dependency formed. The database deadlock detector killed one transaction.\n\nWe eliminated this completely with three engineering adjustments:\n\n1. Deterministic sorting: Always sort incoming primary keys (ASC or DESC) before issuing batch UPDATE or INSERT ON CONFLICT statements. Two transactions locking rows in identical sequence queue sequentially instead of crossing locks.\n2. Narrow payload mutations: Avoid updating columns backed by secondary indexes unless values changed. Secondary index leaf locks expand your lock footprint exponentially.\n3. Short-lived worker queues: Split arbitrary array inputs into discrete, single-row operations inside background jobs, releasing row locks in sub-millisecond windows.\n\nHow do you enforce lock-order determinism when ORMs abstract away your batch persistence logic? Share your battle-tested strategies below.\n\nIf this breakdown helped you debug concurrency issues, hit Like, leave your perspective in the comments, and share this with your backend team!"
+}

@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794981709332",
+  "topicId": "index_skip_scan_locking_contention",
+  "topic": "Loose Index Scans Escalate Row Locks to Table Freezes",
+  "category": "DATABASE CONCURRENCY",
+  "createdAt": "2026-11-18T06:01:49.332Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_index_skip_scan_locking_contention_1794981668604.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_index_skip_scan_locking_contention_1794981708922.jpg",
+  "postText": "Your database handles thousands of requests per second until one routine update stalls every transaction behind it.\n\nIn high-throughput environments like healthcare IT, patient admission updates or bed assignment syncs hit the same core tables. You added an index, yet transactions hang on lock waits. The culprit: composite index leading column mismatch.\n\nWhen a query filters on the second column of a compound index, database cannot do direct point seek. Under REPEATABLE READ or serializable isolation, storage engine locks every row and gap it touches during full index scan, not just matching rows. Unrelated records get locked. Concurrent inserts block. Latency spikes instantly into cascading connection pool exhaustion.\n\nFix the access path. Design composite indexes strictly ordered by equality filters first, then range predicates. Force queries to use covering indexes so row locks never escalate across adjacent records. Switch isolation level to READ COMMITTED where business logic permits, unlocking records immediately after predicate evaluation fails.\n\nHow does your team catch unindexed predicates before lock escalations hit production?\n\nLike, comment your architectural strategies below, and share this post with your engineering team.\n\n@pengikut\n\n#DatabaseArchitecture #SoftwareEngineering #PostgreSQL #MySQL #BackendPerformance #HighConcurrency #SystemDesign"
+}

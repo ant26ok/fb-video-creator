@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794816133291",
+  "topicId": "feature_drift_corrupts_embeddings",
+  "topic": "Silent Embedding Drift Destroys Production Vector RAG",
+  "category": "AI ARCHITECTURE",
+  "createdAt": "2026-11-16T08:02:13.291Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_feature_drift_corrupts_embeddings_1794816079777.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_feature_drift_corrupts_embeddings_1794816132829.jpg",
+  "postText": "Your LLM didn't get dumber. Your vector embeddings just drifted away from your data.\n\nIn healthcare IT, clinical documentation evolves constantly. New drug acronyms emerge, upstream tokenizers get patched, and suddenly semantic retrieval returns irrelevant clinical context. Zero HTTP errors. Zero GPU crashes. Just wrong context fed into prompt chains, quietly poisoning generation quality.\n\nProduction AI pipelines break when teams treat vector databases as simple static storage. A vector space is tightly coupled to the exact model checkpoint and tokenization logic that built it. If upstream data semantics shift or an unpinned embedding model updates, distance metrics lose calibration.\n\nWe solve this by treating embeddings as versioned artifacts. First: lock tokenizer vocabulary hashes inside vector metadata, rejecting insertions from unverified encoders. Second: run continuous evaluations using a golden set of queries, alerting the moment mean cosine similarity deviates past a baseline threshold. Third: deploy shadow vector collections during encoder upgrades, backfilling asynchronously before switching read paths.\n\nNever assume similarity today means relevance tomorrow.\n\nHow do you detect silent semantic drift in your production vector pipelines before downstream users notice?\n\nLike, comment your architectural approach below, and share with your engineering team!\n\n@pengikut\n\n#SoftwareArchitecture #MachineLearning #SystemDesign #VectorSearch #RAG #AIArchitecture #DataEngineering"
+}

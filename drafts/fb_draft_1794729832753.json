@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794729832753",
+  "topicId": "cache_stampede_redis_invalidation",
+  "topic": "Cache Stampedes Crush Cold DBs on TTL Expiry",
+  "category": "DISTRIBUTED CACHING",
+  "createdAt": "2026-11-15T08:03:52.753Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_cache_stampede_redis_invalidation_1794729795784.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_cache_stampede_redis_invalidation_1794729832427.jpg",
+  "postText": "Your cache hit ratio sits at 99.8%. Everything feels safe until your most queried medication master key expires at peak morning shift.\n\nSuddenly, 4,000 concurrent API requests experience a cache miss in the exact same millisecond.\n\nAll 4,000 threads bypass Redis and slam your primary SQL database with identical heavyweight queries. Connection pool starves, DB CPU spikes to 100%, health checks fail, and the cluster goes dark. You just suffered a cache stampede.\n\nNaive cache-aside with uniform TTLs is dangerous under high concurrency. In healthcare IT where catalogs and bed registries face relentless read spikes, we enforce three patterns:\n\n1. Mutex on Miss: First thread to miss acquires a short-lived Redis lock via SETNX. Only lock holder queries DB and repopulates cache; others back off.\n2. Probabilistic Pre-compute: Implement XFetch. Calculate read delta against remaining TTL to trigger asynchronous refresh before key hard-expires.\n3. Event Invalidation with Jitter: Evict explicitly on data mutation. Strip arbitrary static TTLs to eliminate synchronized expiry windows.\n\nHow do you protect your read-heavy databases when critical cache keys expire: distributed locks, background probabilistic refreshes, or stale-while-revalidate proxies?\n\nDrop your thoughts and production lessons below. Like and share this post with fellow engineers.\n\n@pengikut\n\n#DistributedSystems #Redis #SystemDesign #SoftwareArchitecture #DatabaseScaling #BackendEngineering"
+}

@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1795075286976",
+  "topicId": "unchunked_prefill_cripples_local_llms",
+  "topic": "Unchunked Prefill Cripples Local LLM Latency",
+  "category": "AI ARCHITECTURE",
+  "createdAt": "2026-11-19T08:01:26.976Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_unchunked_prefill_cripples_local_llms_1795075249433.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_unchunked_prefill_cripples_local_llms_1795075286632.jpg",
+  "postText": "You spin up an open-weight 70B model on an on-prem dual-A100 server for a busy hospital floor. Everything runs blisteringly fast until an ICU doctor dumps a dense, 8,000-token multi-day clinical chart for immediate summarization. Instantly, active generation for three nurses typing discharge orders freezes mid-sentence.\n\nTime-to-First-Token (TTFT) skyrockets from 45ms to 8,500ms. In local deployments, naive inference runtimes treat prompt prefill and token decoding as monolithic sequential steps. Compute-heavy matrix multiplications for massive prompt ingestion monopolize tensor cores, effectively starving memory-bandwidth-bound decode steps waiting for their next single token.\n\nTo keep local hospital LLMs production-ready, apply three hardware-aligned patterns:\n1. Chunked Prefill: Split mammoth context windows into uniform chunks (e.g., 512 tokens), interleaving prefill slices with running decode steps to bound scheduling delay.\n2. Continuous Batching: Evict requests at the iteration level instead of locking fixed batch slots until all generations finish.\n3. Paged Memory Pools: Decouple virtual key-value blocks from physical VRAM to banish internal memory fragmentation and drop OOM failures to zero.\n\nPredictable decode latency always beats raw prompt ingestion throughput in mission-critical edge deployments.\n\nHow do you balance prefill saturation versus decode jitter when serving long context documents on local hardware?\n\nLike, comment your architectural experiences below, and share this post with your engineering colleagues.\n\n@pengikut\n\n#LLMInference #LocalAI #MachineLearning #MLOps #SystemArchitecture #HealthcareIT #AIEngineering"
+}

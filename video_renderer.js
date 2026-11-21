@@ -24,21 +24,21 @@ function buildP5Html(topic) {
       margin: 0;
       padding: 0;
       width: 1080px;
-      height: 1080px;
+      height: 1920px;
       overflow: hidden;
       background: #020617;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
     @keyframes kenBurns {
       0% { transform: scale(1) translate(0, 0); }
-      100% { transform: scale(1.14) translate(-25px, -15px); }
+      100% { transform: scale(1.14) translate(-25px, -35px); }
     }
     #ai-backdrop {
       position: absolute;
       top: -40px;
       left: -40px;
       width: 1160px;
-      height: 1160px;
+      height: 2040px;
       background-size: cover;
       background-position: center;
       filter: brightness(0.68) contrast(1.15) saturate(1.2);
@@ -50,7 +50,7 @@ function buildP5Html(topic) {
       top: 0;
       left: 0;
       width: 1080px;
-      height: 1080px;
+      height: 1920px;
       z-index: 2;
     }
     #overlay {
@@ -58,10 +58,10 @@ function buildP5Html(topic) {
       top: 0;
       left: 0;
       width: 1080px;
-      height: 1080px;
+      height: 1920px;
       z-index: 10;
       pointer-events: none;
-      padding: 48px;
+      padding: 80px 56px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -188,56 +188,38 @@ function buildP5Html(topic) {
 
     <!-- Center Stage -->
     <div id="center-stage" style="margin: 20px 0;">
-      <!-- Scene 1: Problem Hook (0 - 5.5s) -->
+      <!-- Scene 1: ONE solution + ONE number (3 - 18s) -->
       <div id="scene1" class="scene-box">
-        <div style="font-size: 12px; font-weight: 800; color: #f43f5e; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px;">
-          CRITICAL PROBLEM IDENTIFIED
+        <div style="font-size: 14px; font-weight: 800; color: #38bdf8; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 14px;">
+          THE ONE FIX THAT WORKED
         </div>
-        <div style="font-size: 20px; color: #e2e8f0; line-height: 1.5; font-weight: 600;">
-          ${topic.hook}
+        <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 18px;">
+          <div style="width: 64px; height: 64px; border-radius: 16px; background: rgba(14, 165, 233, 0.2); border: 1.5px solid rgba(56, 189, 248, 0.5); display: flex; align-items: center; justify-content: center; font-size: 30px; flex-shrink: 0; box-shadow: 0 0 20px rgba(56, 189, 248, 0.35);">
+            ⚡
+          </div>
+          <div>
+            <div style="font-size: 30px; font-weight: 900; color: #ffffff; line-height: 1.2;">${(topic.keyPoints && topic.keyPoints[0] ? topic.keyPoints[0].title : topic.title)}</div>
+          </div>
         </div>
-      </div>
-
-      <!-- Scene 2: 3 Pillars (5.5 - 15.5s) -->
-      <div id="scene2" class="scene-box" style="display: none;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-          <span style="font-size: 12px; font-weight: 800; color: #38bdf8; letter-spacing: 0.1em; text-transform: uppercase;">
-            ARCHITECTURAL SOLUTION PATTERN
-          </span>
-          <span style="font-size: 11px; font-family: monospace; color: #94a3b8;">ACTIVE PIPELINE</span>
+        <div style="font-size: 22px; color: #cbd5e1; line-height: 1.45; font-weight: 600;">
+          ${(topic.keyPoints && topic.keyPoints[0] ? topic.keyPoints[0].desc : topic.hook)}
         </div>
-        <div style="display: grid; grid-template-columns: 1fr; gap: 12px;">
-          ${topic.keyPoints.map((pt, i) => {
-            const icons = ['⚡', '🛡️', '📊', '🔒', '⚙️'];
-            const icon = icons[i % icons.length];
-            return `
-            <div id="pillar-${i+1}" style="display: flex; align-items: center; gap: 16px; padding: 14px 20px; border-radius: 14px; background: rgba(30, 41, 59, 0.7); border: 1.5px solid rgba(255, 255, 255, 0.1); opacity: 0.35; transform: translateY(8px); transition: all 0.5s ease;">
-              <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(14, 165, 233, 0.2); border: 1.5px solid rgba(56, 189, 248, 0.5); color: #38bdf8; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);">
-                ${icon}
-              </div>
-              <div style="flex: 1;">
-                <div style="display: flex; align-items: center; gap: 8px;">
-                  <span style="font-family: monospace; font-size: 12px; font-weight: 800; color: #38bdf8; background: rgba(56, 189, 248, 0.15); padding: 2px 8px; border-radius: 6px;">STEP ${pt.num}</span>
-                  <div style="font-size: 16px; font-weight: 800; color: #ffffff;">${pt.title}</div>
-                </div>
-                <div style="font-size: 13px; color: #cbd5e1; margin-top: 4px; line-height: 1.4;">${pt.desc}</div>
-              </div>
-            </div>
-            `;
-          }).join('')}
+        <div style="margin-top: 26px; padding-top: 22px; border-top: 1px solid rgba(255,255,255,0.12); display: flex; align-items: baseline; gap: 16px;">
+          <div style="font-size: 68px; font-weight: 950; color: ${topic.accentColor}; line-height: 1; text-shadow: 0 0 30px ${topic.accentColor}66;">${topic.oneNumber || '−40%'}</div>
+          <div style="font-size: 17px; color: #94a3b8; font-weight: 700; line-height: 1.35; max-width: 520px;">${topic.oneNumberLabel || 'measured after the fix'}</div>
         </div>
       </div>
 
-      <!-- Scene 3: Conclusion / Takeaway (15.5 - 20s) -->
-      <div id="scene3" class="scene-box" style="display: none; text-align: center; padding: 36px 32px;">
-        <div style="width: 48px; height: 48px; border-radius: 50%; background: ${topic.accentColor}22; border: 1px solid ${topic.accentColor}; color: ${topic.accentColor}; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 24px; font-weight: 900;">
-          ✓
+      <!-- Scene 2: Comment CTA close (18 - 24s) -->
+      <div id="scene2" class="scene-box" style="display: none; text-align: center; padding: 48px 36px;">
+        <div style="width: 56px; height: 56px; border-radius: 50%; background: ${topic.accentColor}22; border: 1px solid ${topic.accentColor}; color: ${topic.accentColor}; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 26px; font-weight: 900;">
+          💬
         </div>
-        <div style="font-size: 26px; font-weight: 800; color: #ffffff; line-height: 1.4; max-width: 720px; margin: 0 auto;">
-          "${topic.takeaway}"
+        <div style="font-size: 34px; font-weight: 900; color: #ffffff; line-height: 1.3; max-width: 780px; margin: 0 auto;">
+          ${topic.takeaway}
         </div>
-        <div style="margin-top: 16px; font-size: 13px; font-family: monospace; color: #38bdf8; font-weight: 700;">
-          Deep dive engineering discussion in the Facebook comments below 👇
+        <div style="margin-top: 22px; font-size: 22px; font-weight: 800; color: #38bdf8; line-height: 1.4;">
+          What broke first in YOUR stack? Drop it in the comments 👇
         </div>
       </div>
     </div>
@@ -267,38 +249,25 @@ function buildP5Html(topic) {
     const cover = document.getElementById('cover-thumbnail');
     const s1 = document.getElementById('scene1');
     const s2 = document.getElementById('scene2');
-    const s3 = document.getElementById('scene3');
-    const p1 = document.getElementById('pillar-1');
-    const p2 = document.getElementById('pillar-2');
-    const p3 = document.getElementById('pillar-3');
 
-    // 1. Hide Cover/Thumbnail at 2.8s
+    // 1. Hide Cover/Thumbnail at 3.0s
     setTimeout(() => {
       if (cover) {
         cover.style.opacity = '0';
         cover.style.transform = 'translateY(-100%)';
       }
-    }, 2800);
+    }, 3000);
 
-    // 2. Transition from Scene 1 to Scene 2 at 8.0s
+    // 2. ONE solution + ONE number (3s - 18s), then close with comment CTA
     setTimeout(() => {
       s1.style.display = 'none';
       s2.style.display = 'block';
-      setTimeout(() => { p1.style.opacity = '1'; p1.style.transform = 'translateY(0)'; p1.style.borderColor = '${topic.accentColor}'; }, 400);
-      setTimeout(() => { p2.style.opacity = '1'; p2.style.transform = 'translateY(0)'; p2.style.borderColor = '${topic.accentColor}'; }, 3200);
-      setTimeout(() => { p3.style.opacity = '1'; p3.style.transform = 'translateY(0)'; p3.style.borderColor = '${topic.accentColor}'; }, 6200);
-    }, 8000);
-
-    // 3. Transition from Scene 2 to Scene 3 at 17.5s
-    setTimeout(() => {
-      s2.style.display = 'none';
-      s3.style.display = 'block';
-    }, 17500);
+    }, 18000);
 
     // === P5.JS GENERATIVE BACKGROUND ART ===
     const sketch = (p) => {
       const W = 1080;
-      const H = 1080;
+      const H = 1920;
       const PARTICLE_COUNT = 90;
       let particles = [];
       let nodes = [];
@@ -462,19 +431,19 @@ async function renderVideo(topic) {
   });
 
   const context = await browser.newContext({
-    viewport: { width: 1080, height: 1080 },
+    viewport: { width: 1080, height: 1920 },
     deviceScaleFactor: 1,
     recordVideo: {
       dir: tempDir,
-      size: { width: 1080, height: 1080 }
+      size: { width: 1080, height: 1920 }
     }
   });
 
   const page = await context.newPage();
   await page.goto(`file://${htmlPath}`);
 
-  // Rekam selama 23 detik (termasuk thumbnail cover 2.8s)
-  await page.waitForTimeout(23000);
+  // Rekam 24 detik (cover 0-3s + solusi 3-18s + CTA 18-24s)
+  await page.waitForTimeout(24000);
 
   await page.close();
   await context.close();
@@ -488,7 +457,7 @@ async function renderVideo(topic) {
   const rawWebmPath = path.join(tempDir, webmFiles[0]);
   console.log(`[RENDER P5 VIDEO] Mengonversi ke MP4 H.264 (30 FPS, YUV420p)...`);
 
-  const ffmpegCmd = `ffmpeg -y -i "${rawWebmPath}" -c:v libx264 -pix_fmt yuv420p -r 30 -movflags +faststart "${finalVideoPath}"`;
+  const ffmpegCmd = `ffmpeg -y -i "${rawWebmPath}" -t 24 -c:v libx264 -pix_fmt yuv420p -r 30 -movflags +faststart "${finalVideoPath}"`;
   execSync(ffmpegCmd, { stdio: 'pipe' });
 
   // Ekstrak cover thumbnail gambar JPG beresolusi tinggi di detik pertama

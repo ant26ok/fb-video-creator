@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1793293917027",
+  "topicId": "healthcare_fhir_hl7_telemetry_security",
+  "topic": "Interoperabilitas Faskes: Jebakan HL7, FHIR & IoT Medis",
+  "category": "HEALTHCARE IT ARCHITECTURE",
+  "createdAt": "2026-10-29T17:11:57.027Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_healthcare_fhir_hl7_telemetry_security_1793293881704.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_healthcare_fhir_hl7_telemetry_security_1793293916728.jpg",
+  "postText": "Integrasi sistem di rumah sakit tempat saya bekerja bukan cuma soal kirim payload JSON standar. Salah parsing sedikit, riwayat alergi obat pasien bisa hilang fatal.\n\nBanyak developer anggap remeh integrasi faskes sampai dihadapkan pada mesin legacy HL7 v2 berbasis socket MLLP pipe-delimited. Mesin lab dan bedside monitor ICU rata-rata memuntahkan data mentah ini, sementara sistem EMR modern menuntut REST API standar FHIR (Fast Healthcare Interoperability Resources).\n\nLangkah teknis yang kami terapkan:\n1. Interface Engine Mandiri: Jangan biarkan core EMR menelan socket mentah. Gunakan middleware engine untuk normalisasi message HL7 v2 ke resource FHIR via queue.\n2. Zero-Trust IoT Telemetri: Alat medis jarang di-patch vendor. Isolasi total di VLAN terpisah, terapkan mTLS, dan matikan akses keluar internet.\n3. Enkripsi & Audit Granular: Lindungi Protected Health Information (PHI). Setiap akses ke resource FHIR harus tervalidasi token spesifik dan tercatat di audit log immutable.\n\nInteroperabilitas medis bukan cuma soal data sampai, tapi soal integritas mutlak tanpa kompromi.\n\nJika pernah pusing integrasi HL7 atau amankan IoT medis, silakan Like, Komen pengalaman teknis rekan-rekan, dan Share postingan ini ke komunitas IT faskes lainnya!\n\n#HealthcareIT #HL7 #FHIR #SystemAnalyst #MedicalIoT #CyberSecurity #SoftwareEngineering"
+}

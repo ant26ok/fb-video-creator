@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1793347321824",
+  "topicId": "zero_downtime_canary_deployment",
+  "topic": "Deploy Jam 2 Pagi? Pola Zero-Downtime di Sistem Rumah Sakit",
+  "category": "DEVOPS & DISTRIBUTED SYSTEMS",
+  "createdAt": "2026-10-30T08:02:01.824Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_zero_downtime_canary_deployment_1793347282560.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_zero_downtime_canary_deployment_1793347321330.jpg",
+  "postText": "Pernah dengar saran: 'Jadwalkan maintenance jam 2 pagi saat user sedang tidur'?\n\nDi rumah sakit tempat saya bekerja, jam 2 pagi adalah waktu kritis IGD menerima pasien rujukan dan farmasi meracik injeksi darurat. Bagi faskes 24/7, 'maintenance window' adalah ilusi berbahaya. Sistem mati 1 menit saja dampaknya fatal ke layanan medis.\n\nUntuk mengatasi ini, kami mengandalkan dua strategi rilis:\n\n1. Blue-Green Deployment untuk rilis besar.\nDua environment identik berjalan paralel. Versi lama (Blue) melayani live traffic, sementara versi baru (Green) disiapkan dan diuji menyeluruh di server privat. Saat siap, reverse proxy cukup memutar routing traffic ke Green dalam hitungan milidetik. Ada anomali? Rollback cukup geser balik pointer ke Blue tanpa delay build ulang.\n\n2. Canary Release untuk modul risiko tinggi.\nPerubahan krusial tidak langsung dilepas 100%. Kami alirkan 2-5% request ke service versi baru via reverse proxy weighted balancing. Sambil jalan, kami pantau error rate dan latency log. Jika metrik stabil, traffic dinaikkan bertahap hingga penuh.\n\nKuncinya bukan hanya di load balancer, melainkan DB schema. Terapkan pola 'Expand and Contract'—jangan pernah drop kolom atau ganti tipe data sebelum semua kode lama tuntas dimatikan.\n\nDeployment tenang, pasien terlayani aman, engineer tidur pulas.\n\nBagaimana strategi deployment di tim Anda saat ini? Klik Like jika postingan ini bermanfaat, tulis cerita pengalaman Anda di kolom komentar, dan Share postingan ini ke rekan tech lead atau engineer lainnya!\n\n#SoftwareArchitecture #DevOps #SystemAnalyst #Microservices #ReliabilityEngineering #CICD"
+}

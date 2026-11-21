@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1793865766156",
+  "topicId": "gap_lock_range_deadlock",
+  "topic": "Gap Lock Hantu: Query Rentang Lumpuhkan Insert IGD",
+  "category": "DATABASE CONCURRENCY",
+  "createdAt": "2026-11-05T08:02:46.156Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_gap_lock_range_deadlock_1793865727463.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_gap_lock_range_deadlock_1793865765745.jpg",
+  "postText": "Jam sibuk malam hari di faskes tempat saya bekerja, tiba-tiba sistem IGD lemot parah. Pasien antre masuk triage, tapi form pendaftaran rawat inap gagal simpan beruntun: deadlock!\n\nAnehnya, tidak ada dua transaksi yang menyentuh baris pasien yang sama. Kenapa bisa deadlock?\n\nTersangkanya: Next-Key Lock InnoDB.\n\nSaat staf triage input pasien baru (INSERT), sistem background mengeksekusi kalkulasi okupansi bed dengan filter rentang kamar. Kolom filter tidak punya composite index presisi. Akibatnya, MySQL mengunci baris data fisik dan SELURUH CELAH (gap) di antara indeks tersebut.\n\nPetakanya:\n1. Query rentang pasang Gap Lock di celah ID yang belum ada datanya.\n2. Transaksi pendaftaran IGD coba INSERT record baru di dalam celah terkunci itu.\n3. Dua transaksi berlawanan saling tunggu celah indeks yang sama: BOOM! Deadlock meledak di log produksi.\n\nSolusi kami:\n- Ubah isolation level transaksi reporting dari Repeatable Read ke Read Committed agar InnoDB mematikan gap lock.\n- Buat covering composite index presisi agar pencarian mendarat tepat pada record tanpa menyapu celah liar.\n\nPernahkah sistem Anda dihantam deadlock misterius padahal query yang berjalan menyentuh baris data yang sama sekali berbeda? Bagaimana tim Anda melacak dan membedahnya di production?\n\nSilakan Like, tuliskan pandangan atau pengalaman teknis Anda di kolom komentar, dan Share postingan ini ke rekan-rekan IT lainnya!\n\n#DatabaseEngineering #MySQL #InnoDB #Concurrency #SoftwareArchitecture #HighPerformance #BackendDeveloper"
+}

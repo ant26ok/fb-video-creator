@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794661321551",
+  "topicId": "uncapped_kv_cache_oom_ml_serving",
+  "topic": "Uncapped KV Caches OOM Production LLM Nodes",
+  "category": "AI & ML ARCHITECTURE",
+  "createdAt": "2026-11-14T13:02:01.551Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_uncapped_kv_cache_oom_ml_serving_1794661285580.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_uncapped_kv_cache_oom_ml_serving_1794661321272.jpg",
+  "postText": "Serving open-weight LLMs in production feels stable during local unit tests. But route concurrent clinical records and live discharge summarization requests to the cluster, and worker nodes suddenly vanish with CUDA out-of-memory crashes.\n\nThe culprit is rarely model parameter footprint—it is unmanaged KV-cache growth. In generative workloads, input context and output tokens expand dynamically. Naive memory allocators reserve contiguous VRAM chunks upfront. When request volume surges with diverse context lengths, memory fragmentation turns 70% VRAM utilization into sudden instance termination.\n\nIn our healthcare IT workloads, stabilizing real-time inference required three architectural changes:\n\n1. Paged Allocation: Decouple virtual context from physical GPU memory. Paging KV-cache state across dynamic chunks stops internal memory fragmentation.\n2. Chunked Prefill: Long prompt processing locks tensor cores. Interleaving chunked prefills with token decoding keeps p99 latency flat.\n3. Context Preemption: When VRAM drops under safe thresholds, suspend low-priority background extraction and swap cache state to host system memory instead of killing workers.\n\nTreating LLM inference like standard stateless microservices invites downtime. Rigorous memory management dictates system reliability.\n\nHow do you handle KV-cache scaling and memory starvation under bursty concurrency in your ML systems?\n\nLike, comment your architectural approach below, and share this post with your engineering peers.\n@pengikut\n\n#MachineLearning #AIArchitecture #LLMOps #SystemDesign #SoftwareEngineering #CloudComputing"
+}

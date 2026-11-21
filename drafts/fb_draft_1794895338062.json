@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794895338062",
+  "topicId": "cache_aside_race_invalidation",
+  "topic": "Cache-Aside Races Silently Resurrect Stale DB State",
+  "category": "DISTRIBUTED CACHING",
+  "createdAt": "2026-11-17T06:02:18.062Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_cache_aside_race_invalidation_1794895296440.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_cache_aside_race_invalidation_1794895337722.jpg",
+  "postText": "Most teams treat Cache-Aside as foolproof: write to DB, delete cache key, let next read repopulate.\nIn high-throughput systems, this naive flow silently poisons Redis with zombie records.\n\nIn our healthcare IT workloads, we hit this during peak pharmacy dispensing hours. A service updates drug inventory in Postgres, then issues a cache delete. But milliseconds earlier, a concurrent read misses Redis, queries the DB before transaction commit, and pauses under CPU scheduling. The write commits, the cache eviction runs, and then the stalled read thread wakes up—writing stale, pre-update stock counts back into Redis with a 2-hour TTL.\n\nPatients saw unavailable beds and exhausted medicine stock because the cache resurrected dead state.\n\nThree patterns solved this permanently:\n1. Outbox / CDC Eviction: Never evict inside app code. Stream database WAL events through Debezium to invalidate Redis only after true transaction persistence.\n2. Single-Flight Mutex (SETNX): When misses happen, acquire a 2-second lock. Exactly one thread warms the cache; all others wait or serve stale-while-revalidate.\n3. Probabilistic Early Expiration (XFetch): Recompute hot keys in the background before hard TTL elapses to avoid thundering herds.\n\nHow do you prevent cache invalidation races in your distributed stack—CDC streams, distributed locks, or strict versioned keys?\n\nLike this post, drop your battle-tested caching strategies in the comments, and share this with fellow backend engineers!\n\n@pengikut\n\n#SoftwareArchitecture #Redis #DistributedSystems #BackendEngineering #SystemDesign #DatabasePerformance"
+}

@@ -78,7 +78,7 @@ Strict requirements:
 3. title: punchy, provocative title in English max 65 chars (MUST BE UNIQUE and NEVER repeat recent topics!)
 4. color: Tailwind gradient classes for badge (e.g. "from-cyan-500 to-blue-600" or "from-amber-500 to-rose-600")
 5. accentColor: hex code (e.g. "#06b6d4", "#f43f5e", "#10b981", "#8b5cf6")
-6. hook: 1-2 sentence real-world dilemma or critical bottleneck in English (max 160 chars)
+6. hook: 1-2 sentence real-world dilemma or critical bottleneck in English, LEAD WITH A COST/IMPACT NUMBER (lost rupiah, wasted hours, failed claims, 3-am pages). Max 160 chars.
 7. keyPoints: array of exactly 3 objects:
    - num: "01", "02", "03"
    - title: concise technical solution title in English (max 35 chars)
@@ -96,6 +96,11 @@ Strict requirements:
     - Dramatic high-contrast chiaroscuro, dark obsidian/slate background, neon cyan or warm amber rim lighting.
     - Intriguing focal object matching this new topic: macro shot of glowing neural microchips, optic fiber server racks, or holographic telemetry.
     - Absolutely NO text, NO typography, NO watermark, NO logo, NO cartoon.
+11. oneNumber: ONE concrete number proving the fix (e.g. "-40%", "3x", "12s -> 400ms"). Max 10 chars.
+12. oneNumberLabel: short English label for that number (max 55 chars, e.g. "p95 latency after GGUF quantization").
+13. caption: Facebook reel caption, 150-250 characters in ENGLISH, cost/hook first, one number, ends with a comment question. NO hashtags inside.
+14. hashtags: exactly 2-3 hashtags as a single string (e.g. "#SystemArchitecture #LLMOps #HealthTech").
+15. transcription: plain-text transcript of what the video shows/says, 3-6 short lines, English, no timestamps.
 
 Return ONLY the raw JSON object.`;
 

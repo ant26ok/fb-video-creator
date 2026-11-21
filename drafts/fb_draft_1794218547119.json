@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794218547119",
+  "topicId": "zero_downtime_canary_pipeline",
+  "topic": "Why Pure Blue-Green Fails Without Dual-Write Database Schemas",
+  "category": "MISSION-CRITICAL DEVOPS",
+  "createdAt": "2026-11-09T10:02:27.119Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_zero_downtime_canary_pipeline_1794218506573.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_zero_downtime_canary_pipeline_1794218546634.jpg",
+  "postText": "In healthcare IT, a scheduled 3-minute downtime at 02:00 AM does not exist. Emergency rooms, intensive care monitors, and admission desks write transactions 24/7/365.\n\nMany teams think Blue-Green deployment is just swapping routing targets at the load balancer or ingress. Then reality hits: the new Green version requires a column rename or non-null field that breaks active Blue instances sharing the database. Transactions corrupt, sessions drop, and rollback turns into an unrecoverable disaster.\n\nTo achieve true zero-downtime canary rollouts in high-stakes environments:\n\n1. Enforce Expand-Contract Schemas: Never alter or drop a column in the same release. Phase 1 adds nullable columns. Phase 2 dual-writes. Phase 3 migrates historical data. Phase 4 removes the obsolete column weeks later.\n2. Connection Draining & Session Stickiness: Stateful telemetry and active clinical workflows require graceful termination handlers (SIGTERM) giving 60 seconds for in-flight requests to complete.\n3. Automated Statistical Canary Gates: Route 2% of traffic first. If error rate exceeds 0.05% or P99 latency spikes by 15%, ingress controllers abort immediately before clinical disruption.\n\nReliable deployments don't happen by luck; they succeed through backward compatibility by design.\n\nHow does your team handle database schema evolution during zero-downtime releases without locking critical tables?\n\nLike this post if it was useful, comment your experience or perspectives below, and share with your IT colleagues.\n@pengikut\n\n#DevOps #SystemArchitecture #SoftwareEngineering #ContinuousDelivery #SiteReliability #DatabaseEngineering #HighAvailability"
+}

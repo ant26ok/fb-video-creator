@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794020523548",
+  "topicId": "index_lookup_deadlock_elimination",
+  "topic": "Kill Bookmark Lookups Before They Deadlock You",
+  "category": "DATABASE CONCURRENCY",
+  "createdAt": "2026-11-07T03:02:03.548Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_index_lookup_deadlock_elimination_1794020481166.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_index_lookup_deadlock_elimination_1794020523218.jpg",
+  "postText": "Two concurrent transactions updating entirely different business records can still crash each other with error 1205 deadlock. In high-throughput healthcare IT systems, this happens when doctors concurrently prescribe medication while stock inventory reconciliation runs in the background.\n\nRoot cause: bookmark lookups. When an UPDATE targets a non-clustered secondary index without covering all referenced columns, the database acquires an Exclusive (X) lock on secondary index nodes, then jumps to clustered index to fetch remainder data. If Transaction A updates Index X then requests Clustered Y, while Transaction B updates Clustered Y and requests Index X, the database detects a cyclic dependency and kills one session.\n\nFixing this requires zero infrastructure spend. First, enforce deterministic lock order: sort all IDs in application memory ascending before executing batch mutations. Second, convert secondary indexes to covering indexes using INCLUDE clauses. Engine never touches the clustered table; the lookup race condition disappears.\n\nHave you ever resolved a nasty production deadlock simply by reordering payload arrays or adding a covering index instead of bumping database hardware?\n\nLike if this breakdown helped, comment your worst production deadlock story below, and share with your engineering team.\n\n#DatabaseArchitecture #SQLServer #PostgreSQL #SoftwareEngineering #HighConcurrency #SystemDesign #BackendEngineering"
+}

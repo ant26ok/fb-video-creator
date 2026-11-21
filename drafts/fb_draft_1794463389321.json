@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794463389321",
+  "topicId": "cache_aside_stampede_lock",
+  "topic": "Naive Cache-Aside Loops Trigger Thundering Herd Outages",
+  "category": "DISTRIBUTED SYSTEMS",
+  "createdAt": "2026-11-12T06:03:09.321Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_cache_aside_stampede_lock_1794463349478.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_cache_aside_stampede_lock_1794463388939.jpg",
+  "postText": "One expired Redis key nearly took down our patient queue dashboard at 8 AM.\n\nIn healthcare IT, cache-aside looks simple: read Redis, miss, query SQL, write Redis. In staging, it flies. During morning triage, a hot lookup key expires and 500 concurrent requests miss at once. That thundering herd slams your database before the first cache write finishes.\n\nNaive delete-on-write invalidation also breeds race conditions. Thread A updates SQL and deletes the key; Thread B reads stale replica data and writes it back to Redis.\n\nHow we hardened cache-aside at the hospital where I work:\n1. Singleflight coalescing: Only one worker or distributed Redis lock queries SQL on a miss; concurrent callers share that result.\n2. Versioned keys: Bump a lightweight version pointer instead of deleting keys, preventing stale overwrites.\n3. Stale-while-revalidate: Serve soft-expired cache while one background job refreshes it, keeping p99 latency flat.\n\nHow do you stop cache stampedes on hot keys: distributed Redis locks, app-level singleflight, or stale-while-revalidate?\n\nLike if you have survived a thundering herd, comment your strategy below, and share with your team!\n\n@pengikut\n\n#SystemArchitecture #Redis #Caching #DistributedSystems #BackendEngineering #HealthcareIT"
+}

@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794218495597",
+  "topicId": "probabilistic_cache_stampede_prevention",
+  "topic": "Probabilistic Expiry Beats Cache Stampedes",
+  "category": "DISTRIBUTED CACHING",
+  "createdAt": "2026-11-09T10:01:35.597Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_probabilistic_cache_stampede_prevention_1794218455493.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_probabilistic_cache_stampede_prevention_1794218495196.jpg",
+  "postText": "Cache-aside seems simple until a high-traffic key expires during clinical shift handover. Suddenly, 3,000 concurrent queries miss Redis simultaneously, thundering straight into our primary PostgreSQL cluster. Connection pools exhaust in 800ms. Database CPU hits 100%.\n\nIn high-throughput systems, basic TTL eviction is an operational hazard. When a hot key expires, the thundering herd crushes the persistence layer before the first worker finishes recomputing the cache entry.\n\nWe eliminated stampedes using three architectural patterns:\n1. Singleflight Distributed Mutex: Wrap cache-miss read-throughs in distributed locks. Only one thread hits the database; remaining threads await the single flight resolution.\n2. Probabilistic Early Refresh (XFetch): Compute early refresh probabilities dynamically using key access frequency and query computation cost. Keys recompute asynchronously seconds before hard TTL expiry.\n3. Stale-While-Revalidate: Return existing cached values immediately with a soft TTL, triggering an async worker to renew the dataset without blocking client reads.\n\nNaive cache-aside breaks under high concurrency. Resilient systems require active, probabilistic lifecycle management.\n\nHow do you protect your primary datastores during sudden invalidation spikes: distributed locks, stale-while-revalidate, or probabilistic background recomputation?\n\nDrop your insights below. Like and share this with your engineering teams to prevent production stampedes.\n\n@pengikut\n\n#DistributedSystems #Redis #SystemArchitecture #BackendEngineering #DatabasePerformance #HighAvailability"
+}

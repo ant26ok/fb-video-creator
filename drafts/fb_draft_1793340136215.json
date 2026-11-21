@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1793340136215",
+  "topicId": "multi_agent_orchestration_healthcare",
+  "topic": "AI Agent di Production: Mengapa LLM Monolitik Pasti Gagal?",
+  "category": "AI ARCHITECTURE",
+  "createdAt": "2026-10-30T06:02:16.215Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_multi_agent_orchestration_healthcare_1793340100085.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_multi_agent_orchestration_healthcare_1793340135862.jpg",
+  "postText": "Waktu pertama kali uji coba AI agent di rumah sakit tempat saya bekerja, kami sempat terjebak satu kesalahan pemula: membiarkan satu prompt raksasa menangani segalanya.\n\nEkspektasinya, LLM bisa membaca resume medis, validasi tindakan, lalu menyiapkan draf bridging sistem eksternal sekaligus. Realitanya? Biaya token meledak, respons time tembus 45 detik, dan model mulai berhalusinasi pada dosis obat. Fatal untuk faskes.\n\nDari insiden itu, arsitektur langsung kami ubah ke Multi-Agent Orchestration:\n\n1. Spesialisasi Domain: Satu agent hanya fokus ekstraksi entitas klinis (ICD-10). Agent lain bertugas validasi bisnis dan tarif. Konteks prompt tetap kecil, tajam, dan hemat token.\n2. State Machine Deterministik: Alur orkestrasi dikunci via graph terstruktur. Agent tidak boleh berimprovisasi memilih jalur tanpa validasi schema output.\n3. Human-in-the-Loop: Agent sama sekali dilarang melakukan commit mutasi ke database inti SIMRS. Agent hanya membuat rekomendasi draf untuk disetujui staf koder klinis.\n\nOtonomi AI di sistem riil bukan berarti membiarkan model berjalan liar tanpa pagar pembatas, tapi membatasi blast radius kegagalan.\n\nJika rekan-rekan sedang merancang sistem berbasis AI agent, silakan Like post ini, tulis pengalaman Anda di kolom komentar, dan Share postingan ini ke rekan-rekan IT lainnya!\n\n#SoftwareArchitecture #AIAgents #MultiAgent #SystemAnalyst #HealthTech #LangGraph"
+}

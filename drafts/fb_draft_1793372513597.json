@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1793372513597",
+  "topicId": "dynamic_batching_ml_serving",
+  "topic": "GPU Mahal Latency Jebol: Jebakan Inference 1-by-1",
+  "category": "AI INFRASTRUCTURE",
+  "createdAt": "2026-10-30T15:01:53.597Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_dynamic_batching_ml_serving_1793372477007.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_dynamic_batching_ml_serving_1793372513277.jpg",
+  "postText": "Sewa GPU belasan juta sebulan, tapi pas live di faskes latency tembus 4 detik?\nGPU utilization cuma 15%, tapi antrean request data medis sudah merah membara.\n\nDi rumah sakit tempat saya bekerja, kami pernah integrasikan model bantuan inferensi diagnosis. Di lokal workstation data scientist, inferensi 1 request cuma 40 milidetik. Begitu deploy ke server production pakai framework web standar yang manggil model per request masuk, throughput ambruk di jam sibuk pagi hari.\n\nKenapa?\nGPU dirancang untuk komputasi tensor paralel masif, bukan web worker sekuensial. Kirim request satu per satu bikin GPU habis waktu bolak-balik transfer data RAM ke VRAM (memory bus saturation), bukan compute. Core GPU idle, tapi antrean request numpuk di HTTP worker.\n\nSolusi arsitekturnya:\n1. Dynamic Batching: Tahan request masuk di buffer selama max 5-10ms untuk bentuk micro-batch. GPU proses 16 request sekaligus dalam satu siklus komputasi. Latency individu hanya naik tipis, throughput naik 8x lipat.\n2. Model Optimization: Konversi checkpoint mentah ke engine runtime teroptimasi seperti ONNX Runtime atau TensorRT dengan kuantisasi FP16/INT8.\n3. Dedicated Model Server: Pisahkan backend faskes dari inferensi fisik menggunakan dedicated engine seperti Triton Inference Server via gRPC.\n\nJangan samakan serving model machine learning dengan REST API CRUD database biasa.\n\nPernah hadapi GPU overheat tapi throughput loyo di production? Like postingan ini, tulis pengalamanmu di kolom komentar, dan share ke rekan-rekan IT lainnya!\n\n#SystemArchitecture #MachineLearning #ModelServing #SoftwareEngineering #DeepLearning #TritonInference #CloudComputing"
+}

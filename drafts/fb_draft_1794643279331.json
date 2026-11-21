@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794643279331",
+  "topicId": "kv_cache_bloat_llm",
+  "topic": "KV Cache Bloat Chokes Local LLM Serving",
+  "category": "AI ARCHITECTURE",
+  "createdAt": "2026-11-14T08:01:19.331Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_kv_cache_bloat_llm_1794643239492.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_kv_cache_bloat_llm_1794643278904.jpg",
+  "postText": "Running local LLMs inside hospital infrastructure sounds ideal for data privacy. Then concurrent queries hit production, and GPU VRAM immediately crashes with Out-Of-Memory errors.\n\nDeploying on-prem clinical assistant models reveals a brutal truth: model weights are rarely the bottleneck. Memory fragmentation inside Key-Value (KV) cache allocation is. Traditional runtime engines pre-allocate contiguous memory buffers for maximum sequence lengths. When requests vary between 200 and 4,000 tokens, 60% to 80% of precious GPU memory sits completely wasted as unusable padding.\n\nThree patterns solve local inference bottlenecks without buying extra enterprise GPUs:\n\n1. PagedAttention: Borrow virtual memory concepts from OS kernels. Slice KV cache into fixed-size physical blocks. Allocate non-contiguously on demand to wipe out internal fragmentation.\n2. Iteration-Level Batching: Ditch static request batching. Eject completed sequences immediately and inject incoming prompts mid-flight, maintaining peak compute saturation.\n3. Activation-aware Quantization (AWQ): Protect 1% salient weight channels that preserve clinical reasoning accuracy while compressing remaining weights to 4-bit, cutting model footprint by half.\n\nLocal deployment is an OS memory scheduling problem disguised as machine learning.\n\nHow do you handle KV cache limits and latency SLAs in private deployments—vLLM, TensorRT-LLM, or quantized llama.cpp stacks?\n\nLike, comment your architectural choice below, and share with fellow engineers.\n\n@pengikut\n\n#LLMOps #MachineLearning #SystemArchitecture #LocalLLM #vLLM #AIEngineering"
+}

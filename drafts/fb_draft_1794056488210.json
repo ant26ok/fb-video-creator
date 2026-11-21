@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794056488210",
+  "topicId": "dynamic_batching_p99_collapse",
+  "topic": "The Dynamic Batching Trap Killing Real-Time ML Latency",
+  "category": "AI & ML ARCHITECTURE",
+  "createdAt": "2026-11-07T13:01:28.210Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_dynamic_batching_p99_collapse_1794056439505.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_dynamic_batching_p99_collapse_1794056487747.jpg",
+  "postText": "Your ML model benchmarks show 1,200 inferences/sec on a modern GPU. You turn on dynamic batching to maximize hardware saturation. But in production, clinicians report critical risk scores hanging for 2-3 seconds. What went wrong?\n\nDynamic batching aggregates concurrent inference requests into single tensor passes. Under heavy, continuous load, it delivers massive compute efficiency. But real-world healthcare traffic is bursty.\n\nWhen traffic dips, the first request in a batch waits idly for batch timeout or batch size saturation. Set the timeout too loose, and your P99 latency blows past SLA limits. Set it too tight, and you trigger batch fragmentation—launching tiny batches of 1 or 2 items, burning kernel overhead without efficiency.\n\nIn our healthcare IT infrastructure, tail latency directly affects decision speed. We tackled this with three architectural changes:\n\n1. Adaptive Timeout Windows: Batch delays dynamically scale based on real-time arrival rates rather than static thresholds.\n2. Priority Fast-Path: Urgent clinical alerts bypass the batch collector entirely, executing on dedicated unbatched worker pools.\n3. Concurrency Limits: Enforced Little's Law at the API gateway layer to prevent inference queue bloat before workers saturate.\n\nOptimizing for GPU throughput without strict latency bounds creates hidden production failures.\n\nHow do you balance batching throughput against tight latency SLAs in your ML inference architecture?\n\nLike this post, share your thoughts in the comments, and send this to your engineering team!\n\n#MachineLearning #MLOps #SystemArchitecture #SoftwareEngineering #BackendEngineering #HighPerformanceComputing"
+}

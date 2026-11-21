@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794402155616",
+  "topicId": "unindexed_foreign_key_deadlocks",
+  "topic": "Unindexed Foreign Keys Kill Concurrent Writes",
+  "category": "DATABASE CONCURRENCY",
+  "createdAt": "2026-11-11T13:02:35.616Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_unindexed_foreign_key_deadlocks_1794402111619.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_unindexed_foreign_key_deadlocks_1794402155247.jpg",
+  "postText": "Your database throughput crashes during peak hours, and connection pools exhaust. The culprit is not complex queries. It is an unindexed foreign key combined with out-of-order writes.\n\nIn high-volume healthcare IT systems—like concurrent medication administration records hitting patient visit logs—engineers assume primary keys protect integrity. But relational engines require foreign key validation on child inserts and updates. Without a covering index on that foreign key column, engines like PostgreSQL or SQL Server elevate row-level verification into share-locks across broad index ranges or entire parent tables.\n\nWhen two concurrent worker transactions mutate child records while updating parent states in reverse order, deadlock detection triggers. One worker gets aborted. Under heavy traffic, retries cascade into an exponential backoff death spiral.\n\nFixing this requires two boring, battle-tested architectural disciplines:\n1. Explicitly index every foreign key column on every child table. RDBMS engines do not auto-create them.\n2. Enforce strict canonical lock ordering: sort primary and foreign IDs in ascending order in application memory before executing batch update statements.\n\nHave you ever uncovered a silent unindexed foreign key causing mysterious deadlocks under load? How do you enforce canonical lock order across distributed workers?\n\nDrop your insights below. Like and share this post with your engineering team to keep your mission-critical databases deadlock-free.\n\n@pengikut\n\n#DatabaseArchitecture #SoftwareEngineering #PostgreSQL #BackendEngineering #HighConcurrency #SystemDesign #TechLeadership"
+}

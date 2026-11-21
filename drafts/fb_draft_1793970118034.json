@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1793970118034",
+  "topicId": "cache_stampede_singleflight",
+  "topic": "Cache Kedaluwarsa Serentak: Stampede Robohkan DB Faskes",
+  "category": "DISTRIBUTED CACHING",
+  "createdAt": "2026-11-06T13:01:58.034Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_cache_stampede_singleflight_1793970078992.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_cache_stampede_singleflight_1793970117667.jpg",
+  "postText": "Pernah alami Redis aman dan adem ayem, tapi Postgres mendadak kolaps pas lonjakan traffic pagi hari?\n\nPengalaman ini sempat terjadi di faskes tempat saya bekerja saat ribuan pasien serentak cek jadwal dokter spesialis via antrean online jam 07.00 pagi. Key cache jadwal dokter expired tepat pada detik itu. Karena memakai pola Cache-Aside standar, ratusan worker app mengalami cache-miss bersamaan.\n\nAkibatnya terjadi Cache Stampede (Thundering Herd). Alih-alih dilayani cache, ratusan thread serentak menjalankan query SQL kompleks yang sama ke database utama. Connection pool langsung ludes, CPU database menyentuh 100%, dan latensi melonjak drastis hingga gateway timeout.\n\nUntuk memitigasi petaka ini, ada 3 strategi wajib:\n1. Terapkan SingleFlight atau Distributed Lock (Redis SET NX EX): Hanya satu request yang diizinkan memanggil DB untuk meregenerasi cache. Request lain wajib subscribe atau menunggu lock rilis.\n2. Invalidation Jitter: Jangan set TTL flat (misal pas 1 jam). Berikan deviasi acak (misal 60 menit ± random 5 menit) supaya ribuan master data tidak mati serentak.\n3. Background Pre-warming / Probabilistic Expiration (XFetch): Worker menghitung komputasi probabilistik untuk me-refresh data di latar belakang sebelum masa berlakunya tuntas.\n\nBagaimana strategi Anda di tim saat ini dalam menangani cache stampede pada sistem traffic tinggi: lebih memilih distributed lock ketat, library SingleFlight bawaan bahasa, atau background cron refresh?\n\nYuk, like postingan ini, bagikan pengalaman arsitektur caching Anda di kolom komentar, dan share ke rekan developer lainnya agar database produksi kita tetap tenang di jam sibuk!"
+}

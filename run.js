@@ -51,7 +51,12 @@ async function run() {
     createdAt: new Date().toISOString(),
     videoPath,
     thumbnailPath,
-    postText: currentTopic.postText
+    postText: currentTopic.postText,
+    caption: currentTopic.caption || null,
+    hashtags: currentTopic.hashtags || null,
+    oneNumber: currentTopic.oneNumber || null,
+    oneNumberLabel: currentTopic.oneNumberLabel || null,
+    transcription: currentTopic.transcription || null
   };
   fs.writeFileSync(
     path.join(config.DRAFTS_DIR, `${draftRecord.id}.json`),

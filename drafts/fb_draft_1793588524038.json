@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1793588524038",
+  "topicId": "ml_training_serving_skew_leakage",
+  "topic": "Akurasi 98% di Notebook, Jebol di Prod: Tragedi Serving Skew",
+  "category": "AI & ML ARCHITECTURE",
+  "createdAt": "2026-11-02T03:02:04.039Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_ml_training_serving_skew_leakage_1793588481191.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_ml_training_serving_skew_leakage_1793588523630.jpg",
+  "postText": "Model prediksi risiko sepsis mencatat akurasi 98% di Jupyter Notebook. Begitu dideploy ke ruang rawat inap faskes tempat saya bekerja, alarm berbunyi kacau: false alarm berhamburan dan dokter kehilangan kepercayaan.\n\nBiang keroknya bukan algoritma, melainkan Training-Serving Skew akibat time-travel data leakage.\n\nDi notebook, ekstraksi fitur lab dan tanda vital pasien di-join tanpa batas waktu presisi. Hasil tes lab yang keluar 3 jam setelah pasien masuk ikut terhitung sebagai input pelatihan. Saat live serving di production, hasil lab tersebut belum ada ketika pasien tiba. Inference engine menerima nilai null atau default yang membuat model salah kalkulasi.\n\nTiga pembenahan arsitektur yang kami lakukan:\n\n1. Point-in-Time Correctness: Penarikan data training wajib mengunci temporal window ketat. Data setelah event cutoff diharamkan masuk.\n2. Single Pipeline Feature Store: Logika ekstraksi fitur offline training dan online inference disatukan dalam satu codebase agar tidak ada beda implementasi SQL vs Python runtime.\n3. Drift Monitoring Real-Time: Evaluasi Population Stability Index (PSI) berkala untuk mendeteksi pergeseran distribusi input sebelum berdampak fatal ke pasien.\n\nDi sistem AI production, kode model hanya 10%. 90% sisanya adalah arsitektur pipa data.\n\nBagaimana strategi Anda menjamin keselarasan fitur antara lingkungan riset data science dan serving engine production? Pernah terjebak kebocoran data serupa?\n\nLike jika insight ini relevan, tulis pengalaman Anda di kolom komentar, dan Share postingan ini ke rekan-rekan engineer lainnya!\n\n#MachineLearning #SoftwareArchitecture #DataEngineering #MLOps #SystemDesign #ProductionML"
+}

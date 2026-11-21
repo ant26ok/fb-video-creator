@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794574937470",
+  "topicId": "http2_stream_drain_cutover",
+  "topic": "Sticky HTTP/2 Streams Sabotage Blue-Green Cutovers",
+  "category": "MISSION-CRITICAL DEVOPS",
+  "createdAt": "2026-11-13T13:02:17.470Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_http2_stream_drain_cutover_1794574900828.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_http2_stream_drain_cutover_1794574937168.jpg",
+  "postText": "Your blue-green switchover showed 100% success on the edge router dashboard. Zero HTTP 5xx errors logged. Yet 3 hours later, legacy blue nodes run hot with pinned CPU and memory.\n\nIn 24/7 mission-critical systems like healthcare device telemetry and real-time feeds, clients leverage persistent HTTP/2 and gRPC streams. When your ingress gateway flips traffic from Blue to Green, DNS and reverse-proxy route shifts ONLY apply to new connection handshakes. Established L7 multiplexed streams remain pinned to old instances indefinitely.\n\nThe result? Silent split-brain workloads. Legacy instances continue handling active writes against aging app logic, while new nodes take incoming traffic.\n\nTo achieve true zero-downtime cutover for persistent streams:\n1. Emit explicit HTTP/2 GOAWAY frames with a grace period, signaling clients to finish active requests and establish new connections to Green.\n2. Configure bounded proxy drain timeouts (e.g., Envoy delayed_close_timeout) instead of relying on client disconnects.\n3. Implement exponential jitter on client reconnect logic to prevent thundering herds on new clusters.\n\nNever assume switching an upstream endpoint clears backend traffic.\n\nHow does your team handle long-lived gRPC or WebSocket connection draining during zero-downtime cutovers without dropping patient or client transactions?\n\nDrop your thoughts and operational lessons in the comments below. Like and share this with your engineering team.\n\n@pengikut\n\n#DevOps #SystemArchitecture #SiteReliabilityEngineering #Microservices #SoftwareEngineering #CloudNative"
+}

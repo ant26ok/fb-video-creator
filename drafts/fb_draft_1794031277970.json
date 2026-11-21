@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794031277970",
+  "topicId": "unindexed_fk_deadlock_cascade",
+  "topic": "Unindexed Foreign Keys: The Silent Cascade Deadlock",
+  "category": "DATABASE CONCURRENCY",
+  "createdAt": "2026-11-07T06:01:17.970Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_unindexed_fk_deadlock_cascade_1794031238797.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_unindexed_fk_deadlock_cascade_1794031277630.jpg",
+  "postText": "Two concurrent transactions hit the database at peak admission hours: one updates patient room allocations; another records administered medication. Both target different tables, yet both crash with 40P01 deadlocks.\n\nRoot cause was not missing primary keys or slow disks. A child table with two million records had an unindexed foreign key column pointing to the admissions table.\n\nWhen PostgreSQL or MySQL updates or deletes a primary key row, the engine must verify referential integrity. With an indexed foreign key, the engine grabs a row-level lock on the matching children. Without an index, the engine falls back to a sequential scan, holding broad shared locks across table blocks while child records are verified. A concurrent child insert locks the page, the parent update waits for the child lock, the child waits for the parent row: instant circular deadlock.\n\nFix applied in production:\n1. Audited sys catalog tables for unindexed foreign keys and added composite b-tree indexes matching query patterns.\n2. Enforced deterministic sorting on batch updates to guarantee identical lock acquisition order across transactions.\n3. Shifted hot parent mutation patterns to append-only audit events, eliminating lock contention on root entities.\n\nQuery profilers show execution times; they do not show wait events caused by referential checks.\n\nHow does your team detect missing foreign key indexes before they trigger lock cascades in production?\n\nLike, drop your experience or mitigation tactics in the comments below, and share this with your engineering team."
+}

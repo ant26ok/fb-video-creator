@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794988941962",
+  "topicId": "outbox_table_bloat_kills_db_iops",
+  "topic": "Unpartitioned Outbox Tables Cripple Relational DB IOPS",
+  "category": "EVENT-DRIVEN ARCHITECTURE",
+  "createdAt": "2026-11-18T08:02:21.962Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_outbox_table_bloat_kills_db_iops_1794988897548.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_outbox_table_bloat_kills_db_iops_1794988941579.jpg",
+  "postText": "We avoided distributed dual-write inconsistencies by implementing the Transactional Outbox pattern.\nSix months later, our core electronic medical record database ground to a halt under intense disk I/O pressure.\n\nIn healthcare IT, saving domain events inside the same ACID transaction as patient records is gold standard architecture. It prevents ghost events and lost state. But many teams underestimate the publisher footprint.\n\nRunning repeated SELECT ... FOR UPDATE SKIP LOCKED queries against an outbox table generated millions of dead tuples. B-Tree index bloat choked write throughput. Auto-vacuum workers competed with critical patient admissions for NVMe storage bandwidth.\n\nHere is how we stabilized production:\n1. Switched from SQL polling workers to Log-based Change Data Capture (CDC). Reading Postgres WAL directly decoupled event publishing from transactional compute.\n2. Partitioned the legacy outbox table by day. We drop finished partitions via metadata operations instead of running costly batch DELETE statements.\n3. Enforced downstream consumer idempotency with Redis-backed deduplication windows.\n\nTransactional outbox guarantees atomicity, but unmanaged polling sweeps will turn your event bus foundation into a primary database bottleneck.\n\nHow do you extract outbox events in your microservices—WAL-based CDC, scheduled polling, or direct change listeners?\n\nLike this insight, share your thoughts in the comments, and share this post with your engineering colleagues.\n\n@pengikut\n\n#SoftwareArchitecture #DistributedSystems #DatabasePerformance #Microservices #EventDrivenArchitecture #SystemDesign"
+}

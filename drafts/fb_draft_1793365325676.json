@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1793365325676",
+  "topicId": "ml_feature_drift_shadow_serving",
+  "topic": "Akurasi 98% di Notebook, Rontok di Production?",
+  "category": "MLOPS & REAL-TIME ML",
+  "createdAt": "2026-10-30T13:02:05.676Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_ml_feature_drift_shadow_serving_1793365280526.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_ml_feature_drift_shadow_serving_1793365325314.jpg",
+  "postText": "Model Machine Learning akurasi 98% di Jupyter Notebook mendadak ngaco pas kena data rekam medis live.\nAlgoritmanya tidak salah. Arsitektur serving dan pipeline datanya yang bocor.\n\nDi rumah sakit tempat saya bekerja, reliabilitas model prediksi triage atau anomali klinis menyangkut keselamatan pasien. Waktu awal membangun pipeline MLOps, problem terbesar bukan tuning hyperparameter, melainkan Training-Serving Skew. Fitur yang diekstrak lewat query agregasi SQL saat training offline sering berbeda definisi dengan event stream yang masuk ke app server saat jam sibuk.\n\nTiga pilar arsitektur ML production yang wajib dibangun:\n\n1. Dual-Tier Feature Store: Pakai feature store terpadu. Simpan snapshot di data lake untuk offline training, dan sync state ke in-memory cache (Redis) untuk low-latency inference (<10ms). Satu definisi logic, dua storage tier.\n\n2. Shadow Deployment: Jangan langsung traffic shifting ke model baru. Duplikasi payload request live secara asynchronous ke model kandidat. Evaluasi drift output tanpa membebani latency user.\n\n3. Telemetry & Drift Detection: Pasang monitoring Population Stability Index (PSI) pada feature input. Jika pola data operasional bergeser drastis dari baseline training, kirim alert untuk retraining terarah.\n\nModel ML tanpa monitoring drift hanyalah black-box yang menunggu waktu untuk fail silently.\n\nApakah tim Anda pernah mengalami performa model ML anjlok drastis setelah deploy? Tekan Like, bagikan cerita Anda di kolom komentar, dan Share postingan ini ke rekan-rekan software engineer lainnya!\n\n#MLOps #MachineLearning #SystemArchitecture #DataEngineering #HealthcareIT #ProductionReady"
+}

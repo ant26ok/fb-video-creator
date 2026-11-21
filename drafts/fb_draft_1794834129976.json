@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794834129976",
+  "topicId": "gateway_circuit_breaker_resilience",
+  "topic": "Circuit Breakers Stop Cascading Microservice Death",
+  "category": "DISTRIBUTED SYSTEMS",
+  "createdAt": "2026-11-16T13:02:09.976Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_gateway_circuit_breaker_resilience_1794834093448.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_gateway_circuit_breaker_resilience_1794834129693.jpg",
+  "postText": "One unstable downstream service can kill an entire infrastructure in seconds.\n\nIn healthcare IT where I work, client portals, pharmacy queues, and electronic medical records route through a unified API Gateway. When a third-party insurance endpoint degraded, response times jumped from 120ms to 20 seconds. Client apps kept retrying. Gateway connection pools saturated. Healthy triage endpoints starved behind dead connections. Instant cascading collapse.\n\nThree patterns prevent this disaster:\n\n1. Edge Rate Limiting: Enforce distributed token bucket limits in Redis at the ingress. Drop runaway retry spikes before backend network hops.\n\n2. Sliding-Window Circuit Breakers: Track failure rates across rolling execution windows. If error or timeout counts breach 50%, trip breaker open. Ingress returns cached data or immediate 503 without waiting on downstream IO.\n\n3. Bulkhead Thread Pools: Isolate connection pools per route. Slow external dependency only consumes its dedicated slice, keeping critical patient flows operational.\n\nHow do you configure circuit breaker thresholds in production—strict HTTP error rates or tail latency percentiles?\n\nLike, comment your perspective below, and share with your engineering team.\n\n@pengikut\n\n#SystemArchitecture #DistributedSystems #Microservices #SoftwareEngineering #BackendDevelopment #HighAvailability #DevOps"
+}

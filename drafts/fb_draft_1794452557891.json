@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794452557891",
+  "topicId": "expand_contract_blue_green",
+  "topic": "Schema Drift Traps 24/7 Blue-Green Rollbacks",
+  "category": "MISSION-CRITICAL DEVOPS",
+  "createdAt": "2026-11-12T03:02:37.891Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_expand_contract_blue_green_1794452509954.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_expand_contract_blue_green_1794452557570.jpg",
+  "postText": "Switching traffic from Blue to Green looks clean until a hidden bug forces an instant rollback. Minutes later, Blue crashes in production because Green already altered the shared database.\n\nIn 24/7 healthcare facilities, maintenance windows do not exist. Clinical workflows run non-stop, making Blue-Green and Canary releases mandatory. Early on in healthcare IT, we learned that swapping stateless containers is easy—the real trap is coupling schema migrations to app releases. One breaking column drop turns a 5-second rollback into an outage.\n\nOur three rules for true zero-downtime releases:\n1. Expand-Contract Migrations: Add new columns as nullable first. Never drop or rename fields until the old Blue fleet is fully decommissioned.\n2. Backward-Compatible Dual-Writes: During Canary rollouts, Green writes data formats that Blue can still read safely if traffic snaps back.\n3. Domain-Level Canary Gates: HTTP 200 health checks lie. Gate traffic shifts on business-logic error rates, queue lag, and serialization failures.\n\nBlue-Green means nothing if your database only moves forward.\n\nWhat is the worst schema rollback trap you have hit during a live deploy?\n\nShare your experience in the comments, hit Like if this helped, and Share with your fellow engineers! @pengikut\n\n#DevOps #BlueGreenDeployment #CanaryRelease #ZeroDowntime #DatabaseMigrations #SystemDesign"
+}

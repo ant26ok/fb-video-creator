@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1793883745365",
+  "topicId": "deadlock_silang_batch_mutasi",
+  "topic": "Deadlock Silang Batch Update: Petaka Urutan Acak Kasir",
+  "category": "DATABASE CONCURRENCY",
+  "createdAt": "2026-11-05T13:02:25.365Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_deadlock_silang_batch_mutasi_1793883694138.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_deadlock_silang_batch_mutasi_1793883744820.jpg",
+  "postText": "Jam sibuk kasir rawat jalan di faskes tempat saya bekerja. Puluhan kasir klik 'Selesaikan Pembayaran' serentak. Tiba-tiba DB freeze: Error 1213 Deadlock Detected.\n\nBukan server kehabisan CPU. Masalahnya sederhana tapi mematikan: mutasi batch item tagihan dengan urutan primary key acak.\n\nSkenario petaka:\nTransaksi Kasir A kunci Item ID 10, lalu minta kunci Item ID 25.\nDi milidetik sama, Transaksi Kasir B kunci Item ID 25, lalu minta kunci Item ID 10.\nKeduanya saling sandera kunci (circular dependency). RDBMS engine terpaksa bunuh salah satu transaksi sebagai deadlock victim.\n\nSolusi rekayasa yang kami pasang:\n1. Deterministic Lock Ordering: Urutkan array ID data (sort ascending) di application layer sebelum kirim query batch update ke DB. Kunci diminta dengan urutan seragam, circular wait lenyap.\n2. Foreign Key Indexing: Tabel relasi tanpa indeks pada kolom FK memicu lock eskalasi luas saat parent disentuh transaksi lain.\n3. Safe Retry with Backoff: Pasang handling khusus deadlock error di repositori data dengan jitter exponential retry.\n\nRDBMS tidak pernah lambat sendirian. Urutan query ceroboh yang mencekik kinerjanya sendiri.\n\nBagaimana strategi Anda menuntaskan deadlock batch update di sistem produksi? Urutkan ID di aplikasi, pakai SELECT FOR UPDATE terpisah, atau antrekan lewat message broker?\n\nLike jika bermanfaat, bagikan pengalaman Anda di komentar, dan Share postingan ini ke rekan engineer lain.\n\n#DatabaseEngineering #PostgreSQL #MySQL #Concurrency #HighTraffic #SoftwareArchitecture #BackendDevelopment"
+}

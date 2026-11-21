@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1795093340811",
+  "topicId": "outbox_cdc_read_your_writes_lag",
+  "topic": "Outbox CDC Lag Violates Read-Your-Writes Guarantees",
+  "category": "EVENT-DRIVEN ARCHITECTURE",
+  "createdAt": "2026-11-19T13:02:20.811Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_outbox_cdc_read_your_writes_lag_1795093301947.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_outbox_cdc_read_your_writes_lag_1795093340477.jpg",
+  "postText": "You implement the Transactional Outbox pattern with Debezium CDC to eliminate dual-write hazards. Everything looks clean until a physician admits an emergency patient, refreshes the screen, and sees zero records because the downstream read model lagged 800ms behind.\n\nIn healthcare IT, eventual consistency without read-your-writes semantics breeds panic and dangerous duplicate submissions. Transactional Outbox guarantees at-least-once delivery to message brokers, but it completely decouples write transactions from downstream query views.\n\nWe solved this asynchronous visibility gap across our hospital systems using three battle-tested strategies:\n\n1. Monotonic Version Validation: The client stores the incremented aggregate version on mutation and holds optimistic local state until read projections match.\n2. Write-Affinity Token Routing: The API gateway sets a short-lived token on mutations, routing immediate subsequent reads directly to the primary database.\n3. LSN-Bound Projections: Mission-critical queries supply the commit Log Sequence Number (LSN), ensuring the query service waits for stream catch-up before serving stale cache.\n\nOutbox guarantees message delivery, not instant UI visibility.\n\nHow do your engineering teams solve read-your-writes consistency when scaling outbox CDC pipelines?\n\nShare your architecture strategies below. Like and share this post with your fellow IT and engineering colleagues!\n\n@pengikut\n\n#SoftwareArchitecture #DistributedSystems #EventDriven #TransactionalOutbox #SystemDesign #Microservices #TechLead"
+}

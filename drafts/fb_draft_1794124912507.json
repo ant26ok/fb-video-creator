@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794124912507",
+  "topicId": "zero_downtime_mission_critical_canary",
+  "topic": "Zero-Downtime Deployments Will Break Your Database Schema",
+  "category": "MISSION-CRITICAL DEVOPS",
+  "createdAt": "2026-11-08T08:01:52.507Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_zero_downtime_mission_critical_canary_1794124866678.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_zero_downtime_mission_critical_canary_1794124912010.jpg",
+  "postText": "Switching traffic from Blue to Green takes 50 milliseconds. Corrupting live ICU transactions because your new release dropped a database column takes five seconds.\n\nIn 24/7 mission-critical environments like the healthcare facilities where I work, maintenance windows do not exist. Emergency admissions arrive at 03:00 AM; clinical order entries never stop. A naive blue-green switch destroys active sessions and triggers lock contention on shared databases.\n\nTrue zero-downtime deployment requires three strict architectural rules:\n\n1. Expand-Contract Migrations: Never alter or drop schema columns in the same release. Phase one expands (adds nullable columns). Phase two deploys code writing to both. Phase three contracts (cleans legacy fields).\n2. Stateful Canary Draining: Route 2% of background traffic via reverse proxy weights. Validate P99 latency and error budgets for 15 minutes before shifting clinical workstations.\n3. Automated Blast Radius Control: If canary health checks yield elevated 5xx errors or lock timeouts, the ingress controller cuts the canary slice instantly without manual intervention.\n\nHow does your team handle database schema evolution during zero-downtime canary rollouts without locking transactional tables?\n\nDrop your battle-tested strategies in the comments below. Like this post if it resonates, and share it with your engineering team!\n\n#DevOps #SystemArchitecture #SiteReliability #SoftwareEngineering #DatabaseEngineering #HighAvailability"
+}

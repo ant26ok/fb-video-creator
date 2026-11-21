@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1793692955233",
+  "topicId": "gateway_breaker_cascading_protection",
+  "topic": "Satu Servis Ngelag, Semua Ikut Ambruk: Cegah Efek Domino API",
+  "category": "DISTRIBUTED SYSTEMS",
+  "createdAt": "2026-11-03T08:02:35.233Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_gateway_breaker_cascading_protection_1793692898059.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_gateway_breaker_cascading_protection_1793692954591.jpg",
+  "postText": "Pernah lihat API Gateway mati kutu cuma gara-gara satu servis eksternal lemot?\n\nIni mimpi buruk nyata di faskes. Waktu itu ada lonjakan rute bridging asuransi. Respon upstream yang biasanya 200ms melar jadi 15 detik. Karena API Gateway belum isolasi resource, thread pool habis tersedot antrean gantung ini. Dampaknya fatal: request lab, radiologi, dan kasir yang servernya sehat walafiat ikut macet total. Cascading failure klasik.\n\nProteksi wajib yang langsung kami pasang:\n1. Rate Limiting di Edge: implementasi Token Bucket per consumer ID agar traffic spike tidak membakar compute backend.\n2. Circuit Breaker: begitu latency jebol atau failure rate tembus 50%, sirkuit langsung OPEN. Fail-fast instan tanpa nunggu timeout, upstream dapat ruang napas untuk recovery.\n3. Bulkhead Pattern: partisi thread pool per upstream. Satu rute terbakar, rute lain tetap operasional normal.\n\nMembiarkan request menggantung sampai timeout adalah resep bunuh diri sistemik. Fail-fast selalu lebih terhormat daripada crash berjamaah.\n\nDi arsitektur microservices atau gateway faskes/kantor rekan-rekan, strategi apa yang jadi andalan saat upstream pihak ketiga mulai batuk-batuk: agresif fallback cache, Circuit Breaker murni, atau queue buffer?\n\nSilakan Like jika sepakat, bagikan pandangan teknis Anda di kolom komentar, dan Share postingan ini ke rekan-rekan tech lead serta developer lainnya!\n\n#SoftwareArchitecture #DistributedSystems #APIGateway #CircuitBreaker #Microservices #SystemDesign #TechLead"
+}

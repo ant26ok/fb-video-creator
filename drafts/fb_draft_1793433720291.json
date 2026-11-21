@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1793433720291",
+  "topicId": "llm_local_kv_cache_paged_attention",
+  "topic": "LLM Lokal OOM: Tragedi KV Cache Saat Dokumen Panjang",
+  "category": "LOCAL LLM OPTIMIZATION",
+  "createdAt": "2026-10-31T08:02:00.291Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_llm_local_kv_cache_paged_attention_1793433685439.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_llm_local_kv_cache_paged_attention_1793433720001.jpg",
+  "postText": "Data rekam medis faskes haram keluar ke cloud publik. Solusinya jelas: wajib deploy LLM on-premise di server lokal.\n\nDi awal, kalkulasi VRAM terasa aman: model 8B FP16 makan sekitar 16 GB, dipasang di kartu 24 GB masih sisa 8 GB. Testing prompt pendek 100 token berjalan mulus. Masalah fatal meledak saat dokter paste histori rawat inap pasien setebal 8.000 token: CUDA Out of Memory seketika.\n\nBanyak engineer salah kira VRAM habis oleh bobot model. Padahal pembunuh senyapnya adalah KV Cache (Key-Value Cache). Tiap token baru mengalokasikan tensor konteks masa lalu. Jika memori dialokasikan berurutan secara kontigu, fragmentasi VRAM lokal langsung jebol.\n\nSolusi produksi yang kami terapkan di faskes:\n1. Singkirkan runtime standar HuggingFace, pakai inference engine berbasis PagedAttention (seperti vLLM). Paging memecah KV cache ke blok-blok kecil non-kontigu, mirip virtual memory OS. Nol fragmentasi.\n2. Quantize KV Cache ke FP8. Bobot model di-quantize via AWQ 4-bit, konteks cache diturunkan ke FP8. Hasilnya, context window 16k token jalan stabil tanpa drop akurasi terminologi medis.\n\nDeploy LLM lokal bukan cuma soal punya GPU, tapi disiplin kelola alokasi memori dinamis.\n\nBagaimana strategi Anda mengunci VRAM server lokal saat hajar context window panjang: pangkas token context, kuantisasi agresif, atau pakai speculative decoding?\n\nKlik Like jika relate, tulis uneg-uneg teknis Anda di kolom komentar, dan Share postingan ini ke rekan engineer Anda!"
+}

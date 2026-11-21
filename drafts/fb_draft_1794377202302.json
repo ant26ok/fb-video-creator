@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794377202302",
+  "topicId": "probabilistic_cache_stampede_xfetch",
+  "topic": "Probabilistic Early Expiry Kills Redis Cache Stampedes",
+  "category": "DISTRIBUTED CACHING",
+  "createdAt": "2026-11-11T06:06:42.303Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_probabilistic_cache_stampede_xfetch_1794377167722.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_probabilistic_cache_stampede_xfetch_1794377201950.jpg",
+  "postText": "Cache-aside with rigid TTL looks pristine on paper until peak traffic hits your database.\n\nIn the hospital where I work, patient census and ICU occupancy telemetry face sudden read spikes. The classic fix for cache misses was simple: acquire a distributed Redis mutex, recompute the query from PostgreSQL, and write it back. \n\nUnder high concurrency, that mutex created disastrous latency cascades. Hundreds of client threads queued up waiting for the lock, thread pools exhausted, and network timeouts spiked.\n\nThe fix wasn't bigger Redis instances or complex lock retry loops. It was switching to the XFetch probabilistic early expiration algorithm.\n\nInstead of letting the key expire abruptly, XFetch evaluates each read: if `-(delta * beta * ln(random()))` exceeds remaining TTL, the current worker asynchronously recomputes the data in the background before expiration hits. In-flight requests continue reading fast, acceptable warm data without blocking. DB load stays flat, lock contention disappears completely.\n\nHave you replaced distributed cache locks with probabilistic expiration, or do you rely on static background cron warmers?\n\nLike, comment your architectural approach below, and share this with your engineering team!\n\n@pengikut\n\n#SoftwareArchitecture #Redis #DistributedSystems #SystemDesign #BackendEngineering #PerformanceOptimization"
+}

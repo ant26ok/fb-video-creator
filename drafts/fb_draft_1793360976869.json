@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1793360976869",
+  "topicId": "traffic_shifting_canary_rollout",
+  "topic": "Traffic Shifting 5%: Strategi Rilis Aman di Faskes 24 Jam",
+  "category": "MISSION CRITICAL DEVOPS",
+  "createdAt": "2026-10-30T11:49:36.870Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_traffic_shifting_canary_rollout_1793360938929.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_traffic_shifting_canary_rollout_1793360976429.jpg",
+  "postText": "Di rumah sakit tempat saya bekerja, unit gawat darurat beroperasi nonstop 24/7. Menunda rilis aplikasi sampai jam 3 pagi sering kali bukan solusi, karena di jam tersebut pasien kritis tetap masuk dan peresepan obat digital tidak boleh berhenti sedetik pun.\n\nSolusi yang kami terapkan adalah Canary Deployment berbasis Traffic Shifting:\n\n1. Weighted Traffic Split: Memanfaatkan reverse proxy (seperti Nginx atau Envoy) untuk mengarahkan 5% traffic produksi ke server versi baru (Canary), sementara 95% sisa user tetap berjalan aman di versi stabil.\n\n2. Schema DB Expand-Contract: Perubahan tabel database dipisahkan jadi dua fase. Tahap 'expand' menambahkan kolom baru secara nullable, sehingga aplikasi versi lama dan versi baru berjalan paralel tanpa breaking change.\n\n3. Telemetri & Auto-Rollback: Prometheus memantau error rate dan latency. Jika HTTP 5xx pada pod Canary naik di atas 1% dalam 3 menit pertama, traffic otomatis ditarik kembali 100% ke versi stabil tanpa downtime.\n\nDengan arsitektur ini, rilis fitur besar bisa dilakukan pada jam kerja biasa tanpa kecemasan sistem tumbang.\n\nApakah faskes atau kantor rekan-rekan sudah menerapkan canary rollout, atau masih bertahan dengan jadwal rilis larut malam?\n\nYuk Like postingan ini jika bermanfaat, ceritakan pengalaman rekan-rekan di kolom komentar, dan Share postingan ini ke rekan-rekan IT lainnya!\n\n#SoftwareArchitecture #DevOps #CanaryDeployment #SystemDesign #HighAvailability #HealthTech #Engineering"
+}

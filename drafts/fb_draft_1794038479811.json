@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794038479811",
+  "topicId": "llm_prefill_decode_interference",
+  "topic": "Stop Letting Huge Prompts Stall Local LLM Tokens",
+  "category": "AI ARCHITECTURE",
+  "createdAt": "2026-11-07T08:01:19.811Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_llm_prefill_decode_interference_1794038442521.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_llm_prefill_decode_interference_1794038479524.jpg",
+  "postText": "You deploy a 70B model on local hospital GPUs. Tests show lightning-fast responses—until a physician pastes a massive 12-page patient dossier into the system.\n\nInstantly, streaming output freezes for every other active consultation across the facility.\n\nHere is the culprit: LLM inference operates across two distinct bottlenecks:\n1. Prefill Phase: Compute-bound matrix multiplications evaluating prompt tokens in parallel.\n2. Decode Phase: Memory-bandwidth-bound autoregressive operations producing one token at a time.\n\nWhen a large prompt arrives without tuning, the inference engine yields all tensor cores to compute-heavy prompt processing. The active decode requests stall waiting for execution slices, turning a smooth 40 tokens/sec stream into zero for multiple seconds.\n\nTo eliminate this bottleneck in on-premise environments:\n\n• Enable Chunked Prefills (e.g., via vLLM or TensorRT-LLM): Slice multi-thousand-token prompts into smaller token chunks, interleaving them smoothly alongside active decode iterations.\n• Evaluate Disaggregated Prefill/Decode: Isolate prefill tasks to compute-optimized hardware while routing streaming decode tasks to high-bandwidth-memory nodes.\n• Implement Priority Queue Slicing: Interactive clinical chats preempt asynchronous batch document summarizers.\n\nWhat is your primary bottleneck running on-prem LLMs under high concurrency: TTFT spikes or inter-token latency degradation?\n\nHit Like, share your battle stories in the comments below, and Share this post with fellow engineers optimizing local AI infrastructure!\n\n#LLMOps #LocalLLM #AIArchitecture #vLLM #MachineLearning #SystemDesign #SoftwareEngineering"
+}

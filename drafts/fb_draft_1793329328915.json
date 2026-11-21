@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1793329328915",
+  "topicId": "autonomous_multi_agent_orchestration",
+  "topic": "AI Agent di Production: Mengapa Single LLM Pasti Gagal?",
+  "category": "AI ARCHITECTURE",
+  "createdAt": "2026-10-30T03:02:08.915Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_autonomous_multi_agent_orchestration_1793329293427.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_autonomous_multi_agent_orchestration_1793329328603.jpg",
+  "postText": "Banyak demo AI Agent terlihat magis di media sosial. Begitu dibawa ke production rumah sakit tempat saya bekerja, single-agent prompt raksasa langsung kena hallucination loop.\n\nBanyak engineer salah kaprah menumpuk semua instruksi dalam satu prompt panjang, lalu memberi LLM akses tools eksekusi bebas. Hasilnya? Infinite loop, token exhaustion, dan eksekusi payload keliru.\n\nDi faskes, kami tidak boleh berjudi dengan ketidakpastian. Pendekatan yang terbukti stabil adalah Multi-Agent Orchestration dengan Supervisor-Worker pattern:\n\n1. Supervisor Agent: Bertindak murni sebagai router deterministik. Ia memetakan intent pengguna ke worker spesifik (misal: Agent Validasi NIK, Agent Jadwal Poli, Agent Klaim Asuransi).\n2. Worker Agents: Beroperasi dalam isolasi scope ketat dengan toolset minimal. Worker tidak punya izin mengubah state global.\n3. Finite State Machine (FSM): Transisi antar agent diatur state machine kaku. LLM boleh fleksibel merangkai kalimat, tapi alur eksekusi logika mutlak deterministik.\n4. Human-in-the-Loop: Semua mutasi data kritis tetap wajib menunggu otorisasi eksplisit user.\n\nOtonomi tanpa guardrail di production adalah resep bencana. Buat agent Anda bekerja spesifik dalam batasan yang jelas.\n\nApakah faskes atau tech stack kantor rekan-rekan sudah mulai menguji coba multi-agent? Silakan Like, Komen pengalaman Anda di bawah jika pernah mengalami AI loop, dan Share ke rekan-rekan IT lainnya agar tidak salah langkah!\n\n#AIEngineering #MultiAgent #SoftwareArchitecture #HealthcareIT #SystemDesign #TechLeadID"
+}

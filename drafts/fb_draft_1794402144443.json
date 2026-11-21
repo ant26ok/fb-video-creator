@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794402144443",
+  "topicId": "polling_outbox_lock_contention",
+  "topic": "Polling Outbox Loops Cripple Production DB Latency",
+  "category": "DISTRIBUTED SYSTEMS",
+  "createdAt": "2026-11-11T13:02:24.443Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_polling_outbox_lock_contention_1794402090859.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_polling_outbox_lock_contention_1794402143891.jpg",
+  "postText": "Everyone tells you to ditch dual-writes and adopt the Transactional Outbox pattern. What they omit: naive polling loops can crush your production database faster than the split-brain bug you set out to solve.\n\nIn mission-critical healthcare systems where I work—dispatching e-prescriptions, admission state updates, and lab telemetry—loss of message integrity is unacceptable. You bundle the business entity write and the outbound event record into a single local ACID transaction. Perfect reliability on paper.\n\nThen traffic spikes. Five background workers poll `SELECT * FROM outbox WHERE status = 'PENDING' LIMIT 100` every 500ms. Multiple workers collide on the exact same rows. Index bloat accumulates from rapid UPDATE operations. Autovacuum struggles to keep up, locking tables and driving disk IOPS to 100% saturation.\n\nTo scale Transactional Outbox under real load:\n1. Concurrency control: Use `FOR UPDATE SKIP LOCKED` so concurrent pollers claim distinct pending records without lock waits.\n2. Log-based CDC: Replace query polling with engine WAL consumption (e.g., Debezium streaming directly to Kafka or RabbitMQ). DB handles writes; the engine WAL handles event delivery.\n3. Aggressive truncation: Partition your outbox by date or drop processed rows immediately. An outbox is an ephemeral buffer, not an audit log.\n\nAre you still running polling workers on your outbox tables, or have you already transitioned to CDC log tailing?\n\nLike, drop your production experience in the comments, and share this with your engineering team.\n\n@pengikut\n\n#SoftwareArchitecture #DistributedSystems #Microservices #DatabasePerformance #MessageQueues #BackendEngineering #PostgreSQL"
+}

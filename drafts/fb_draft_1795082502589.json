@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1795082502589",
+  "topicId": "gap_lock_deadlock_cascades",
+  "topic": "Unindexed Updates Trigger Fatal Gap Lock Deadlocks",
+  "category": "DATABASE CONCURRENCY",
+  "createdAt": "2026-11-19T10:01:42.589Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_gap_lock_deadlock_cascades_1795082462240.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_gap_lock_deadlock_cascades_1795082502137.jpg",
+  "postText": "During peak admission hours at the hospital where I work, database transactions suddenly seized. No CPU spikes, no memory exhaustion—just deadlocks cascading through emergency queues.\n\nTwo concurrent services touched bed state. Service A assigned emergency arrivals; Service B finalized discharge billing. Both queries targeted the same table milliseconds apart.\n\nThe root cause was not transaction volume. It was an unindexed filter.\n\nUnder default Repeatable Read isolation in MySQL/InnoDB, unindexed row updates force the storage engine to scan the entire clustered index. The database places Next-Key and Gap locks across wide row ranges to prevent phantom reads. Service A held a gap lock on bed records. Service B held an overlapping gap lock from the opposite direction. Neither could acquire an exclusive write lock. Deadlock 1213 fired, aborting admission transactions.\n\nWe stabilized the platform with three architectural fixes:\n1. Covered Index Scans: Indexed (ward_id, bed_status) so updates grab exact row locks, never gaps.\n2. Deterministic Locking: Enforced ascending ID sort on batch operations before calling SELECT ... FOR UPDATE, breaking circular waits.\n3. Isolation Tuning: Moved high-write OLTP tables to Read Committed isolation, eliminating phantom-protection gap locks entirely.\n\nHardware upgrades cannot cure lock contention.\n\nHow does your team trace and prevent lock escalation before it exhausts connection pools in high-throughput tables?\n\nLike, comment your architectural approach or war stories below, and share this with fellow backend engineers.\n\n@pengikut\n\n#DatabaseArchitecture #MySQL #PostgreSQL #Concurrency #SystemDesign #BackendEngineering"
+}

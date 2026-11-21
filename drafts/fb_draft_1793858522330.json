@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1793858522330",
+  "topicId": "mllp_telemetry_fhir_ingestion",
+  "topic": "MLLP Polos di ICU: Telemetri Liar Rontokkan FHIR Store",
+  "category": "HEALTHCARE INTEROPERABILITY",
+  "createdAt": "2026-11-05T06:02:02.330Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_mllp_telemetry_fhir_ingestion_1793858481346.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_mllp_telemetry_fhir_ingestion_1793858521908.jpg",
+  "postText": "Banyak yang kira migrasi ke HL7 FHIR otomatis bikin faskes aman dan interoperable. Kenyataannya di lapangan, alat bedside monitor ICU tua masih teriak pakai HL7 v2 lewat protokol purba MLLP (Minimal Lower Layer Protocol).\n\nDi rumah sakit tempat saya bekerja, problem muncul saat puluhan monitor pasien streaming telemetry data tiap detik. Masalahnya dobel:\n\nPertama, protokol MLLP itu plain text tanpa enkripsi native. Siapa pun yang pasang packet sniffer di VLAN alat medis bisa baca denyut nadi, saturasi oksigen, sampai identitas pasien telanjang bulat.\n\nKedua, pattern mismatch. Telemetri medis sifatnya continuous high-frequency stream. Kalau tiap wave data mentah langsung dipaksa diconvert jadi resource FHIR Observation via REST API, FHIR server bakal kena DDoS internal oleh alat faskes sendiri. DB write bottleneck, thread pool habis, request dokter visite malah timeout.\n\nSolusi kami:\n1. Tempatkan edge aggregator gateway dekat alat. Bungkus MLLP pakai mTLS tunnel sebelum melintasi subnet.\n2. Terapkan sliding window batching. Data per 10 detik dirangkum jadi satu bundle ringkas.\n3. Bedakan storage telemetri: raw waveform masuk Time-Series DB, hanya agregasi vital signs terverifikasi yang dipush ke FHIR server.\n\nPernahkah faskes Anda mengalami benturan antara protokol alat medis lawas (MLLP/RS232) dengan standarisasi FHIR modern? Bagaimana strategi tim Anda mengamankan jalur dan mengontrol beban stream-nya?\n\nYuk Like jika postingan ini relate, tinggalkan komentar tentang pengalaman arsitektur Anda di bawah, dan Share ke rekan-rekan IT medis lainnya!\n\n#HealthcareIT #HL7FHIR #MedicalInformatics #SystemArchitect #SoftwareEngineering #DataSecurity"
+}

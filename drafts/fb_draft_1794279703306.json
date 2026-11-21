@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794279703306",
+  "topicId": "unindexed_fk_deadlocks",
+  "topic": "Unindexed Foreign Keys Breed Lethal Deadlocks",
+  "category": "DATABASE CONCURRENCY",
+  "createdAt": "2026-11-10T03:01:43.306Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_unindexed_fk_deadlocks_1794279660987.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_unindexed_fk_deadlocks_1794279702855.jpg",
+  "postText": "Your query deletes one parent record. Suddenly, your database deadlocks and entire production freezes.\n\nIn high-volume healthcare IT systems, admission and prescription workflows hammer transactional tables concurrently. We hit severe deadlock cascades when discharging patients during peak hours. The culprit was not our business logic; it was an innocent child table missing an index on its foreign key column.\n\nWhen updating or deleting a row referenced by a foreign key, the database must verify referential integrity. Without an index on the child foreign key, the engine cannot do targeted row-level verification. It falls back to full table scans or full table shared locks on child tables.\n\nConcurrent transactions modifying unrelated parent-child relationships get trapped behind these unexpected broad locks. Mutex contention spikes. Deadlock detector fires, abruptly killing user requests.\n\nFixing this is deterministic:\n1. Index every single foreign key column across all child tables. Relational DBs do not auto-index FKs.\n2. Delete or update parent rows in strict, deterministic primary key order to eliminate circular lock dependencies.\n3. Turn on Read Committed Snapshot Isolation (RCSI) or MVCC so referential reads do not block concurrent writes.\n\nHave you ever been bitten by missing foreign key indexes during peak production load? How do you enforce FK indexing in your CI/CD schema linters?\n\nLike and share this post with your engineering team to keep your production DB healthy. Drop your thoughts below.\n\n@pengikut\n\n#DatabaseArchitecture #SQLServer #PostgreSQL #HighConcurrency #SystemDesign #SoftwareEngineering"
+}

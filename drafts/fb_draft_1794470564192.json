@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794470564192",
+  "topicId": "blue_green_db_pool_exhaustion",
+  "topic": "Blue-Green Overlap Starves Production DB Pools",
+  "category": "MISSION-CRITICAL DEVOPS",
+  "createdAt": "2026-11-12T08:02:44.192Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_blue_green_db_pool_exhaustion_1794470530110.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_blue_green_db_pool_exhaustion_1794470563830.jpg",
+  "postText": "We tested our Blue-Green deployment in staging for weeks. Five minutes into our 24/7 production cutover, both Blue and Green crashed at once.\n\nThe culprit wasn't bad code. It was connection pool math.\n\nIn 24/7 healthcare IT, clinical systems cannot drop a single request. So we spun up a full Green cluster alongside Blue for an instant switch.\n\nEvery app pod eagerly opened its own DB connection pool on startup. With Blue holding 50% of `max_connections` and Green claiming the rest, a routine ER traffic spike pushed us past the DB ceiling. Both stacks choked on connection timeouts simultaneously.\n\nThree guardrails fixed our Blue-Green and Canary rollouts:\n1. External poolers: Put PgBouncer or ProxySQL in transaction mode between app pods and the DB.\n2. Progressive Canary scaling: Scale Green pods with traffic weight instead of pre-warming 100% capacity.\n3. Strict pool budgets: Divide `max_connections` by combined Blue + Green peak pods, keeping a 20% admin buffer.\n\nHow do you budget database connections during Blue-Green or Canary overlaps in production?\n\nIf this resonates, hit Like, Comment your pooling strategy below, and Share with your engineering team! @pengikut\n\n#DevOps #BlueGreenDeployment #CanaryDeployment #SoftwareArchitecture #DatabaseEngineering #ZeroDowntime"
+}

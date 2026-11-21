@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794895328842",
+  "topicId": "multi_agent_feedback_loops",
+  "topic": "Feedback Loops Drain Multi-Agent Context Windows",
+  "category": "AI ARCHITECTURE",
+  "createdAt": "2026-11-17T06:02:08.842Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_multi_agent_feedback_loops_1794895282002.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_multi_agent_feedback_loops_1794895328422.jpg",
+  "postText": "Letting autonomous AI agents talk freely to each other sounds great on paper until your token bill explodes in production.\n\nWhile evaluating multi-agent orchestration for clinical decision support in healthcare IT, we hit a silent killer: agent conversation loops. A diagnostic agent disagreed with a pharmacy verification agent. They started debating dosages, feeding full conversational context back and forth. Within six turns, the context window saturated, latency spiked from 1.2s to 42s, and downstream workers starved waiting for resolution.\n\nPure autonomous collaboration fails at scale. Here is how to fix it:\n\n1. Use Deterministic DAGs: Never allow dynamic peer-to-peer agent chatter. Route events through a deterministic central coordinator like LangGraph or Temporal. State transitions must follow fixed code paths.\n\n2. Enforce Strict Payload Boundaries: Strip internal chain-of-thought tokens before passing state. Agent A outputs a typed JSON schema; Agent B consumes only that clean payload, not the prior conversation history.\n\n3. Hard Loop Circuit Breakers: Set a hard limit on iteration cycles. If agents cannot converge in two attempts, abort and escalate to human review immediately.\n\nAutonomous intelligence needs deterministic architecture to survive production.\n\nDo you run multi-agent systems with peer-to-peer delegation, or do you enforce rigid orchestrator state machines to prevent runaway loops?\n\nLike this post, share your thoughts in the comments below, and share it with your engineering team!\n\n@pengikut\n\n#AIAgents #SystemDesign #SoftwareArchitecture #LangGraph #DistributedSystems #HealthcareIT"
+}

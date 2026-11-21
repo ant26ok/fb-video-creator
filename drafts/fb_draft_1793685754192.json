@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1793685754192",
+  "topicId": "pharmacy_lock_order_deadlock",
+  "topic": "Petaka Urutan Lock Acak: Deadlock Saling Sandera Farmasi",
+  "category": "DATABASE CONCURRENCY",
+  "createdAt": "2026-11-03T06:02:34.192Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_pharmacy_lock_order_deadlock_1793685709422.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_pharmacy_lock_order_deadlock_1793685753735.jpg",
+  "postText": "Jam 9 pagi di rumah sakit tempat saya bekerja, farmasi mendadak macet. Sistem dispensing resep melempar error: \"Deadlock detected (Postgres 40P01)\".\n\nPadahal indeks lengkap, CPU DB cuma 25%, dan koneksi longgar. Penyebabnya adalah Lock Ordering Inconsistency.\n\nSaat resep multi-obat diproses bersamaan:\nTx 1 butuh Paracetamol lalu Amoxicillin.\nTx 2 butuh Amoxicillin lalu Paracetamol.\n\nTx 1 lock Paracetamol via SELECT FOR UPDATE dan antre Amoxicillin. Di saat sama, Tx 2 lock Amoxicillin dan antre Paracetamol. Saling sandera circular dependency terjadi. Database terpaksa membunuh salah satu transaksi dengan abort error.\n\nLangkah mitigasi kami:\n1. Deterministic Ordering: Array ID obat wajib di-sort ASC sebelum FOR UPDATE. Arah lock seragam mematikan potensi siklus antrean.\n2. Shrink Tx Scope: Validasi klinis dipindah ke luar transaksi DB. Lock row ditahan dalam hitungan milidetik saja.\n3. Delta Ledger: Gunakan mutasi bertahap alih-alih berebut lock baris tunggal master stok.\n\nHasilnya, insiden deadlock langsung lenyap total di jam puncak faskes.\n\nPernahkah sistem Anda dihantam deadlock akibat urutan lock acak di aplikasi padahal indeks sudah rapi? Bagaimana trik mitigasi tim Anda?\n\nKlik Like bila relate, tulis pengalaman Anda di komentar, dan Share postingan ini ke rekan engineer lainnya!\n\n#DatabaseArchitecture #Concurrency #BackendEngineering #SQLPerformance #SoftwareEngineering #TechLead"
+}

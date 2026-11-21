@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794384195779",
+  "topicId": "next_key_gap_lock_deadlocks",
+  "topic": "Next-Key Gap Locks Freeze High-TPS Inserts",
+  "category": "DATABASE CONCURRENCY",
+  "createdAt": "2026-11-11T08:03:15.779Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_next_key_gap_lock_deadlocks_1794384153587.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_next_key_gap_lock_deadlocks_1794384195335.jpg",
+  "postText": "You scale ingestion workers. DB throughput collapses. Deadlock graphs flood the logs, yet no two workers touch the same record.\n\nUnder default REPEATABLE READ in engines like InnoDB, row updates do not just lock rows. They deploy Next-Key locks—combining index record locks with gap locks to stop phantom reads.\n\nWhen UPDATE or DELETE targets unindexed columns or foreign keys without secondary indexes, the engine traverses the clustered index. It places gap locks on entire ranges of nonexistent keys. Concurrent INSERT operations attempting to write into those gaps stall. When two transactions hold overlapping gap locks and simultaneously request insertion into each other's locked ranges, you get an immediate deadlock.\n\nIn our healthcare IT pipelines, we tackled this systematically:\n1. Explicitly indexed every foreign key and filtering column, locking strictly target index records instead of table ranges.\n2. Switched isolation to READ COMMITTED with row-based binlogging, eliminating gap locks for standard search and update operations.\n3. Enforced strict deterministic sorting on batch inserts before execution, preventing cross-transaction circular lock waits.\n\nMissing index designs silently turn local writes into global gridlocks.\n\nHave you ever uncovered unexpected gap lock deadlocks under high concurrency, and did tuning isolation levels or indexing solve it?\n\nHit Like, share your production deadlock lessons in the comments below, and share this post with your fellow engineers!\n\n@pengikut\n\n#DatabaseArchitecture #SoftwareEngineering #HighConcurrency #SystemDesign #SQLOptimization #BackendEngineering"
+}

@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794132109705",
+  "topicId": "unpaged_kv_cache_fragmentation",
+  "topic": "Unpaged KV Cache Fragmentation Kills Local LLMs",
+  "category": "AI INFRASTRUCTURE",
+  "createdAt": "2026-11-08T10:01:49.705Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_unpaged_kv_cache_fragmentation_1794132064362.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_unpaged_kv_cache_fragmentation_1794132109226.jpg",
+  "postText": "Deploying local LLMs in air-gapped healthcare infrastructure is standard practice for patient data privacy. But during stress testing on our on-prem nodes, servers crashed with CUDA out-of-memory errors while GPU compute hovered below 40%.\n\nThe culprit was naive KV cache allocation. Naive runtimes allocate contiguous VRAM buffers sized for maximum sequence length (like 8,192 tokens) per request. Because clinical notes and queries vary wildly in length, up to 70% of that reserved VRAM sits empty as internal fragmentation. Concurrency degrades rapidly, trigger allocation faults, and crashes instances while tensor cores idle.\n\nThree architectural shifts fixed our production throughput:\n\n1. PagedAttention: Partition KV cache tensors into fixed-size virtual blocks mapped to non-contiguous physical memory, wiping out external fragmentation.\n2. Chunked Prefills: Break massive prompt inputs into chunks, preventing long document ingest from starving active token decode streams.\n3. FP8 KV Quantization: Compress cache memory footprints by 50% with negligible loss in clinical extraction quality.\n\nWhen deploying self-hosted models, compute rarely forms the primary bottleneck. Virtual memory allocation discipline does.\n\nHow do you balance KV cache memory against concurrency limits in your on-prem or private cloud LLM deployments?\n\nLike, comment your architectural approach below, and share with your engineering peers.\n\n#LLMOps #SystemArchitecture #LocalLLM #GPUOptimization #DeepLearning #InfrastructureEngineering"
+}

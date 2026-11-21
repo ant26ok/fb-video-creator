@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794229321374",
+  "topicId": "transactional_outbox_queue_failure",
+  "topic": "Dual-Writes Silently Shatter Event-Driven Systems",
+  "category": "DISTRIBUTED SYSTEMS",
+  "createdAt": "2026-11-09T13:02:01.374Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_transactional_outbox_queue_failure_1794229268071.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_transactional_outbox_queue_failure_1794229320883.jpg",
+  "postText": "Saving data to PostgreSQL and publishing directly to RabbitMQ inside the same HTTP handler looks harmless. Until a network partition strikes mid-flight, leaving your database updated while your message broker receives nothing.\n\nIn mission-critical healthcare IT where I work, lost events mean delayed medication orders or missing patient telemetry sync. Dual-writes create an accidental distributed transaction without 2PC guarantees. One side always fails eventually.\n\nThe fix: Transactional Outbox Pattern.\n\nStop calling the message broker during business write transactions. Instead, save domain changes and outbound event payloads into an 'outbox' table inside the exact same local ACID transaction. Commit succeeds or rolls back atomically. Zero external network dependency.\n\nA decoupled relay worker—either Change Data Capture via Debezium reading DB write-ahead logs, or an index-optimized batch poller—reads the outbox table and dispatches messages to the broker. Pair this with idempotent consumers using unique event IDs to safely absorb at-least-once retries.\n\nEliminating dual-write anti-patterns transformed our message pipeline into an unshakeable backbone.\n\nHow does your team guarantee event publishing consistency: CDC log tailing, polling outbox tables, or direct broker writes?\n\nLike this post if you prioritize data reliability, drop your experience below, and share this with your IT team!\n\n@pengikut\n\n#DistributedSystems #SoftwareArchitecture #EventDrivenArchitecture #BackendEngineering #Microservices #MessageQueues"
+}

@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1793502111200",
+  "topicId": "canary_automated_rollback_healthcheck",
+  "topic": "Canary Lolos Health Check: Jebakan Rilis Silent Error",
+  "category": "DEPLOYMENT & RELIABILITY",
+  "createdAt": "2026-11-01T03:01:51.200Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_canary_automated_rollback_healthcheck_1793502069538.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_canary_automated_rollback_healthcheck_1793502110698.jpg",
+  "postText": "Rilis tengah malam lancar, endpoint /health jawab HTTP 200 OK. Begitu subuh tiba, antrean rawat jalan macet: modul validasi resep lempar silent exception tanpa memicu crash pod.\n\nDi rumah sakit tempat saya bekerja, sistem beroperasi non-stop 24/7. IGD dan ICU tidak kenal istilah 'jendela maintenance'. Kita tidak boleh bersandar pada health check standar bawaan orkestrator yang hanya memantau server hidup atau mati.\n\nKami ubah arsitektur rilis menggunakan Automated Canary Analysis (ACA):\n\n1. Baseline vs Canary Pod: Versi baru (Canary) dipasang berdampingan dengan versi lama (Baseline) dengan alokasi traffic 2-5% lewat service mesh.\n2. Metrik Bisnis Nyata: Prometheus tidak hanya cek status HTTP, tapi pantau latensi p99, error rate 5xx, dan volume database rollback.\n3. Automatic Circuit-Breaker Rollback: Jika error rate Canary naik 0.5% di atas Baseline dalam 3 menit, ingress otomatis buang rute Canary ke nol tanpa intervensi manual nakes atau engineer.\n\nZero downtime bukan sekadar uptime container, tapi integritas alur kerja operasional medis yang tidak boleh terputus sedetik pun.\n\nBagaimana tim Anda mendeteksi silent error saat rilis versi baru: masih manual intip log produksi atau sudah pasang automated rollback berbasis metrik bisnis?\n\nYuk, tinggalkan pandangan dan pengalaman Anda di kolom komentar! Jangan lupa Like dan Share postingan ini ke rekan-rekan tech lead & software engineer lainnya.\n\n#SoftwareArchitecture #DevOps #CanaryDeployment #SystemReliability #DistributedSystems #EngineeringLeadership"
+}

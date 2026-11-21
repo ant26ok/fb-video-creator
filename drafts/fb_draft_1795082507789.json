@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1795082507789",
+  "topicId": "unindexed_foreign_keys_deadlock_db",
+  "topic": "Unindexed Foreign Keys Trigger Hidden Cascade Deadlocks",
+  "category": "DATABASE CONCURRENCY",
+  "createdAt": "2026-11-19T10:01:47.789Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_unindexed_foreign_keys_deadlock_db_1795082473207.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_unindexed_foreign_keys_deadlock_db_1795082507473.jpg",
+  "postText": "Two concurrent outpatient billing jobs update separate patient visits. Neither touches the same record, yet both blow up with Deadlock detected (SQLSTATE 40P01).\n\nIn our healthcare IT systems, high-frequency writes hit parent and child tables simultaneously: admissions, prescriptions, lab results. When engines like PostgreSQL or MySQL update a parent record or delete children, the DB checks foreign key constraints. If foreign key columns on child tables lack dedicated B-Tree indexes, the storage engine cannot take fine-grained row-level locks. It escalates to locking the entire child table or scanning wide ranges. Unrelated concurrent transactions collide on locks they never explicitly requested.\n\nThree rules keep our clinical database pipelines deadlock-free:\n1. Explicitly index all foreign keys. RDBMS creates indexes on primary keys automatically, but never on foreign key child columns.\n2. Enforce strict lock ordering. Sort entity IDs before running multi-row UPDATE or SELECT FOR UPDATE queries. If Transaction A locks 1 then 2, and Transaction B locks 2 then 1, deadlock is guaranteed under concurrency.\n3. Minimize lock duration. Strip all network calls, external token checks, and business calculations out of active DB transactions. Open connection, lock, mutate, commit immediately.\n\nHow does your team detect and prevent hidden foreign key locking bottlenecks before hitting production load?\n\nLike this post, share your thoughts or war stories in the comments below, and share with your engineering team!\n\n@pengikut\n\n#DatabaseEngineering #PostgreSQL #SoftwareArchitecture #HighConcurrency #BackendDevelopment #DatabasePerformance"
+}

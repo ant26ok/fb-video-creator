@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1793959323439",
+  "topicId": "agent_ping_pong_feedback_loop",
+  "topic": "Ping-Pong Agen Otonom: Saling Koreksi Berujung Token Meledak",
+  "category": "AI AGENT ARCHITECTURE",
+  "createdAt": "2026-11-06T10:02:03.439Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_agent_ping_pong_feedback_loop_1793959271118.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_agent_ping_pong_feedback_loop_1793959322977.jpg",
+  "postText": "Niatnya pasang dua AI Agent biar saling koreksi dosis obat pasien faskes.\nHasilnya? Keduanya malah debat 'ping-pong' 40 turn sampai token hangus dan request timeout.\n\nDi rumah sakit tempat saya bekerja, kami sempat menguji pola Actor-Critic multi-agent. Satu agen bertindak sebagai formulator terapi, agen kedua sebagai verifikator interaksi obat.\n\nDi atas kertas terlihat ideal. Masalah meledak saat verifikator memberi catatan minor, formulator merevisi kalimatnya, lalu verifikator menemukan celah diksi baru. Loop revisi berputar tanpa ujung. Keduanya terjebak semantic drift; esensi klinis sama, tapi frasa terus diperdebatkan. State context membengkak, latensi melonjak puluhan detik, dan kuota API terkuras sia-sia.\n\nSolusi arsitektur yang kami terapkan:\n1. Hard Termination Budget: Kunci maksimal 3 turn. Jika belum sepakat, lempar langsung ke dokter jaga.\n2. Convergence Delta Check: Hitung embedding distance antar draft. Jika perubahan di bawah ambang batas toleransi, hentikan iterasi paksa.\n3. Deterministic Arbiter: Putus siklus pakai rule engine kaku (pure code), bukan membiarkan model LLM kedua membantah balik.\n\nMulti-agent otonom tanpa pagar deterministik bukan sistem cerdas, melainkan insiden pemborosan infrastruktur.\n\nPernahkah pipeline multi-agent Anda terjebak loop debat tanpa henti hingga token jebol? Bagaimana arsitektur orkestrasi Anda membatasi keliaran agen tersebut?\n\nLike jika pernah pusing dengan loop LLM, bagikan pengalaman arsitektur Anda di kolom komentar, dan Share postingan ini ke rekan-rekan tech lead lainnya!\n\n#SoftwareArchitecture #AIAgents #MultiAgent #LLMOps #SystemDesign #HealthTech"
+}

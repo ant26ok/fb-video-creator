@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794729718527",
+  "topicId": "cache_stampede_redis_invalidation",
+  "topic": "Cache Stampedes Melt Databases on Sudden Eviction",
+  "category": "DISTRIBUTED SYSTEMS",
+  "createdAt": "2026-11-15T08:01:58.527Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_cache_stampede_redis_invalidation_1794729681165.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_cache_stampede_redis_invalidation_1794729718195.jpg",
+  "postText": "A sudden Redis key eviction during peak outpatient registration once brought our primary database to its knees.\nThousands of concurrent client requests missed cache simultaneously, triggering a classic cache stampede.\n\nIn healthcare IT, doctor quotas and live bed availability are read-heavy. The standard Cache-Aside pattern seems trivial: check Redis first; on a miss, query DB and write back.\n\nThe trap appears when hot keys expire or get invalidated during updates. If hundreds of worker threads hit a cache miss in the exact same millisecond, all of them hammer the DB with identical heavy queries. Connection pools exhaust instantly, latency jumps from 5ms to timeouts, and the DB falls over.\n\nTo keep our services resilient, we apply three strict rules:\n1. Mutex on Cache Miss: On miss, acquire a Redis lock via SET NX PX. Exactly one thread queries DB and updates Redis. Other threads back off briefly and read the freshly populated key.\n2. Probabilistic Expiration (XFetch): Asymmetrically refresh hot keys before hard TTL expires based on compute cost and read frequency.\n3. Invalidate, Never Overwrite: Evict keys post-commit rather than writing DB data directly into cache, avoiding stale overwrites from out-of-order writes.\n\nHow does your team protect primary databases from hot-key stampedes: distributed locking, singleflight deduplication, or scheduled pre-warming?\n\nHit Like if you have fought cache stampedes, share your experience in the comments, and share this post with your tech team.\n@pengikut\n\n#SystemDesign #Redis #SoftwareArchitecture #DistributedSystems #BackendEngineering #HighAvailability"
+}

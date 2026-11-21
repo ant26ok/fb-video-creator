@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794211348583",
+  "topicId": "multi_row_lock_inversion_deadlock",
+  "topic": "Lock Inversion Silently Crushes Batch Writes",
+  "category": "DATABASE CONCURRENCY",
+  "createdAt": "2026-11-09T08:02:28.583Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_multi_row_lock_inversion_deadlock_1794211306442.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_multi_row_lock_inversion_deadlock_1794211348169.jpg",
+  "postText": "Two batch jobs touch the same ten records. Job A updates IDs 1 to 10. Job B updates IDs 10 to 1. Under light load, both pass. Under production concurrency, the database engine aborts one with a fatal deadlock exception.\n\nIn healthcare IT systems, batch pharmacy dispensing and patient admission pipelines frequently mutate shared operational tables. The root cause is Lock Inversion. Transactions acquire row-exclusive locks incrementally as rows match execution plans. When two transactions traverse overlapping sets of records in opposing order, neither can proceed. Both hold what the other needs.\n\nAdding database retries is merely masking the architectural flaw. The real fix requires three rules:\n\n1. Enforce Deterministic Lock Ordering: Always sort IDs client-side or in stored procedures before executing batch updates. Lock records in strict ascending sequence everywhere across the codebase.\n\n2. Eliminate Ambiguous Index Paths: If Query A uses a secondary index to acquire row locks and Query B uses the primary clustered index, their physical lock acquisition order diverges. Force predictable access paths.\n\n3. Pre-lock via Sorted SELECT FOR UPDATE: Read and claim target rows in ordered batches prior to mutating values.\n\nHow does your team enforce strict lock acquisition orders across independent microservices touching shared transactional stores?\n\nLike, comment your perspective below, and share with your engineering team.\n\n@pengikut\n\n#DatabaseArchitecture #SoftwareEngineering #PostgreSQL #MySQL #Concurrency #SystemDesign #HighPerformance"
+}

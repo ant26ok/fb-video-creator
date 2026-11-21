@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794823374719",
+  "topicId": "unindexed_foreign_key_lock_escalation",
+  "topic": "Unindexed Foreign Keys Silently Deadlock Parent Updates",
+  "category": "DATABASE CONCURRENCY",
+  "createdAt": "2026-11-16T10:02:54.719Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_unindexed_foreign_key_lock_escalation_1794823332500.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_unindexed_foreign_key_lock_escalation_1794823374346.jpg",
+  "postText": "In healthcare IT, morning admission spikes can paralyze databases without pushing CPU or memory past safe limits.\n\nDuring high traffic, our team traced intermittent deadlock exceptions during routine patient status updates. The application query looked clean: updating a single admission row by primary key. Yet concurrent worker threads repeatedly aborted.\n\nThe culprit: an unindexed foreign key in a related encounter-events table.\n\nWhen relational engines verify foreign key constraints on parent row updates or deletes, they must check the referencing child table. Without an index on that child foreign key column:\n1. The engine performs full scans or acquires broad share locks across the child table to check referential integrity.\n2. Concurrent transactions updating adjacent records acquire overlapping share and exclusive locks.\n3. Circular lock dependencies form instantly, forcing the deadlock detector to kill transactions.\n\nWe eliminated the deadlocks by querying catalog metadata to detect every unindexed foreign key, adding explicit B-tree indexes, and enforcing deterministic key-ordering across multi-row batches.\n\nHow does your team detect unindexed foreign keys before they trigger locking storms in production?\n\nLike this breakdown, share your engineering perspective in the comments below, and share with your team.\n\n@pengikut\n\n#DatabaseEngineering #PostgreSQL #SystemDesign #HighConcurrency #SoftwareArchitecture #BackendDevelopment"
+}

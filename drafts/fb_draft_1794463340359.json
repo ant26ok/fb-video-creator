@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794463340359",
+  "topicId": "local_llm_kv_cache_oom",
+  "topic": "Unbounded KV Cache Crashes On-Premise LLM Inference",
+  "category": "AI ARCHITECTURE",
+  "createdAt": "2026-11-12T06:02:20.359Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_local_llm_kv_cache_oom_1794463299728.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_local_llm_kv_cache_oom_1794463339981.jpg",
+  "postText": "Healthcare IT cannot send patient records to public LLM APIs. Local inference on on-premise GPUs is mandatory, yet naive setups crash under light load.\n\nAt hospital where I work, we deployed 8B model in FP16 for clinical note summaries. Single request ran fast. Ten concurrent requests triggered instant CUDA OOM error.\n\nCulprit is not model weights. Culprit is KV cache growth and static memory pre-allocation. Standard engines reserve contiguous VRAM for max context length, wasting 60% GPU memory on short prompts.\n\nThree fixes stabilized local inference:\n1. Quantize weights via AWQ or GGUF Q4_K_M: Shrinks weight footprint 70% with negligible accuracy loss, freeing VRAM for active sessions.\n2. Run PagedAttention in vLLM: Splits KV cache into non-contiguous blocks, removing memory fragmentation and tripling concurrent throughput.\n3. Cap context and use continuous batching: Drop idle sequences early and cap max_model_len at 8192 tokens instead of 128K.\n\nMemory layout tuning beats buying bigger GPUs.\n\nOn tight VRAM budgets, would you cut context window length or drop quantization from 8-bit to 4-bit first, and why?\n\nLike this post, comment your inference tuning experience below, and share with IT colleagues. @pengikut\n\n#AIArchitecture #LocalLLM #LLMInference #HealthcareIT #MLOps #SystemDesign"
+}

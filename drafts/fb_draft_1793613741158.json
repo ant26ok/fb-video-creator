@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1793613741158",
+  "topicId": "fhir_etag_concurrency_storm",
+  "topic": "Badai 412 Precondition Failed: Tragedi Concurrency ETag FHIR",
+  "category": "HEALTHCARE IT ARCHITECTURE",
+  "createdAt": "2026-11-02T10:02:21.158Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_fhir_etag_concurrency_storm_1793613707270.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_fhir_etag_concurrency_storm_1793613740882.jpg",
+  "postText": "Pasang integrasi FHIR server untuk telemetri medis sering bikin engineer terjebak ilusi REST API biasa.\n\nKejadian di faskes tempat saya bekerja: tim bridging memetakan data tanda vital pasien dari monitor bedside ke resource `Observation` tunggal. Tiap ada update SpO2, NIBP, atau Heart Rate, worker langsung tembak HTTP PUT pakai header `If-Match: W/\"version\"` buat ngejar optimistic locking.\n\nBegitu 30 bed isolasi streaming data barengan via integration engine, bencana datang: HTTP 412 Precondition Failed meledak beruntun.\n\nKenapa? Karena worker A dan worker B balapan nge-patch resource yang sama di milidetik berdekatan. Versi resource berubah duluan, request lain ditolak FHIR server, retry logic aktif liar, DB threadpool langsung exhaustion. Antrean pesan HL7 v2 tertahan ribuan message.\n\nSolusi arsitektur yang kami terapkan:\n1. Ubah mindset: Resource `Observation` pada FHIR didesain time-series. Jangan di-PUT/PATCH. Bikin record baru (Append-Only) tiap snapshot telemetri masuk.\n2. Partisi message queue: Sharding Kafka/RabbitMQ berbasis `Patient.id`. Semua telemetri dari pasien yang sama dieksekusi secara serial oleh consumer yang sama.\n3. Snapshot agregat dipisah: Jika dashboard EMR butuh data terkini, gunakan materialized view atau caching layer Redis terpisah, jangan paksa query berat langsung ke FHIR store.\n\nBagaimana strategi tim Anda menangani benturan konkurensi data realtime saat bridging HL7 v2 ke FHIR Resource?\n\nYuk, like, drop pengalaman teknis Anda di kolom komentar, dan share postingan ini ke rekan-rekan tech faskes lainnya!"
+}

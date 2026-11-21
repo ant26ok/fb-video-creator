@@ -1,0 +1,15 @@
+{
+  "id": "fb_draft_1795303469935",
+  "topicId": "api_gateway_circuit_breaker_cascade",
+  "topic": "API Gateway: Rate Limiting & Circuit Breaker to Stop Cascading Failures",
+  "category": "DISTRIBUTED SYSTEMS",
+  "createdAt": "2026-11-21T23:24:29.935Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_api_gateway_circuit_breaker_cascade_1795303431042.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_api_gateway_circuit_breaker_cascade_1795303469495.jpg",
+  "postText": "At 3 AM, a single slow database query in the billing service took down the entire hospital information system. Claims processing halted, ER admissions backed up, and the on-call team spent hours firefighting. The root cause? No circuit breaker at the API Gateway. A classic cascading failure.\n\nIn healthcare IT, downtime isn't just inconvenient—it's critical. Here's how we fixed it:\n\n1. **Rate Limiting at the Gateway**: We set per-client and per-endpoint limits to prevent any single service from overwhelming the system. A sudden spike in lab result requests? Throttled.\n\n2. **Circuit Breaker Pattern**: Implemented closed/open/half-open states. When the billing service started timing out, the breaker opened, and requests were immediately routed to a fallback (cached data or a friendly error). No more retry storms.\n\n3. **Bulkheads**: Isolated thread pools for critical services (ER admissions) vs. non-critical (reporting). A failure in reporting no longer impacts patient care.\n\nThe result: p95 latency dropped from 12s to 400ms during peak load, and cascading failures became a thing of the past.\n\nWhat's your go-to pattern for preventing cascading failures in microservices? Have you tried circuit breakers with fallbacks, or do you prefer other approaches?\n\nLike, comment your experience below, and share this post with your team to spark discussion. @pengikut\n\n#Microservices #SystemDesign #HealthcareIT #APIGateway #CircuitBreaker #DistributedSystems #SRE",
+  "caption": "One slow service took down the whole hospital system at 3 AM. We fixed it with API Gateway rate limiting and circuit breakers. p95 latency dropped from 12s to 400ms. What's your cascading failure prevention strategy?",
+  "hashtags": "#Microservices #SystemDesign #HealthcareIT",
+  "oneNumber": "12s -> 400ms",
+  "oneNumberLabel": "p95 latency after circuit breaker and rate limiting",
+  "transcription": "A single slow service can cascade and take down your entire system.\nAt the API Gateway, enforce rate limiting and circuit breakers.\nUse closed, open, and half-open states with fallbacks.\nIsolate critical services with bulkheads and load shedding.\nResult: p95 latency from 12s to 400ms, no more cascading failures."
+}

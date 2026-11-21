@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1793538108968",
+  "topicId": "transactional_outbox_dual_write",
+  "topic": "DB Sukses Tapi Queue Hilang: Tragedi Dual-Write Data Obat",
+  "category": "DISTRIBUTED SYSTEMS",
+  "createdAt": "2026-11-01T13:01:48.968Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_transactional_outbox_dual_write_1793538070609.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_transactional_outbox_dual_write_1793538108643.jpg",
+  "postText": "DB sukses commit, tapi farmasi tidak pernah terima order resep obat.\nPasien sudah berdiri di depan loket, obatnya belum diracik sama sekali.\n\nMasalah klasik ini sempat mampir di faskes tempat saya bekerja saat migrasi ke Event-Driven Architecture. Flow awalnya sederhana: backend simpan transaksi resep ke PostgreSQL, lalu baris berikutnya panggil publisher RabbitMQ. \n\nKelihatan rapi sampai suatu hari koneksi ke broker timeout tepat setelah DB selesai commit. Transaksi bisnis sukses, tapi event hilang ditelan bumi. Mau dibalik urutannya? Kalau broker sukses tapi DB gagal rollback, antrean farmasi memproses orderan hantu. Ini jebakan maut Dual-Write.\n\nSolusinya: Transactional Outbox Pattern.\n\n1. Hilangkan pemanggilan broker di flow utama aplikasi.\n2. Buat tabel `outbox` di database yang sama.\n3. Masukkan event payload ke tabel outbox dalam satu blok transaksi database ACID bersama data resep.\n4. Biarkan background process terpisah (bisa polling worker atau Change Data Capture seperti Debezium) membaca tabel outbox lalu meneruskannya ke message queue dengan jaminan at-least-once delivery.\n\nSistem bisnis tidak lagi terbebani nasib koneksi message broker. Jika DB sukses, event pasti terkirim.\n\nDi arsitektur microservices atau modular monolith Anda saat ini, apakah masih ada dual-write manual ke DB dan message queue, atau sudah beralih pakai Outbox CDC?\n\nYuk, like postingan ini jika bermanfaat, tulis pengalaman atau unek-unek teknis Anda di kolom komentar, dan share ke rekan developer lainnya!"
+}

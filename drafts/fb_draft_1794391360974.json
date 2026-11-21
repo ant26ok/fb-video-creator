@@ -1,0 +1,10 @@
+{
+  "id": "fb_draft_1794391360974",
+  "topicId": "cache_lease_stampede_prevention",
+  "topic": "Cache Leases Kill Stale Reads in High-Write Systems",
+  "category": "DISTRIBUTED CACHING",
+  "createdAt": "2026-11-11T10:02:40.974Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_cache_lease_stampede_prevention_1794391316562.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_cache_lease_stampede_prevention_1794391360353.jpg",
+  "postText": "Cache-aside looks simple: read cache, on miss query DB, write back to cache. In high-concurrency systems, this pattern silently corrupts state under write pressure.\n\nDuring peak hours in healthcare IT systems where I engineer services, patient status updates triggered subtle data inconsistencies. A writer updates PostgreSQL, then deletes the Redis key. Concurrently, a read request misses the cache, hits a lagged read replica, gets old data, and repopulates Redis right after the deletion. The cache now serves stale, dangerous patient status indefinitely.\n\nSimultaneously, key eviction triggers hundreds of parallel requests to hammer database tables in dogpile stampedes.\n\nWe solved both issues with two strict patterns:\n1. Singleflight suppression: Coalesce identical concurrent misses in process memory so only one DB trip executes while waiting callers share results.\n2. Lease-based tokens: Cache misses obtain a monotonic generation token. When DB transactions commit, they bump generation IDs. Redis Lua scripts reject repopulation writes carrying stale tokens.\n\nPure Cache-Aside without write-fencing is a production trap.\n\nHow do you handle stale cache overwrites: distributed locks, CDC event streams, or generation leases?\n\nLike and comment your production approach below, and share with your engineering team.\n\n@pengikut\n\n#DistributedSystems #SoftwareArchitecture #Redis #SystemDesign #BackendEngineering #DatabaseDesign"
+}
