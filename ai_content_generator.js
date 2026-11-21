@@ -166,18 +166,47 @@ async function generateAiBackgroundImage(topicId, prompt) {
         'Authorization': `Bearer ${config.ROUTER_API_KEY}`
       },
       body: JSON.stringify({
-        model: 'ag/gemini-3.1-flash-image',
+        model: 'pecut/pecuti/gemini-3.1-flash-image',
         prompt
       })
     });
 
     if (res.ok) {
       const buffer = Buffer.from(await res.arrayBuffer());
-      fs.writeFileSync(filePath, buffer);
-      console.log(`[AI IMAGE SUCCESS] Latar visual AI tersimpan: ${filePath} (${buffer.length} bytes)`);
-      return filePath;
+      if (buffer.length > 10000) {
+        fs.writeFileSync(filePath, buffer);
+        console.log(`[AI IMAGE SUCCESS] Latar visual AI tersimpan: ${filePath} (${buffer.length} bytes)`);
+        return filePath;
+      }
     } else {
-      console.warn(`[AI IMAGE WARN] HTTP ${res.status}: ${await res.text().catch(() => '')}`);
+      console.warn(`[AI IMAGE WARN] /images/generations HTTP ${res.status}`);
+    }
+
+    // Fallback: chat/completions with image model returns inline base64
+    const chatRes = await fetch(`${config.ROUTER_URL}/chat/completions`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${config.ROUTER_API_KEY}`
+      },
+      body: JSON.stringify({
+        model: 'pecut/pecuti/gemini-3.1-flash-image',
+        messages: [{ role: 'user', content: `Generate an image: ${prompt}` }]
+      })
+    });
+
+    if (chatRes.ok) {
+      const txt = await chatRes.text();
+      const m = txt.match(/data:image\/(png|jpeg|webp);base64,([A-Za-z0-9+/=]{500,})/);
+      if (m) {
+        const buffer = Buffer.from(m[2], 'base64');
+        fs.writeFileSync(filePath, buffer);
+        console.log(`[AI IMAGE SUCCESS] Latar visual AI tersimpan: ${filePath} (${buffer.length} bytes)`);
+        return filePath;
+      }
+      console.warn('[AI IMAGE WARN] no inline image in chat response');
+    } else {
+      console.warn(`[AI IMAGE WARN] chat/completions HTTP ${chatRes.status}`);
     }
   } catch (e) {
     console.warn('[AI IMAGE ERROR]:', e.message);
