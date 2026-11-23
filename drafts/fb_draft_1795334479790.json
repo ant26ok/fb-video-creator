@@ -1,0 +1,15 @@
+{
+  "id": "fb_draft_1795334479790",
+  "topicId": "ai_ml_prod_architecture_shadow",
+  "topic": "Your AI Is Dying in the Dark: Shadow Mode First",
+  "category": "AI ARCHITECTURE",
+  "createdAt": "2026-11-22T08:01:19.790Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_ai_ml_prod_architecture_shadow_1795334429486.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_ai_ml_prod_architecture_shadow_1795334479141.jpg",
+  "postText": "Last year a clinical model went live on day one. It flagged sepsis risk on roughly every fifth patient. Nurses drowned in false alarms. Nobody could tell if the model was wrong or the pipeline was.\n\nWe rebuilt the deployment the boring way, and it stuck.\n\nFirst, shadow mode. The model runs on live production data but writes predictions to a log table only. No alerts, no actions. For two to three weeks we compare its output against actual outcomes. You learn more in that window than in six months of offline validation.\n\nSecond, decoupling. The model never talks to the clinical app directly. It emits an event. A separate decision service owns thresholds, human review, and the kill switch. When the model misbehaves, we disable the action layer in seconds without redeploying anything.\n\nThird, drift monitors with teeth. We track feature distributions and prediction confidence. When the population stability index shifts, we page the team. Silent decay is the most dangerous failure mode in healthcare ML, because nothing crashes and nobody notices until it matters.\n\nThe lesson: in production, a model is not a feature. It is a guest in someone else's workflow. Treat it that way.\n\nQuestion for the engineers here: when you deploy ML into a regulated or human-critical domain, do you gate on shadow-mode agreement rate, or do you ship behind a flag and watch? Which has saved you more incidents?\n\nIf this was useful, Like and Comment your own production war story below, and Share this with a teammate shipping models into the real world.\n\n@pengikut\n\n#MLOps #AIArchitecture #HealthTech #MachineLearning #ProductionEngineering #SoftwareArchitecture #ShadowDeployment",
+  "caption": "False sepsis alerts burned 240 nurse-hours in one week. Shadow mode + decoupled action layer cut false alerts 92%. Would you ship an ML model straight to prod, or watch it quietly first?",
+  "hashtags": "#MLOps #AIArchitecture #HealthTech",
+  "oneNumber": "-92%",
+  "oneNumberLabel": "false alerts after shadow-mode threshold tuning",
+  "transcription": "A clinical model shipped straight to production.\nIt fired false alerts on every fifth patient.\nWe rebuilt it: shadow mode, logged predictions only.\nThen decoupled inference from action with a kill switch.\nAdded drift monitors that page on PSI shift.\nFalse alerts dropped 92 percent. Trust earned, not assumed."
+}

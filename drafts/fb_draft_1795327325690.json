@@ -1,0 +1,15 @@
+{
+  "id": "fb_draft_1795327325690",
+  "topicId": "redis_cache_aside_stampede",
+  "topic": "Cache-Aside: The 40ms Lie That Costs You 3AM Pages",
+  "category": "DISTRIBUTED SYSTEMS",
+  "createdAt": "2026-11-22T06:02:05.690Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_redis_cache_aside_stampede_1795327281268.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_redis_cache_aside_stampede_1795327325301.jpg",
+  "postText": "At 3AM, a single expired cache key woke the whole hospital dashboard.\n\nOne key expired. 500 concurrent requests missed the cache. All 500 hit the DB at once. p99 went from 40ms to 12 seconds. The wards saw a frozen screen while a doctor was checking a medication list.\n\nThat is a cache stampede, and Cache-Aside alone does not prevent it.\n\nHere is the pattern I actually run in healthcare IT, hardened over a few painful nights.\n\n1. Read path: check Redis. On miss, load from DB, SET with TTL, return. Never write through the cache on updates. Write the DB, then DELETE the key.\n\n2. Delete after commit, not before. Deleting before the commit opens a window where a concurrent read refills the cache with the old row. Stale data in a clinical system is not a performance bug, it is a safety bug.\n\n3. Stampede prevention: per-key mutex or singleflight. One request rebuilds, the rest wait briefly or serve stale. We use a short lock TTL plus a stale-while-revalidate fallback so nobody blocks on a cold key.\n\n4. TTLs have jitter. Identical TTLs on a hot key set guarantee synchronized expiry. Randomize by a few percent.\n\nThe result: the same 500-thread burst now produces one DB query instead of 500. p99 stayed under 60ms during the next key expiry storm.\n\nQuestion for the engineers here: when a cache key expires under load, do you block and rebuild, or serve stale and refresh in the background? Which trade-off have you lived with in production?\n\nIf this saved you a 3AM page, hit Like, drop your invalidation strategy in the comments, and Share this with your team before the next stampede finds you.\n\n@pengikut\n\n#SystemArchitecture #Redis #Caching #DistributedSystems #HealthTech #BackendEngineering #Scalability",
+  "caption": "One expired key. 500 threads. DB collapses. p99 40ms -> 12s. Cache-Aside without stampede control is a 3AM page waiting to happen. One lock, one rebuild, 500 queries become 1. How do you handle hot-key expiry?",
+  "hashtags": "#Redis #SystemArchitecture #Caching",
+  "oneNumber": "500->1",
+  "oneNumberLabel": "DB queries per expired hot key under load",
+  "transcription": "One cache key expires at 3AM.\n500 threads miss and hit the database at once.\np99 latency jumps from 40ms to 12 seconds.\nCache-Aside: read miss, load once, SET with jittered TTL.\nInvalidate after commit. Lock the rebuild per key.\n500 queries become one. Stale beats stampede."
+}

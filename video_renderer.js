@@ -5,6 +5,8 @@ const { chromium } = require('playwright');
 const config = require('./config');
 
 function buildP5Html(topic) {
+  const COVER_MS = topic.coverMs || 3000;
+  const CTA_MS = topic.ctaAtMs || 18000;
   const p5Script = fs.readFileSync(path.join(__dirname, 'p5.min.js'), 'utf8');
   let bgBase64 = '';
   if (topic.bgImagePath && fs.existsSync(topic.bgImagePath)) {
@@ -26,7 +28,7 @@ function buildP5Html(topic) {
       width: 1080px;
       height: 1920px;
       overflow: hidden;
-      background: #020617;
+      background: ${topic.bgColor || '#020617'};
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
     @keyframes kenBurns {
@@ -129,11 +131,12 @@ function buildP5Html(topic) {
   <div id="canvas-container"></div>
 
   <!-- Attention-Grabbing Video Thumbnail Cover (0s - 2.8s) -->
-  <div id="cover-thumbnail" style="position: absolute; inset: 0; ${bgBase64 ? `background: linear-gradient(180deg, rgba(2, 6, 23, 0.72) 0%, rgba(2, 6, 23, 0.92) 100%), url('data:image/jpeg;base64,${bgBase64}'); background-size: cover; background-position: center;` : 'background: radial-gradient(circle at 50% 38%, #0f172a 0%, #020617 100%);'} z-index: 100; display: flex; flex-direction: column; justify-content: space-between; padding: 60px; box-sizing: border-box; transition: all 0.75s cubic-bezier(0.16, 1, 0.3, 1);">
+  <div id="cover-thumbnail" style="position: absolute; inset: 0; background-color: ${topic.bgColor || '#020617'}; ${bgBase64 ? `background-image: linear-gradient(180deg, rgba(2, 6, 23, 0.72) 0%, rgba(2, 6, 23, 0.92) 100%), url('data:image/jpeg;base64,${bgBase64}'); background-size: cover; background-position: center;` : `background-image: radial-gradient(circle at 50% 38%, ${topic.accentColor}33 0%, transparent 62%);`} z-index: 100; display: flex; flex-direction: column; justify-content: space-between; padding: 60px; box-sizing: border-box; transition: all 0.75s cubic-bezier(0.16, 1, 0.3, 1);">
+    ${topic.queueTheme && !bgBase64 ? `<div style="position:absolute; inset:0; z-index:-1; opacity:0.5; background-image: repeating-linear-gradient(0deg, ${topic.accentColor}26 0 3px, transparent 3px 26px), repeating-linear-gradient(90deg, ${topic.accentColor}1f 0 3px, transparent 3px 26px); mask-image: radial-gradient(circle at 50% 42%, #000 0%, transparent 72%); -webkit-mask-image: radial-gradient(circle at 50% 42%, #000 0%, transparent 72%);"></div>` : ''}
     <div style="display: flex; justify-content: space-between; align-items: center;">
-      <div style="display: inline-flex; align-items: center; gap: 10px; padding: 8px 22px; border-radius: 9999px; background: rgba(244, 63, 94, 0.18); border: 1.5px solid #f43f5e; color: #f43f5e; font-weight: 900; font-size: 15px; letter-spacing: 0.12em; text-transform: uppercase;">
-        <span style="width: 10px; height: 10px; border-radius: 50%; background: #f43f5e; box-shadow: 0 0 12px #f43f5e;"></span>
-        CRITICAL IT WARNING
+      <div style="display: inline-flex; align-items: center; gap: 10px; padding: 8px 22px; border-radius: 9999px; background: ${topic.accentColor}2e; border: 1.5px solid ${topic.accentColor}; color: ${topic.accentColor}; font-weight: 900; font-size: 15px; letter-spacing: 0.12em; text-transform: uppercase;">
+        <span style="width: 10px; height: 10px; border-radius: 50%; background: ${topic.accentColor}; box-shadow: 0 0 12px ${topic.accentColor};"></span>
+        ${topic.coverBadge || 'CRITICAL IT WARNING'}
       </div>
       <div style="font-family: monospace; font-size: 15px; font-weight: 800; color: #38bdf8; background: rgba(14, 165, 233, 0.15); padding: 8px 18px; border-radius: 10px; border: 1px solid rgba(56, 189, 248, 0.4);">
         ⚡ SYSTEM ARCHITECTURE
@@ -210,6 +213,18 @@ function buildP5Html(topic) {
         </div>
       </div>
 
+      <!-- Scene 3: 3-point breakdown for photo posts -->
+      ${topic.photoMode && topic.keyPoints ? `<div id="scene3" class="scene-box" style="display:none;">
+        <div style="font-size: 14px; font-weight: 800; color: #38bdf8; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 20px;">THE 3-POINT BREAKDOWN</div>
+        ${topic.keyPoints.map(k => `<div style="display:flex; gap:16px; align-items:flex-start; margin-bottom:20px;">
+          <div style="flex:0 0 auto; width:48px; height:48px; border-radius:14px; background:${topic.accentColor}22; border:1.5px solid ${topic.accentColor}88; color:${topic.accentColor}; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:17px;">${k.num}</div>
+          <div>
+            <div style="font-size:26px; font-weight:900; color:#ffffff; line-height:1.25;">${k.title}</div>
+            <div style="font-size:19px; color:#cbd5e1; font-weight:600; line-height:1.45; margin-top:4px;">${k.desc}</div>
+          </div>
+        </div>`).join('')}
+      </div>` : ''}
+
       <!-- Scene 2: Comment CTA close (18 - 24s) -->
       <div id="scene2" class="scene-box" style="display: none; text-align: center; padding: 48px 36px;">
         <div style="width: 56px; height: 56px; border-radius: 50%; background: ${topic.accentColor}22; border: 1px solid ${topic.accentColor}; color: ${topic.accentColor}; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 26px; font-weight: 900;">
@@ -219,7 +234,7 @@ function buildP5Html(topic) {
           ${topic.takeaway}
         </div>
         <div style="margin-top: 22px; font-size: 22px; font-weight: 800; color: #38bdf8; line-height: 1.4;">
-          What broke first in YOUR stack? Drop it in the comments 👇
+          ${topic.ctaText || 'What broke first in YOUR stack? Drop it in the comments 👇'}
         </div>
       </div>
     </div>
@@ -256,15 +271,16 @@ function buildP5Html(topic) {
         cover.style.opacity = '0';
         cover.style.transform = 'translateY(-100%)';
       }
-    }, 3000);
+    }, ${COVER_MS});
 
-    // 2. ONE solution + ONE number (3s - 18s), then close with comment CTA
+    // 2. ONE solution + ONE number, then close with comment CTA
     setTimeout(() => {
       s1.style.display = 'none';
       s2.style.display = 'block';
-    }, 18000);
+    }, ${CTA_MS});
 
     // === P5.JS GENERATIVE BACKGROUND ART ===
+    const QUEUE_THEME = ${topic.queueTheme ? 'true' : 'false'};
     const sketch = (p) => {
       const W = 1080;
       const H = 1920;
@@ -336,12 +352,61 @@ function buildP5Html(topic) {
         p.pop();
       }
 
+      // Green message-queue stack: rows of enqueued events draining to the right
+      function drawQueueStack(t) {
+        p.push();
+        p.translate(120, 260);
+        const rows = 7;
+        const rowH = 74;
+        const boxW = 210;
+        const gap = 26;
+        for (let r = 0; r < rows; r++) {
+          const y = r * (rowH + gap);
+          const drained = ((t * 0.6 + r * 0.35) % 3) > 2.2;
+          for (let c = 0; c < 4; c++) {
+            const x = c * (boxW + gap);
+            const appear = Math.min(1, Math.max(0, t * 0.8 - r * 0.12 - c * 0.08));
+            if (appear <= 0) continue;
+            p.push();
+            p.translate(x + boxW / 2, y + rowH / 2);
+            p.scale(appear);
+            p.rectMode(p.CENTER);
+            if (drained && c === 3) {
+              p.noFill();
+              p.stroke(34, 197, 94, 70);
+              p.strokeWeight(2);
+              p.drawingContext.setLineDash([8, 8]);
+              p.rect(0, 0, boxW, rowH, 10);
+              p.drawingContext.setLineDash([]);
+            } else {
+              p.fill(6, 78, 59, 150);
+              p.stroke(34, 197, 94, 160);
+              p.strokeWeight(2);
+              p.rect(0, 0, boxW, rowH, 10);
+              p.noStroke();
+              p.fill(34, 197, 94, 220);
+              p.rect(-boxW / 2 + 16, -8, 6, rowH - 28, 3);
+              p.fill(16, 185, 129, 180);
+              p.rect(-boxW / 2 + 34, -6, boxW * 0.46, 8, 4);
+              p.fill(34, 197, 94, 110);
+              p.rect(-boxW / 2 + 34, 10, boxW * 0.30, 8, 4);
+            }
+            p.pop();
+          }
+          p.noStroke();
+          p.fill(34, 197, 94, 90);
+          p.rect(boxW * 4 + gap * 4 + 12, y + rowH / 2 - 1, 6, 6, 3);
+        }
+        p.pop();
+      }
+
       p.draw = () => {
         ${bgBase64 ? 'p.clear(); p.background(2, 6, 23, 70);' : 'p.background(2, 6, 23);'}
 
         const t = p.frameCount * 0.015;
         
         drawArchitectureGlyphs(t);
+        if (QUEUE_THEME) drawQueueStack(t);
         
         for (let i = 0; i < nodes.length; i++) {
           const n = nodes[i];
@@ -439,11 +504,14 @@ async function renderVideo(topic) {
     }
   });
 
+  const durationMs = topic.durationMs || 24000;
+  const ctaAtMs = topic.ctaAtMs || 18000;
+  const durationSec = Math.round(durationMs / 1000);
+
   const page = await context.newPage();
   await page.goto(`file://${htmlPath}`);
 
-  // Rekam 24 detik (cover 0-3s + solusi 3-18s + CTA 18-24s)
-  await page.waitForTimeout(24000);
+  await page.waitForTimeout(durationMs);
 
   await page.close();
   await context.close();
@@ -457,7 +525,7 @@ async function renderVideo(topic) {
   const rawWebmPath = path.join(tempDir, webmFiles[0]);
   console.log(`[RENDER P5 VIDEO] Mengonversi ke MP4 H.264 (30 FPS, YUV420p)...`);
 
-  const ffmpegCmd = `ffmpeg -y -i "${rawWebmPath}" -t 24 -c:v libx264 -pix_fmt yuv420p -r 30 -movflags +faststart "${finalVideoPath}"`;
+  const ffmpegCmd = `ffmpeg -y -i "${rawWebmPath}" -t ${durationSec} -c:v libx264 -pix_fmt yuv420p -r 30 -movflags +faststart "${finalVideoPath}"`;
   execSync(ffmpegCmd, { stdio: 'pipe' });
 
   // Ekstrak cover thumbnail gambar JPG beresolusi tinggi di detik pertama
@@ -482,6 +550,55 @@ async function renderVideo(topic) {
   };
 }
 
+async function renderStill(topic) {
+  // ponytail: screenshot the cover frame instead of a separate photo pipeline; upgrade to image model when quota returns
+  const tempDir = path.join(config.VIDEOS_DIR, `still_${Date.now()}`);
+  fs.mkdirSync(tempDir, { recursive: true });
+  const htmlPath = path.join(tempDir, 'index.html');
+  fs.writeFileSync(htmlPath, buildP5Html(topic));
+
+  const browser = await chromium.launch({ headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox'] });
+  const page = await browser.newPage({ viewport: { width: 1080, height: 1920 } });
+  await page.goto(`file://${htmlPath}`);
+  await page.waitForTimeout(1500);
+
+  // ponytail: hide the cover layer so the still is the clean solution scene, not two stacked layers
+  // ponytail: fit the feed photo in a 1080x1350 viewport instead of cropping a 9:16 frame
+  await page.setViewportSize({ width: 1080, height: 1350 });
+  await page.evaluate(() => {
+    const cover = document.getElementById('cover-thumbnail');
+    if (cover) cover.style.display = 'none';
+    const s1 = document.getElementById('scene1');
+    const s3 = document.getElementById('scene3');
+    if (s3) {
+      if (s1) s1.style.display = 'none';
+      s3.style.display = 'block';
+      const header = document.querySelector('.header-box');
+      if (header) header.style.display = 'none';
+    }
+    document.documentElement.style.height = '1350px';
+    document.body.style.height = '1350px';
+    ['canvas-container', 'overlay'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.style.height = '1350px';
+    });
+    const overlay = document.getElementById('overlay');
+    if (overlay) overlay.style.padding = '48px 56px';
+  });
+  await page.waitForTimeout(600);
+
+  const rawPath = path.join(tempDir, 'raw.jpg');
+  await page.screenshot({ path: rawPath, type: 'jpeg', quality: 92 });
+  await browser.close();
+
+  const stillPath = path.join(config.VIDEOS_DIR, `fb_still_${topic.id}_${Date.now()}.jpg`);
+  execSync(`ffmpeg -y -i "${rawPath}" -q:v 2 "${stillPath}"`, { stdio: 'pipe' });
+  try { fs.rmSync(tempDir, { recursive: true, force: true }); } catch (e) {}
+  console.log(`[RENDER STILL SUCCESS] ${stillPath} (${fs.statSync(stillPath).size} bytes)`);
+  return stillPath;
+}
+
 module.exports = {
-  renderVideo
+  renderVideo,
+  renderStill
 };

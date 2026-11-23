@@ -1,0 +1,15 @@
+{
+  "id": "fb_draft_1795316637185",
+  "topicId": "ml_shadow_deploy_guardrails",
+  "topic": "Your ML Model Works in Staging. Production Says No.",
+  "category": "AI ARCHITECTURE",
+  "createdAt": "2026-11-22T03:03:57.185Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_ml_shadow_deploy_guardrails_1795316591031.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_ml_shadow_deploy_guardrails_1795316636807.jpg",
+  "postText": "Last month a model passed every offline test with 94% accuracy. We deployed it behind a feature flag. Within hours, live predictions degraded on 30% of requests. Nobody changed the model. The world changed around it.\n\nThis is the gap most ML teams ignore: staging environments are a lie. Your test set is frozen. Production traffic is a river. Feature distributions shift, upstream services change formats, and suddenly your carefully tuned model is confidently wrong.\n\nThe fix is not \"better testing.\" It's architectural:\n\n1. Shadow deploy first. Mirror real traffic to the new model in parallel. Log predictions. Compare against the incumbent. Zero user exposure, full production signal.\n\n2. Enforce a feature parity contract. Assert that train-time and serve-time feature pipelines produce identical outputs. Fail the deploy on drift, not on a dashboard nobody watches.\n\n3. Automate quality gates. Block model promotion when live accuracy or p95 latency crosses thresholds. Make rollback a one-command operation, not a 3 AM incident call.\n\nIn healthcare IT, a degraded prediction isn't a metric. It's a triage recommendation someone trusts. We learned to treat model deployment like any other distributed system change: observable, reversible, gated.\n\nQuestion for the engineers here: when you ship a model, what is your actual rollback trigger? A metric threshold, a human judgment call, or a page at 3 AM?\n\nIf this resonated, drop your experience in the comments, Like if it helped, and Share it with a teammate who still trusts their staging environment. Follow @pengikut for more production architecture lessons.\n\n#MLOps #AIArchitecture #ProductionEngineering #HealthTech #SystemDesign #MachineLearning",
+  "caption": "Model passed staging at 94% accuracy. Live traffic degraded 30% of predictions. Offline tests lie. Shadow deploy first, then trust. What's your rollback trigger?",
+  "hashtags": "#MLOps #AIArchitecture #HealthTech",
+  "oneNumber": "30%",
+  "oneNumberLabel": "predictions degraded before shadow deploy caught it",
+  "transcription": "Your model passed every offline test. Then production traffic hit.\n30% of predictions degraded. Nobody changed the model.\nStaging is a frozen test set. Production is a river.\nShadow deploy: mirror real traffic, compare outputs, zero user impact.\nEnforce feature parity. Automate quality gates. Make rollback one command.\nOffline metrics prove nothing. Shadow traffic is the only honest test."
+}

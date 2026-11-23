@@ -1,0 +1,15 @@
+{
+  "id": "fb_draft_1795341677480",
+  "topicId": "transactional_outbox_dual_write",
+  "topic": "Dual Writes: The 3AM Silent Data Loss in Your Queue",
+  "category": "DISTRIBUTED SYSTEMS",
+  "createdAt": "2026-11-22T10:01:17.480Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_transactional_outbox_dual_write_1795341633564.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_transactional_outbox_dual_write_1795341677077.jpg",
+  "postText": "DB commit succeeds. Publish fails. Event gone. Nobody notices until finance asks why 40 claims never reconciled.\n\nThat's the dual-write problem. You write to your database, then publish to Kafka or RabbitMQ. Two systems, no shared transaction. Between them sits a window where reality splits in two.\n\nIn healthcare IT, that window costs money. A lab result saved but not published means the ward never gets notified. A billing event lost means a claim silently rots in a queue nobody watches.\n\nThe fix: Transactional Outbox.\n\n1. Your business write and your event write land in the SAME database transaction. Same commit. Atomic. Either both exist or neither does.\n2. A relay worker polls unpublished outbox rows, publishes to the broker, marks them sent.\n3. Consumers must be idempotent. Delivery is at-least-once, never exactly-once. Dedupe by event ID.\n\nSmall table. One worker. Hours of 3AM debugging saved. The boring pattern that keeps event-driven systems honest.\n\nWhat's your poison here: polling the outbox on a schedule, or CDC with Debezium tailing the WAL? Curious how smaller healthcare teams handle broker reliability.\n\nLike if this hit home, comment your setup below, and share with the teammate who thinks publish-after-commit is fine.\n\n@pengikut\n\n#EventDrivenArchitecture #TransactionalOutbox #SystemDesign #HealthTech #DistributedSystems #MessageQueues",
+  "caption": "Commit succeeds, publish fails, event vanishes. In healthcare IT that's a lost billing event and a claim nobody reconciles. Transactional Outbox closes the gap: 0 lost events since we moved publishing into the same DB transaction. What do you use, polling relay or CDC?",
+  "hashtags": "#EventDrivenArchitecture #SystemDesign #HealthTech",
+  "oneNumber": "0 lost",
+  "oneNumberLabel": "events after outbox relay replaced publish-after-commit",
+  "transcription": "Write to DB. Publish to broker. Two systems, no shared transaction.\nIf publish fails after commit, the event is gone. Silently.\nTransactional outbox: event row in the same commit as the business row.\nA relay worker polls, publishes, marks sent.\nConsumers dedupe by event ID. At-least-once, never exactly-once.\nOne table. One worker. No more forgotten events."
+}

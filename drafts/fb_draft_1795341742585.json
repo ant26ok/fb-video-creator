@@ -1,0 +1,15 @@
+{
+  "id": "fb_draft_1795341742585",
+  "topicId": "inference_sidecar_latency_tax",
+  "topic": "Your Inference Sidecar Is Taxing Every Request",
+  "category": "AI ARCHITECTURE",
+  "createdAt": "2026-11-22T10:02:22.585Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_inference_sidecar_latency_tax_1795341696396.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_inference_sidecar_latency_tax_1795341742180.jpg",
+  "postText": "We added an AI inference sidecar to every microservice pod. Latency jumped 180ms per request and memory doubled overnight. The model was fine. The placement was wrong.\n\nHere is what production taught us about ML architecture in healthcare IT, where every millisecond can mean a delayed triage or a stalled claim:\n\n1. Sidecars multiply cost. A sidecar per pod means the model loads per replica. Ten replicas, ten copies in memory, ten cold starts after deploy. Centralize inference behind one batching service and scale that service, not the mesh.\n\n2. Keep the request path synchronous only when it must be. Predictions for non-critical signals (risk scores, anomaly flags) belong in an async queue. The request path stays fast; the model works in the background.\n\n3. Warm weights beat clever code. Dedicated GPU node pools with preloaded models removed our 2.1s cold-start spikes. Pinning model versions to nodes made rollbacks boring, which is exactly what you want at 3AM.\n\n4. Observability is not optional. We track p95 inference latency, queue depth, and model version per response. Without those, you are debugging blind.\n\nAfter moving to a central inference gateway with async fallback, p95 dropped from 640ms to 210ms and memory per pod fell 40%.\n\nThe uncomfortable question: when your model is fast but your architecture is slow, who owns the latency? The data scientist, the platform team, or the person who clicked deploy?\n\nDrop your experience in the comments. If this helped, Like, Comment, and Share it with your team.\n\n@pengikut\n\n#AIArchitecture #MLOps #HealthTech #SystemDesign #ProductionEngineering #Kubernetes",
+  "caption": "Sidecar per pod doubled memory and added 180ms per request. Central inference gateway cut p95 from 640ms to 210ms. Where do you run inference in prod?",
+  "hashtags": "#AIArchitecture #MLOps #HealthTech",
+  "oneNumber": "640ms→210ms",
+  "oneNumberLabel": "p95 inference latency after centralizing ML gateway",
+  "transcription": "Adding an inference sidecar to every pod looked clean.\nIt cost 180ms per request and doubled memory.\nWe moved inference to a central batching gateway with async queue.\np95 latency: 640ms down to 210ms.\nMemory per pod: minus 40 percent.\nPut the model where it scales once, not per pod."
+}

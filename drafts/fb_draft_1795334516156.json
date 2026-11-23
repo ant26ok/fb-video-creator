@@ -1,0 +1,15 @@
+{
+  "id": "fb_draft_1795334516156",
+  "topicId": "db_lock_deadlock_indexing",
+  "topic": "Deadlocks Don't Sleep: Lock Contention at 3AM",
+  "category": "DATABASE CONCURRENCY",
+  "createdAt": "2026-11-22T08:01:56.156Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_db_lock_deadlock_indexing_1795334468816.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_db_lock_deadlock_indexing_1795334515754.jpg",
+  "postText": "3AM alert. Pharmacy stock update deadlocked. 200 claims stuck for 40 minutes. Rp 12M in delayed dispensing. The root cause? Not the database. Our transaction design.\n\nIn healthcare IT, concurrency is not theoretical. Two nurses dispense the same drug batch. Billing and inventory fight over the same prescription row. Lab results and orders collide on patient_id.\n\nHere is what we changed:\n\n1. Lock ordering. Every transaction now acquires rows in ascending ID order. Circular wait disappears when everyone agrees on the sequence.\n\n2. Index the predicate. A missing composite index on (ward_id, status) turned a row lock into a table scan lock. One migration cut lock wait by 70%.\n\n3. Short transactions. We moved HTTP calls and PDF generation outside the transaction boundary. Lock held for 40ms, not 4 seconds.\n\n4. Deadlock telemetry. We log deadlock graphs to a table and alert when rate exceeds 1/min. Silent retries hide design debt.\n\nThe lesson: a deadlock is not a retry problem. It is a signal that your lock order, index, or transaction scope is wrong.\n\nQuestion for the engineers here: when you hit a deadlock in production, do you fix the transaction design or just add retry logic and move on? Be honest.\n\nIf this resonates, like this post, drop your war story in the comments, and share it with your backend team. @pengikut\n\n#DatabaseConcurrency #Deadlock #HealthcareIT #BackendEngineering #SystemDesign #PostgreSQL #Indexing",
+  "caption": "3AM deadlock froze 200 pharmacy claims for 40 minutes. Root cause: missing index + wrong lock order. One migration cut lock wait by 70%. What is your deadlock war story?",
+  "hashtags": "#DatabaseConcurrency #Deadlock #HealthcareIT",
+  "oneNumber": "-70%",
+  "oneNumberLabel": "lock wait time after composite index migration",
+  "transcription": "3AM. Pharmacy stock update deadlocks. 200 claims stuck.\nRoot cause one: transactions acquire rows in random order. Circular wait.\nRoot cause two: missing composite index. Row lock becomes table lock.\nFix: deterministic lock order, index the predicate, short transactions.\nResult: lock wait down 70 percent. Deadlock rate near zero.\nDeadlock is a design signal, not a retry problem."
+}

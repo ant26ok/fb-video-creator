@@ -2,41 +2,6 @@
   "lastTopicIndex": 0,
   "history": [
     {
-      "id": "fb_draft_1794463389321",
-      "topicId": "cache_aside_stampede_lock",
-      "title": "Naive Cache-Aside Loops Trigger Thundering Herd Outages",
-      "timestamp": "2026-11-12T06:03:16.153Z",
-      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_cache_aside_stampede_lock_1794463349478.mp4"
-    },
-    {
-      "id": "fb_draft_1794470532897",
-      "topicId": "pod_termination_race_deploy",
-      "title": "Pod Termination Races Break Zero-Downtime Deploys",
-      "timestamp": "2026-11-12T08:03:48.409Z",
-      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_pod_termination_race_deploy_1794470493505.mp4"
-    },
-    {
-      "id": "fb_draft_1794477754841",
-      "topicId": "silent_embedding_drift_rag",
-      "title": "Silent Embedding Drift Corrupts Production RAG",
-      "timestamp": "2026-11-12T10:02:39.305Z",
-      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_silent_embedding_drift_rag_1794477710257.mp4"
-    },
-    {
-      "id": "fb_draft_1794488560409",
-      "topicId": "gateway_retry_storm_shield",
-      "title": "Stop Retry Storms Before They Melt Your API Gateway",
-      "timestamp": "2026-11-12T13:05:13.679Z",
-      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_gateway_retry_storm_shield_1794488520683.mp4"
-    },
-    {
-      "id": "fb_draft_1794538926471",
-      "topicId": "canary_traffic_weighting_mesh",
-      "title": "Naive Traffic Shifts Cripple Canary Rollouts",
-      "timestamp": "2026-11-13T03:02:10.875Z",
-      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_canary_traffic_weighting_mesh_1794538885127.mp4"
-    },
-    {
       "id": "fb_draft_1794549733356",
       "topicId": "circular_delegation_multi_agent_swarms",
       "title": "Circular Delegation Traps Multi-Agent Swarms",
@@ -350,7 +315,42 @@
       "title": "API Gateway: Rate Limiting & Circuit Breaker to Stop Cascading Failures",
       "timestamp": "2026-11-21T23:24:33.817Z",
       "videoPath": "/home/antok/fb-video-creator/videos/fb_video_api_gateway_circuit_breaker_cascade_1795303431042.mp4"
+    },
+    {
+      "id": "fb_draft_1795316637185",
+      "topicId": "ml_shadow_deploy_guardrails",
+      "title": "Your ML Model Works in Staging. Production Says No.",
+      "timestamp": "2026-11-22T03:04:01.379Z",
+      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_ml_shadow_deploy_guardrails_1795316591031.mp4"
+    },
+    {
+      "id": "fb_draft_1795327325690",
+      "topicId": "redis_cache_aside_stampede",
+      "title": "Cache-Aside: The 40ms Lie That Costs You 3AM Pages",
+      "timestamp": "2026-11-22T06:02:12.871Z",
+      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_redis_cache_aside_stampede_1795327281268.mp4"
+    },
+    {
+      "id": "fb_draft_1795334516156",
+      "topicId": "db_lock_deadlock_indexing",
+      "title": "Deadlocks Don't Sleep: Lock Contention at 3AM",
+      "timestamp": "2026-11-22T08:02:03.144Z",
+      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_db_lock_deadlock_indexing_1795334468816.mp4"
+    },
+    {
+      "id": "fb_draft_1795341742585",
+      "topicId": "inference_sidecar_latency_tax",
+      "title": "Your Inference Sidecar Is Taxing Every Request",
+      "timestamp": "2026-11-22T10:02:29.840Z",
+      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_inference_sidecar_latency_tax_1795341696396.mp4"
+    },
+    {
+      "id": "fb_draft_1795352480590",
+      "topicId": "api_rate_limiting_circuit_breaker",
+      "title": "Circuit Breaker: Menyelamatkan Server Saat Layanan Mitra Down",
+      "timestamp": "2026-11-22T13:01:24.394Z",
+      "videoPath": "/home/antok/fb-video-creator/videos/fb_video_api_rate_limiting_circuit_breaker_1795352441777.mp4"
     }
   ],
-  "lastExecutedSlot": "2026-11-22_06"
+  "lastExecutedSlot": "2026-11-22_20"
 }

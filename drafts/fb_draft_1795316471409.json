@@ -1,0 +1,15 @@
+{
+  "id": "fb_draft_1795316471409",
+  "topicId": "ml_drift_silent_failure",
+  "topic": "Your Model Didn't Decay. Your Data Pipeline Did.",
+  "category": "AI ARCHITECTURE",
+  "createdAt": "2026-11-22T03:01:11.409Z",
+  "videoPath": "/home/antok/fb-video-creator/videos/fb_video_ml_drift_silent_failure_1795316426462.mp4",
+  "thumbnailPath": "/home/antok/fb-video-creator/videos/fb_thumb_ml_drift_silent_failure_1795316471043.jpg",
+  "postText": "We watched model accuracy drop 22% over six weeks. The knee-jerk reaction: retrain. We did. Accuracy barely moved. That's when we realized the model wasn't decaying—our feature pipeline was silently sending garbage.\n\nA upstream schema change turned a nullable column into a string. Our preprocessing code coerced it to NaN. The model kept predicting, just badly. No errors. No alerts. Just quiet degradation.\n\nHere's the architecture pattern that saved us:\n\n1. Feature-level monitoring. Track distributions (mean, null rate, cardinality) per feature, not just final accuracy. Accuracy is a lagging indicator. Feature drift is leading.\n\n2. Contract tests in CI. Every feature schema gets a test: types, ranges, nullability. Upstream change breaks the build, not production.\n\n3. Shadow retraining. New model runs on live traffic in parallel before promotion. Compare outputs, then swap. Never deploy blind.\n\nThe lesson: ML observability is data observability. Your model is innocent until proven guilty. The pipeline is usually the culprit.\n\nWhat's your go-to signal that tells you it's a model problem versus a data problem? Have you been burned by silent feature drift? Drop your war stories in the comments.\n\nIf this resonated, like, comment your experience below, and share this with a teammate who's chasing ghosts in their model metrics. Follow @pengikut for more production AI architecture lessons.\n\n#MachineLearning #MLOps #DataEngineering #AIArchitecture #ProductionAI #HealthTech",
+  "caption": "Model accuracy dropped 22%. Retraining didn't fix it. The bug was upstream in the feature pipeline—silent schema drift. Monitor features, not just predictions. What's your drift signal?",
+  "hashtags": "#MLOps #DataEngineering #AIArchitecture",
+  "oneNumber": "22%",
+  "oneNumberLabel": "accuracy drop from silent feature schema change",
+  "transcription": "Model accuracy fell 22% in six weeks. Retraining barely moved it.\nRoot cause: upstream schema change turned a column to string, coerced to NaN.\nModel kept predicting. Badly. No alerts.\nFix: feature-level monitoring, schema contract tests in CI, shadow retraining before swap.\nLesson: monitor the pipeline, not just the prediction."
+}
